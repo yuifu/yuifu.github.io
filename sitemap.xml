@@ -1,18 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://yuifu.github.io/blog/2013/07/16/test/</loc>
-        <lastmod>2013-07-17T12:07:35+09:00</lastmod>
-    </url>
-    <url>
-        <loc>http://yuifu.github.io/blog/2013/07/16/test2/</loc>
-        <lastmod>2013-07-17T12:07:35+09:00</lastmod>
-    </url>
-    <url>
-        <loc>http://yuifu.github.io/blog/2013/07/16/test3/</loc>
-        <lastmod>2013-07-17T12:22:10+09:00</lastmod>
-    </url>
-    <url>
         <loc>http://yuifu.github.io/blog/2013/07/17/setup-of-octopress/</loc>
         <lastmod>2013-07-17T17:25:58+09:00</lastmod>
     </url>
