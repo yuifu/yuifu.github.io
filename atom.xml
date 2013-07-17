@@ -4,7 +4,7 @@
   <title><![CDATA[Bioinformatics for All]]></title>
   <link href="http://yuifu.github.io/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-07-17T17:22:49+09:00</updated>
+  <updated>2013-07-17T17:24:25+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -18,16 +18,16 @@
     <link href="http://yuifu.github.io/blog/2013/07/17/setup-of-octopress/"/>
     <updated>2013-07-17T17:10:00+09:00</updated>
     <id>http://yuifu.github.io/blog/2013/07/17/setup-of-octopress</id>
-    <content type="html"><![CDATA[<h3>git, ruby, octopress などのインストール</h3>
+    <content type="html"><![CDATA[<h2>git, ruby, octopress などのインストール</h2>
 
 <p><a href="http://onigra.github.io/blog/2013/04/28/introduction-of-octopress/">こちらのブログ</a>を参考にしました．</p>
 
-<h3>Github User/Organization pages</h3>
+<h2>Github User/Organization pages</h2>
 
 <p><a href="http://octopress.org/docs/deploying/github/">Octopressのページ</a> を参考にしました．
 基本的にはこの通りにやればよいとのですが，githubのレポジトリを作成する際に <code>username.github.com</code> ではなく <code>username.github.io</code> にするようにするとうまくいきました．</p>
 
-<h3>新しいポストの作成</h3>
+<h2>新しいポストの作成</h2>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -37,7 +37,7 @@
 </span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>新しいページの作成</h3>
+<h2>新しいページの作成</h2>
 
 <p><a href="http://onigra.github.io/blog/2013/04/28/introduction-of-octopress/">こちらのブログ</a>を参考にしました．</p>
 
@@ -54,7 +54,7 @@
 </span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>デフォルトとは異なるテーマのインストール（オプション）</h3>
+<h2>デフォルトとは異なるテーマのインストール（オプション）</h2>
 
 <p><a href="http://onigra.github.io/blog/2013/04/28/introduction-of-octopress/">こちらのブログ</a>を参考にしました．</p>
 
@@ -64,7 +64,7 @@
 </span><span class='line'>rake install['whitespace']</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>途中で内容をプレビューしたいとき</h3>
+<h2>途中で内容をプレビューしたいとき</h2>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -72,11 +72,11 @@
 </span><span class='line'>git preview</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>tex プラグインのインストール</h3>
+<h2>tex プラグインのインストール</h2>
 
 <p><a href="http://www.mk-mode.com/octopress/2013/01/03/octopress-display-tex-formula/">こちらのブログ</a>を参考にしました．</p>
 
-<h3>TODO</h3>
+<h2>TODO</h2>
 
 <ul>
 <li>Rが，自分のローカルにあるpygmentでは対応していないので，対応できるようにする．</li>
