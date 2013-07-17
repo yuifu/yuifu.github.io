@@ -4,7 +4,7 @@
   <title><![CDATA[Bioinformatics for All]]></title>
   <link href="http://yuifu.github.io/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-07-17T17:24:25+09:00</updated>
+  <updated>2013-07-17T17:26:02+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[setup of octopress]]></title>
+    <title type="html"><![CDATA[Octopressの準備]]></title>
     <link href="http://yuifu.github.io/blog/2013/07/17/setup-of-octopress/"/>
     <updated>2013-07-17T17:10:00+09:00</updated>
     <id>http://yuifu.github.io/blog/2013/07/17/setup-of-octopress</id>
