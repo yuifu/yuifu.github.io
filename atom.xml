@@ -4,7 +4,7 @@
   <title><![CDATA[Bioinformatics for All]]></title>
   <link href="http://yuifu.github.io/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-07-17T12:08:45+09:00</updated>
+  <updated>2013-07-17T12:11:06+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -19,7 +19,7 @@
     <updated>2013-07-16T22:09:00+09:00</updated>
     <id>http://yuifu.github.io/blog/2013/07/16/test3</id>
     <content type="html"><![CDATA[<p>ああ
-this is not a mere test.</p>
+this is not a mere test $a=1$.</p>
 
 <figure class='code'><figcaption><span>hoge</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='tex'><span class='line'><span class="s">$</span><span class="nb">a</span><span class="o">=</span><span class="m">1</span><span class="s">$</span>
