@@ -94,7 +94,7 @@
   </header>
 
 
-<div class="entry-content"><h1>samtools rmdup について</h1>
+<div class="entry-content"><h2>samtools rmdup について</h2>
 
 <p><code>samtools rmdup</code>は，potential PCR duplicates を除くのによく使われる便利なツールです．</p>
 
@@ -109,7 +109,7 @@ Remove potential PCR duplicates: if multiple read pairs have identical external 
 
 <p>この説明では，どのような挙動がよくわからなかっため，簡単な実験を行いました．</p>
 
-<h1>実験</h1>
+<h2>実験</h2>
 
 <p>まず，座標が同一な，ペアエンドのリード（ペアの両方または片方のみがマップされているもの）およびシングルエンドのリードから成るテストデータを作成しました．
 リード名はそれぞれ以下の通り．</p>
@@ -239,7 +239,7 @@ Remove potential PCR duplicates: if multiple read pairs have identical external 
 
 <p>ということが分かりました．</p>
 
-<h1>なにが挙動を決めているのか</h1>
+<h2>なにが挙動を決めているのか</h2>
 
 <p>ペアの片方のセグメントのみがマップされている場合に，デフォルトでは除かれないことがわかりました．最初は，FLAG列をみてペアエンドかどうかを判定していると思い込んでいたので驚きました．</p>
 
@@ -364,7 +364,7 @@ SAM/BAMの7列目のRNEXTは<a href="http://samtools.sourceforge.net/SAM1.pdf">T
 このことから，ペアエンドのリードを除くかどうかの判定には，（FLAGは関係なく）RNEXTおよびPNEXTのみを参照していると考えられました．
 一方で，<code>-s</code>のときに，ペアの片方のみマップされたリードが除かれないことから，シングルエンドの判定にはFLAGを使っていると考えられます．</p>
 
-<h1>まとめ</h1>
+<h2>まとめ</h2>
 
 <ul>
 <li>デフォルト: ペアエンドでペアの両方がマップされるものについて，PCR duplicatesかどうかを判定する</li>
@@ -375,10 +375,13 @@ SAM/BAMの7列目のRNEXTは<a href="http://samtools.sourceforge.net/SAM1.pdf">T
 
 <p>余談ですが，<a href="http://samtools.sourceforge.net/samtools.shtml">samtoolsの公式</a>には</p>
 
-<blockquote><p>-S      Treat paired-end reads and single-end reads.
-と書いてある一方で，例えば<a href="https://wikis.utexas.edu/display/bioiteam/Removing+duplicates+from+alignment+output">こちらのページ</a>には
--S      Treat paired-end reads as single-end reads.
-と書いてあり，この書き方の方が分かりやすい気がしました．</p></blockquote>
+<blockquote><p>-S      Treat paired-end reads and single-end reads.</p></blockquote>
+
+<p>と書いてある一方で，例えば<a href="https://wikis.utexas.edu/display/bioiteam/Removing+duplicates+from+alignment+output">こちらのページ</a>には</p>
+
+<blockquote><p>-S      Treat paired-end reads as single-end reads.</p></blockquote>
+
+<p>と書いてあり，この書き方の方が分かりやすい気がしました．</p>
 
 <p>もし勘違いなどあれば，コメントか<a href="https://twitter.com/yuifu">twitter</a>でご指摘いただけると幸いです．</p>
 </div>
