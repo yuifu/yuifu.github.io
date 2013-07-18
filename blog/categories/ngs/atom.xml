@@ -4,7 +4,7 @@
   <title><![CDATA[Category: NGS | Bioinformatics for All]]></title>
   <link href="http://yuifu.github.io/blog/categories/ngs/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-07-18T22:50:27+09:00</updated>
+  <updated>2013-07-18T22:54:01+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -24,14 +24,17 @@
 
 <p><a href="http://samtools.sourceforge.net/samtools.shtml">samtoolsの公式</a>では以下のように説明してあります．</p>
 
-<blockquote><p>samtools rmdup [-sS] &lt;input.srt.bam> &lt;out.bam>
-Remove potential PCR duplicates: if multiple read pairs have identical external coordinates, only retain the pair with highest mapping quality. In the paired-end mode, this command ONLY works with FR orientation and requires ISIZE is correctly set. It does not work for unpaired reads (e.g. two ends mapped to different chromosomes or orphan reads).</p>
+<blockquote><p>samtools rmdup [-sS] &lt;input.srt.bam> &lt;out.bam></p>
 
-<p>OPTIONS:
--s      Remove duplicate for single-end reads. By default, the command works for paired-end reads only.
--S      Treat paired-end reads and single-end reads.</p></blockquote>
+<p>Remove potential PCR duplicates: if multiple read pairs have identical external coordinates, only retain the pair with highest mapping quality. In the paired-end mode, this command ONLY works with FR orientation and requires ISIZE is correctly set. It does not work for unpaired reads (e.g. two ends mapped to different chromosomes or orphan reads).</p>
 
-<p>この説明では，どのような挙動がよくわからなかっため，簡単な実験を行いました．</p>
+<p>OPTIONS:</p>
+
+<p>-s      Remove duplicate for single-end reads. By default, the command works for paired-end reads only.</p>
+
+<p>-S      Treat paired-end reads and single-end reads.</p></blockquote>
+
+<p>しかし，この説明ではオプションを使った場合にどのような挙動をするのかよくわからなかっため，簡単な実験を行いました．</p>
 
 <h2>実験</h2>
 
