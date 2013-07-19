@@ -9,7 +9,8 @@
   <meta name="author" content="yuifu">
 
   
-  <meta name="description" content="samtools rmdup について samtools rmdupは，potential PCR duplicates を除くのによく使われる便利なツールです． samtoolsの公式では以下のように説明してあります． samtools rmdup [-sS] &lt;input.srt.bam &hellip;">
+  <meta name="description" content="マルチリードについて ゲノム上の複数箇所にマップされたリードをmultiple mapped reads, multi-reads, reads with multiple hits などと呼びます．
+もしくは，一つのリードに対して複数のアラインメントが出力されるもの，とも言えます． &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +69,205 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/19/remove-multi-reads/">SAM/BAMからマルチリードを除く方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-19T11:45:00+09:00" pubdate data-updated="true">Jul 19<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>マルチリードについて</h2>
+
+<p>ゲノム上の複数箇所にマップされたリードをmultiple mapped reads, multi-reads, reads with multiple hits などと呼びます．
+もしくは，一つのリードに対して複数のアラインメントが出力されるもの，とも言えます．</p>
+
+<p>このマルチリードは，しばしば解析の前に除かれます．では，どうやって除いたらいいでしょうか．</p>
+
+<h2>MAPQを使う</h2>
+
+<p>MAPQ（SAM/BAMの５列目）が適切にセットされているなら，これを使うことができます．
+適切というのは，ユニークなアラインメントでMAPQが50，アラインメントが２つだとMAPQが3，アラインメントが3以上だとMAPQが0に設定されている状態です．</p>
+
+<p>このとき，<code>samtools view -q</code>を使って，以下のように書けます．</p>
+
+<blockquote><p>-q INT      Skip alignments with MAPQ smaller than INT [0]</p></blockquote>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>samtools view -q 4 hoge.bam &gt; hoge.uniq.bam</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>NHを使う</h2>
+
+<p>NHタグは，SAM/BAMファイルに，あるリードに対するアラインメントがいくつ入力されたかを <code>NH:i:[0-9]+</code>という形式で記録しています．</p>
+
+<blockquote><p>NH      i      Number of reported alignments that contains the query in the current record</p></blockquote>
+
+<p>（<a href="http://samtools.sourceforge.net/SAM1.pdf">The SAM Format Specification (PDF)</a>）</p>
+
+<p>そのため，スクリプト言語で（私はNHの分布が知りたかったので，こちらの方法を使ってました）．
+以下は，Perlで書いた例です．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nb">open</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="s">&quot;hoge.bam&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="nb">open</span><span class="p">(</span><span class="n">O</span><span class="p">,</span> <span class="s">&quot;&gt; hoge.uniq.bam&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">while</span><span class="p">(</span><span class="sr">&lt;I&gt;</span><span class="p">){</span>
+</span><span class='line'>     <span class="k">if</span><span class="p">(</span><span class="sr">/^@/</span><span class="p">){</span> <span class="c1"># header</span>
+</span><span class='line'>          <span class="k">print</span> <span class="n">O</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class='line'>          <span class="k">next</span><span class="p">;</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'>     <span class="k">if</span><span class="p">(</span><span class="sr">/NH:i:([0-9]+)/</span><span class="p">){</span>  <span class="c1"># NH: Number of reported alignments that contains the query in the current record</span>
+</span><span class='line'>          <span class="k">if</span><span class="p">(</span><span class="nv">$1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+</span><span class='line'>               <span class="k">print</span> <span class="n">O</span> <span class="nv">$_</span><span class="p">;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nb">close</span><span class="p">(</span><span class="n">I</span><span class="p">);</span>
+</span><span class='line'><span class="nb">close</span><span class="p">(</span><span class="n">O</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>FLAGは使えなさそう</h2>
+
+<p>掲示板などを読んでいるとFLAG（SAM/BAMの２列目）のビットを使って，すなわち<code>samtools view -F ***</code>を使う方法が提案されることがしばしばあります．
+これはおそらく<code>0x100</code>(secondary alignment)のことを指しているのだと思うのですが，以下の例で示す通り，マルチヒットのリードを除くには不適切です．</p>
+
+<p>=====</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="n">read1</span>      <span class="mi">339</span>     <span class="n">chr1</span>    <span class="mi">181938</span>  <span class="mi">3</span>       <span class="mi">2</span><span class="n">M107N99M</span>       <span class="o">=</span>       <span class="mi">181891</span>  <span class="o">-</span><span class="mi">255</span>    <span class="n">ACCGGAGGATGTTGGGATGGCAGAGGCGGTTCATGAGCTGCACCTCCCGCAGCATGTTGGCCTTGTTGCTCGCCAGCGTGTTCATCTTCAGCGCCATCACC</span>   <span class="n">BDDDCACCC</span><span class="o">&lt;&lt;</span><span class="mi">3</span><span class="n">DDDDCDDDDDD</span><span class="nv">@@9BBCCDCC@49CCCCA</span><span class="o">&lt;</span><span class="n">DB</span><span class="p">?</span><span class="n">CDFFFFHHHHJJJJJIIJIJJJJJJJGJJJJIJJJJJJIJJJJHHHHHFFEDD</span><span class="p">?</span><span class="nv">@B</span>   <span class="n">AS:i:0</span>  <span class="n">XN:i:0</span>  <span class="n">XM:i:0</span>  <span class="n">XO:i:0</span>  <span class="n">XG:i:0</span>  <span class="n">NM:i:0</span>  <span class="n">MD:Z:101</span>        <span class="n">YT:Z:UU</span> <span class="n">XS:A:</span><span class="o">-</span>  <span class="n">NH:i:2</span>  <span class="n">CC:Z:</span><span class="o">=</span>  <span class="n">CP:i:182045</span>     <span class="n">HI:i:0:0</span>
+</span><span class='line'><span class="n">read1</span>      <span class="mi">83</span>      <span class="n">chr1</span>    <span class="mi">182045</span>  <span class="mi">3</span>       <span class="mi">101</span><span class="n">M</span>    <span class="o">=</span>       <span class="mi">181891</span>  <span class="o">-</span><span class="mi">255</span>    <span class="n">ACCGGAGGATGTTGGGATGGCAGAGGCGGTTCATGAGCTGCACCTCCCGCAGCATGTTGGCCTTGTTGCTCGCCAGCGTGTTCATCTTCAGCGCCATCACC</span>   <span class="n">BDDDCACCC</span><span class="o">&lt;&lt;</span><span class="mi">3</span><span class="n">DDDDCDDDDDD</span><span class="nv">@@9BBCCDCC@49CCCCA</span><span class="o">&lt;</span><span class="n">DB</span><span class="p">?</span><span class="n">CDFFFFHHHHJJJJJIIJIJJJJJJJGJJJJIJJJJJJIJJJJHHHHHFFEDD</span><span class="p">?</span><span class="nv">@B</span>   <span class="n">AS:i:0</span>  <span class="n">XN:i:0</span>  <span class="n">XM:i:0</span>  <span class="n">XO:i:0</span>  <span class="n">XG:i:0</span>  <span class="n">NM:i:0</span>  <span class="n">MD:Z:101</span>        <span class="n">YT:Z:UU</span> <span class="n">NH:i:2</span>  <span class="n">HI:i:11</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これは，ペアエンドのリードをTopHatでアラインメントして得られた，あるリード <code>read1</code>に対する2つのアラインメントです．
+どちらも<code>NH:i:2</code>であることから，各リードに対して，ファイル中に2つのアラインメントが出力されていることがわかります．これは，MAPQ（５列目）が<code>3</code>になっていることからも分かります．
+一方で，FLAG（２列目）が，read1では<code>339</code>（0x1, 0x2, 0x10, 0x40, 0x100）で，read2では<code>83</code>（0x1, 0x2, 0x10, 0x20）となっています．２つのアラインメントにEdit distanceなどで違いがないにも関わらず，片方だけに<code>0x100</code>が付いています．</p>
+
+<p>つまり，マルチヒットのリードを除くという目的には不適切だと言えます．</p>
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="http://seqanswers.com/forums/showthread.php?t=19491">Remove reads which are not uniquely mapped &ndash; SEQanswers</a></li>
+</ul>
+
+
+<h2>（参考）FLAGのビットの意味</h2>
+
+<p><a href="http://samtools.sourceforge.net/SAM1.pdf">The SAM Format Specification (PDF)</a></p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="left"> Bit </th>
+<th align="right"> Description  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td align="left"> 0x1 </td>
+<td align="right"> template having multiple segments in sequencing |</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> 0x2 </td>
+<td align="right"> each segment properly aligned according to the aligner |</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> 0x4 </td>
+<td align="right"> segment unmapped |</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> 0x8 </td>
+<td align="right"> next segment in the template unmapped |</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> 0x10 </td>
+<td align="right"> SEQ being reverse complemented |</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> 0x20 </td>
+<td align="right"> SEQ of the next segment in the template being reversed</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> 0x40 </td>
+<td align="right"> the first segment in the template |</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> 0x80 </td>
+<td align="right"> the last segment in the template |</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> 0x100 </td>
+<td align="right"> secondary alignment |</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> 0x200 </td>
+<td align="right"> not passing quality controls</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> 0x400 </td>
+<td align="right"> PCR or optical duplicate |</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -507,6 +707,10 @@ SAM/BAMの7列目のRNEXTは<a href="http://samtools.sourceforge.net/SAM1.pdf">T
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/19/remove-multi-reads/">SAM/BAMからマルチリードを除く方法</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/07/18/samtools-rmdup/">samtools rmdup の挙動に関する実験</a>
