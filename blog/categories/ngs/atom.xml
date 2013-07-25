@@ -4,7 +4,7 @@
   <title><![CDATA[Category: NGS | Life with Bioinformatics]]></title>
   <link href="http://yuifu.github.io/blog/categories/ngs/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-07-25T15:45:09+09:00</updated>
+  <updated>2013-07-25T15:50:14+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -61,6 +61,10 @@
 <li>DESeqで使われているのと同じもの</li>
 </ul>
 
+
+<p><script type="math/tex; mode=display">
+N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{&ndash;\frac{(x-m)<sup>2</sup>}{2\sigma^{2}}}
+</script></p>
 
 <p><script type="math/tex; mode=display">
 \hat{s}<em>{j} = \textup{median}</em>{i} \frac{ k<em>{ij} } { \left (\prod</em>{v=1}^{m} k_{iv}  \right )^{1/m} }

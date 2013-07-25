@@ -4,7 +4,7 @@
   <title><![CDATA[Life with Bioinformatics]]></title>
   <link href="http://yuifu.github.io/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-07-25T15:45:09+09:00</updated>
+  <updated>2013-07-25T15:50:14+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -60,6 +60,13 @@
 <li><a href="http://genomebiology.com/2010/11/10/R106">Anders and Huber (Genome Biology, 2010)</a> を参照</li>
 <li>DESeqで使われているのと同じもの</li>
 </ul>
+
+
+<script type="math/tex; mode=display">
+N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
+</script>
+
+
 
 
 <script type="math/tex; mode=display">
