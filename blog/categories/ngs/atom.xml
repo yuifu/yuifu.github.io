@@ -4,7 +4,7 @@
   <title><![CDATA[Category: NGS | Life with Bioinformatics]]></title>
   <link href="http://yuifu.github.io/blog/categories/ngs/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-07-25T16:30:17+09:00</updated>
+  <updated>2013-07-25T16:43:07+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -18,11 +18,7 @@
     <link href="http://yuifu.github.io/blog/2013/07/25/cufflinks-library-norm-method/"/>
     <updated>2013-07-25T15:43:00+09:00</updated>
     <id>http://yuifu.github.io/blog/2013/07/25/cufflinks-library-norm-method</id>
-    <content type="html"><![CDATA[<p><script type="math/tex; mode=display">
-N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{&ndash;\frac{(x-m)<sup>2</sup>}{2\sigma^{2}}}
-</script></p>
-
-<p>この記事では，CufflinksおよびCuffdiffの<code>--library-norm-method</code>オプションで指定できる，ライブラリサイズの正規化法の違いについて述べています．</p>
+    <content type="html"><![CDATA[<p>この記事では，CufflinksおよびCuffdiffの<code>--library-norm-method</code>オプションで指定できる，ライブラリサイズの正規化法の違いについて述べています．</p>
 
 <h2>言葉の説明</h2>
 
@@ -30,7 +26,7 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{&ndash;\frac{(x-m)<sup>2</sup>}{2\
 <li>ライブラリ library: サンプルのこと．</li>
 <li>ライブラリサイズ library size: ライブラリのリード数のこと．Sequecning depthともいう．</li>
 <li>size factor（scaling factor）: 各ライブラリのFPKMやフラグメントカウントを割るための値．
-各ライブラリについて計算される値です．正規化因子とかスケーリング因子とか呼ばれたりします．
+各ライブラリについて計算される値です．正規化因子とかスケーリング因子とか呼ばれたりします．<br/>
 通常，他のライブラリに比べてFPKMやフラグメントカウントが大きいライブラリのスケーリング因子は，大きくなります．</li>
 <li>フラグメント fragment: ペアエンドで読んだときの2つのreadを一組にした概念．</li>
 </ul>
@@ -56,7 +52,9 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{&ndash;\frac{(x-m)<sup>2</sup>}{2\
 <h3>geometric</h3>
 
 <ul>
-<li>まず，各遺伝子について，フラグメントカウントの全ライブラリについての幾何平均を求める．次に，その幾何平均に対する各ライブラリでのフラグメントカウントの比を計算する．最後に，その比の全遺伝子についてのメディアンを計算する．このメディアンをsize factorとして，FPKMとフラグメントカウントのスケーリングを行う</li>
+<li>まず，各遺伝子について，フラグメントカウントの全ライブラリについての幾何平均を求める．<br/>
+次に，その幾何平均に対する各ライブラリでのフラグメントカウントの比を計算する．<br/>
+最後に，その比の全遺伝子についてのメディアンを計算する．このメディアンをsize factorとして，FPKMとフラグメントカウントのスケーリングを行う．</li>
 <li>幾何平均 geometric mean</li>
 <li>Cuffdiffでのデフォルト</li>
 <li><a href="http://genomebiology.com/2010/11/10/R106">Anders and Huber (Genome Biology, 2010)</a> を参照</li>
@@ -65,11 +63,7 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{&ndash;\frac{(x-m)<sup>2</sup>}{2\
 
 
 <p><script type="math/tex; mode=display">
-N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{&ndash;\frac{(x-m)<sup>2</sup>}{2\sigma^{2}}}
-</script></p>
-
-<p><script type="math/tex; mode=display">
-\hat{s}<em>{j} = \textup{median}</em>{i} \frac{ k<em>{ij} } { \left (\prod</em>{v=1}^{m} k_{iv}  \right )^{1/m} }
+\hat{s}<em>{j} = {\rm median}</em>{i} \frac{ k<em>{ij} } { \left (\prod</em>{v=1}^{m} k_{iv}  \right )^{1/m} }
 </script></p>
 
 <p><code>j</code>: ライブラリ(j=1,&hellip;,m)
@@ -86,7 +80,7 @@ N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{&ndash;\frac{(x-m)<sup>2</sup>}{2\
 
 <p><script type="math/tex; mode=display"></p>
 
-<p>\hat{s}<em>{j} =  \frac{ \textup{3Q}</em>{i} (k<em>{ij}) } { \sum</em>{v=1}^{m} \textup{3Q}<em>{i} (k</em>{iv}) }
+<p>\hat{s}<em>{j} =  \frac{ {\rm 3Q}</em>{i} (k<em>{ij}) } { \sum</em>{v=1}^{m} {\rm 3Q}<em>{i} (k</em>{iv}) }
 </script></p>
 
 <p><code>3Q_{i}</code>: k_{i,j} の全遺伝子についての分布から，第３四分位点を選ぶ関数だと思ってください．</p>
