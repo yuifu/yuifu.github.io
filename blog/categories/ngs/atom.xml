@@ -4,7 +4,7 @@
   <title><![CDATA[Category: NGS | Life with Bioinformatics]]></title>
   <link href="http://yuifu.github.io/blog/categories/ngs/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-07-19T11:51:05+09:00</updated>
+  <updated>2013-07-25T15:45:09+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -12,6 +12,84 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[cufflinks-library-norm-method]]></title>
+    <link href="http://yuifu.github.io/blog/2013/07/25/cufflinks-library-norm-method/"/>
+    <updated>2013-07-25T15:43:00+09:00</updated>
+    <id>http://yuifu.github.io/blog/2013/07/25/cufflinks-library-norm-method</id>
+    <content type="html"><![CDATA[<h2>&mdash;library-norm-method</h2>
+
+<p>この記事では，CufflinksおよびCuffdiffの<code>--library-norm-method</code>オプションで指定できる，ライブラリサイズの正規化法の違いについて述べています．</p>
+
+<h2>言葉の説明</h2>
+
+<ul>
+<li>ライブラリ library: サンプルのこと．</li>
+<li>ライブラリサイズ library size: ライブラリのリード数のこと．Sequecning depthともいう．</li>
+<li>size factor（scaling factor）: 各ライブラリのFPKMやフラグメントカウントを割るための値．
+&mdash; 各ライブラリについて計算される値です．正規化因子とかスケーリング因子とか呼ばれたりします．
+&mdash; 通常，他のライブラリに比べてFPKMやフラグメントカウントが大きいライブラリのスケーリング因子は，大きくなります．</li>
+<li>フラグメント fragment: ペアエンドで読んだときの2つのreadを一組にした概念．</li>
+</ul>
+
+
+<blockquote><p>In paired-end RNA-Seq experiments, fragments are sequenced from both ends, providing two reads for each fragment.    <a href="http://cufflinks.cbcb.umd.edu/howitworks.html">Cufflinks RNA-Seq analysis tools &ndash; Background</a></p></blockquote>
+
+<p>-FPKM: Fragments Per Kilobase of exon per Million fragments mapped (FPKM) のこと．
+&mdash; <a href="http://cufflinks.cbcb.umd.edu/howitworks.html#hqua">Cufflinks RNA-Seq analysis tools &ndash; Background</a>を参照のこと．</p>
+
+<h2>&mdash;library-norm-method</h2>
+
+<p><code>classic-fpkm</code>，<code>geometric</code>，<code>quartile</code>の3種類があります．</p>
+
+<h3>classic-fpkm</h3>
+
+<ul>
+<li>size factorは1．つまり，FPKMやフラグメントカウントに対してスケーリングを行わない</li>
+<li>Cufflinksでのみ使用可能</li>
+</ul>
+
+
+<h3>geometric</h3>
+
+<ul>
+<li>まず，各遺伝子について，フラグメントカウントの全ライブラリについての幾何平均を求める．次に，その幾何平均に対する各ライブラリでのフラグメントカウントの比を計算する．最後に，その比の全遺伝子についてのメディアンを計算する．このメディアンをsize factorとして，FPKMとフラグメントカウントのスケーリングを行う</li>
+<li>幾何平均 geometric mean</li>
+<li>Cuffdiffでのデフォルト</li>
+<li><a href="http://genomebiology.com/2010/11/10/R106">Anders and Huber (Genome Biology, 2010)</a> を参照</li>
+<li>DESeqで使われているのと同じもの</li>
+</ul>
+
+
+<p><script type="math/tex; mode=display">
+\hat{s}<em>{j} = \textup{median}</em>{i} \frac{ k<em>{ij} } { \left (\prod</em>{v=1}^{m} k_{iv}  \right )^{1/m} }
+</script></p>
+
+<p><code>j</code>: ライブラリ(j=1,&hellip;,m)
+<code>i</code>: 遺伝子
+<code>k_{ij}</code>: ライブラリ<code>j</code>における遺伝子<code>i</code></p>
+
+<h3>quartile</h3>
+
+<ul>
+<li>各ライブラリでのフラグメントカウントの第３四分位点の，全てのライブラリについての第３四分位点の平均値に対する比をsize factorとして，FPKMとフラグメントカウントのスケーリングを行う</li>
+<li>いわゆるquantile normalization とは全く異なる</li>
+</ul>
+
+
+<p><script type="math/tex; mode=display"></p>
+
+<p>\hat{s}<em>{j} =  \frac{ \textup{3Q}</em>{i} (k<em>{ij}) } { \sum</em>{v=1}^{m} \textup{3Q}<em>{i} (k</em>{iv}) }
+</script></p>
+
+<p><code>3Q_{i}</code>: k_{i,j} の全遺伝子についての分布から，第３四分位点を選ぶ関数だと思ってください．</p>
+
+<h2>参考</h2>
+
+<p><a href="http://cufflinks.cbcb.umd.edu/manual.html">Cufflinks RNA-Seq analysis tools &ndash; User&rsquo;s Manual</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[SAM/BAMからマルチリードを除く方法]]></title>
