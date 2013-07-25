@@ -4,7 +4,7 @@
   <title><![CDATA[Life with Bioinformatics]]></title>
   <link href="http://yuifu.github.io/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-07-25T15:50:14+09:00</updated>
+  <updated>2013-07-25T15:56:08+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -18,7 +18,10 @@
     <link href="http://yuifu.github.io/blog/2013/07/25/cufflinks-library-norm-method/"/>
     <updated>2013-07-25T15:43:00+09:00</updated>
     <id>http://yuifu.github.io/blog/2013/07/25/cufflinks-library-norm-method</id>
-    <content type="html"><![CDATA[<h2>&mdash;library-norm-method</h2>
+    <content type="html"><![CDATA[<script type="math/tex; mode=display">
+N(m,\sigma^{2})=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-m)^2}{2\sigma^{2}}}
+</script>
+
 
 <p>この記事では，CufflinksおよびCuffdiffの<code>--library-norm-method</code>オプションで指定できる，ライブラリサイズの正規化法の違いについて述べています．</p>
 
@@ -28,8 +31,8 @@
 <li>ライブラリ library: サンプルのこと．</li>
 <li>ライブラリサイズ library size: ライブラリのリード数のこと．Sequecning depthともいう．</li>
 <li>size factor（scaling factor）: 各ライブラリのFPKMやフラグメントカウントを割るための値．
-&mdash; 各ライブラリについて計算される値です．正規化因子とかスケーリング因子とか呼ばれたりします．
-&mdash; 通常，他のライブラリに比べてFPKMやフラグメントカウントが大きいライブラリのスケーリング因子は，大きくなります．</li>
+各ライブラリについて計算される値です．正規化因子とかスケーリング因子とか呼ばれたりします．
+通常，他のライブラリに比べてFPKMやフラグメントカウントが大きいライブラリのスケーリング因子は，大きくなります．</li>
 <li>フラグメント fragment: ペアエンドで読んだときの2つのreadを一組にした概念．</li>
 </ul>
 
@@ -37,9 +40,9 @@
 <blockquote><p>In paired-end RNA-Seq experiments, fragments are sequenced from both ends, providing two reads for each fragment.    <a href="http://cufflinks.cbcb.umd.edu/howitworks.html">Cufflinks RNA-Seq analysis tools &ndash; Background</a></p></blockquote>
 
 <p>-FPKM: Fragments Per Kilobase of exon per Million fragments mapped (FPKM) のこと．
-&mdash; <a href="http://cufflinks.cbcb.umd.edu/howitworks.html#hqua">Cufflinks RNA-Seq analysis tools &ndash; Background</a>を参照のこと．</p>
+<a href="http://cufflinks.cbcb.umd.edu/howitworks.html#hqua">Cufflinks RNA-Seq analysis tools &ndash; Background</a>を参照のこと．</p>
 
-<h2>&mdash;library-norm-method</h2>
+<h2>library-norm-method</h2>
 
 <p><code>classic-fpkm</code>，<code>geometric</code>，<code>quartile</code>の3種類があります．</p>
 
