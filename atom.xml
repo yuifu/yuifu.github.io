@@ -4,7 +4,7 @@
   <title><![CDATA[Life with Bioinformatics]]></title>
   <link href="http://yuifu.github.io/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-08-06T11:26:29+09:00</updated>
+  <updated>2013-08-06T16:29:16+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -14,15 +14,48 @@
 
   
   <entry>
-    <title type="html"><![CDATA[pplacerの使い方]]></title>
+    <title type="html"><![CDATA[系統樹を描くのにClustalWを使うな]]></title>
+    <link href="http://yuifu.github.io/blog/2013/08/06/do-not-use-clustal/"/>
+    <updated>2013-08-06T10:50:00+09:00</updated>
+    <id>http://yuifu.github.io/blog/2013/08/06/do-not-use-clustal</id>
+    <content type="html"><![CDATA[<p><a href="http://betascience.blogspot.jp/2010/03/please-dont-use-clustal-for-tree.html">Beta Science: Please don&rsquo;t use Clustal for tree construction!</a>という短いブログ記事を見つけました．</p>
+
+<p>まとめると，</p>
+
+<ul>
+<li>「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい</li>
+<li>そもそもClustalのインターフェースで提供されている系統樹推定手法（NJ法？）はそんなに良くない</li>
+<li>もはや，より高速な<a href="http://www.drive5.com/muscle/">Muscle</a>などが出ているので，多くの人はマルチプルアラインメントにすらClustalを使わない</li>
+<li>多くの人は系統樹推定に最尤法やベイズ法を用いた手法を使う（<a href="http://atgc.lirmm.fr/phyml/">PhyML</a>や<a href="http://mrbayes.sourceforge.net">Mr.Bayes</a>など）</li>
+<li><a href="http://www.phylogeny.fr/">Robust Phylogenetic Analysis For The Non-Specialist</a>が参考になる</li>
+</ul>
+
+
+<p>また，<code>ClustalW</code>はguide treeという樹形図を計算の過程で構築しますが，これは系統樹ではありません．</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pplacer]]></title>
     <link href="http://yuifu.github.io/blog/2013/08/06/pplacer/"/>
-    <updated>2013-08-06T11:30:00+09:00</updated>
+    <updated>2013-08-06T00:00:00+09:00</updated>
     <id>http://yuifu.github.io/blog/2013/08/06/pplacer</id>
-    <content type="html"><![CDATA[<h1>pplacerとは</h1>
+    <content type="html"><![CDATA[<hr />
+
+<p>layout: post
+title: &ldquo;pplacerの使い方&rdquo;
+date: 2013-08-06 11:30
+comments: true</p>
+
+<h2>categories: メタゲノム NGS</h2>
+
+<h1>pplacerとは</h1>
 
 <p><a href="http://matsen.fhcrc.org/pplacer/"><code>pplacer</code></a>はメタゲノムデータ中にどのような種が多いかを可視化・比較するツールです．</p>
 
 <p>メタゲノム中に含まれる遺伝子配列ひとつひとつについて，予め作成したリファレンス系統樹（16Sなどのuniversal geneの遺伝子系統樹）上のどこに配置（placement）するべきかを計算し，メタゲノムデータに含まれる種の構成を系統樹上の枝の太さに変換します．</p>
+
+<hr />
 
 <h1>全体の流れ</h1>
 
@@ -40,6 +73,12 @@
 <li>可視化，比較などを行う → guppy, Archaeopteryx</li>
 </ol>
 
+
+<h2>mothur/QIIMEユーザ向け情報</h2>
+
+<p><a href="http://matsen.fhcrc.org/pplacer/2013/05/20/v1.1.alpha14.html">pplacerのアップデート報告</a>によると，<code>mothur</code>/<code>QIIME</code>のBIOM fileとtreeをリファレンスパッケージと<code>.jplace</code>ファイルの代わりに使えるそうです．</p>
+
+<hr />
 
 <h1>フォーマットの説明</h1>
 
@@ -78,6 +117,8 @@
 </ul>
 
 
+<hr />
+
 <h1>必要なツールのインストール</h1>
 
 <h2>MAFFTのインストール</h2>
@@ -94,7 +135,9 @@
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># Macの場合
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'># Macの場合
 </span><span class='line'>gcc -O3 -finline-functions -funroll-loops -Wall -o FastTree FastTree.c -lm </span></code></pre></td></tr></table></div></figure>
 
 
@@ -131,6 +174,8 @@
 <p><code>Archaeopteryx</code>は系統樹の可視化ツールです．<a href="https://sites.google.com/site/cmzmasek/home/software/archaeopteryx">こちらのページ</a>から，<code>forester.jar</code>をダウンロードしてください．</p>
 
 <p>また，<code>_aptx_configuration_file</code>というconfiguration fileを<a href="https://github.com/fhcrc/microbiome-demo/blob/master/bin/_aptx_configuration_file">こちらのページ</a>からダウンロードしてください．</p>
+
+<hr />
 
 <h1>リファレンスパッケージの作成まで</h1>
 
@@ -171,20 +216,6 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>.csv</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>"seqname","accession","tax_id","tax_name","isType","ok","i","outlier","selected","label","strain"
-</span><span class='line'>"S000001207","AJ243791","103621","Actinomyces urogenitalis",TRUE,TRUE,1,FALSE,TRUE,"Actinomyces urogenitalis (103621)","type"
-</span><span class='line'>"S000127864","AJ243893","103621","Actinomyces urogenitalis",FALSE,TRUE,2,FALSE,TRUE,"Actinomyces urogenitalis (103621)","non-type"
-</span><span class='line'>"S000130223","AJ243894","103621","Actinomyces urogenitalis",FALSE,TRUE,3,FALSE,TRUE,"Actinomyces urogenitalis (103621)","non-type"
-</span><span class='line'>"4VAG-103","","109790","Lactobacillus jensenii",FALSE,TRUE,5,FALSE,TRUE,"Lactobacillus jensenii (109790)","non-type"</span></code></pre></td></tr></table></div></figure>
-
-
 <p>また， 以下のように，分類情報を含むリファレンスを作成することもできます．</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -212,6 +243,10 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>リファレンスパッケージの作成に必要なファイルのフォーマットについては，<a href="http://fhcrc.github.io/taxtastic/quickstart.html">taxtasticのQuickstart</a>を参照してください．</p>
+
+<hr />
+
 <h1>リファレンスパッケージを作成してから</h1>
 
 <h2>あるオーソログに類似した配列をメタゲノムデータから集める</h2>
@@ -233,10 +268,6 @@
 
 
 <p>また，リファレンス配列とメタゲノムデータ由来の配列を混ぜた（マージした）配列について，<code>MAFFT</code>を実行することも可能だと思います．</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>mafft --auto GreenGenesCore-May09.ref.fna &gt; GreenGenesCore-May09.ref.align.fa  </span></code></pre></td></tr></table></div></figure>
-
 
 <h2>メタゲノムのリードをリファレンス系統樹へ配置（placement）する</h2>
 
@@ -263,7 +294,7 @@
 </span><span class='line'>guppy fat GreenGenesCore-May09.ref.align.jplace </span></code></pre></td></tr></table></div></figure>
 
 
-<p>リファレンスパッケージに分類情報が含まれないときに，<code>guppy fat</code>の<code>-c</code>オプションでリファレンスパッケージを指定すると，以下のようなエラーが出ます．</p>
+<p>リファレンスパッケージに分類情報が含まれないときに，<code>guppy fat</code>の<code>-c</code>オプションでリファレンスパッケージを指定すると，以下のようなエラーが出ます．この場合は，<code>-c</code>オプションを使用しないとうまくいきます．しかし，可視化の際に分類情報は表示されません．</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -281,12 +312,6 @@
 </span><span class='line'>java -jar forester.jar -c _aptx_configuration_file GreenGenesCore-May09.ref.align.xml
 </span></code></pre></td></tr></table></div></figure>
 
-
-<h1>Note that fat can be run without the reference package specification, e.g.:but in that case there won&rsquo;t be any taxonomic information in the visualizations.</h1>
-
-<p>guppy fat GreenGenesCore-May09.ref.align.jplace</p>
-
-<p>Here is an online version. <a href="http://matsen.fhcrc.org/pplacer/demo/p4z1r36.html">http://matsen.fhcrc.org/pplacer/demo/p4z1r36.html</a></p>
 
 <h2>比較</h2>
 
@@ -318,7 +343,7 @@
 </span><span class='line'>java -jar forester.jar -c _aptx_configuration_file pca_out.xml &</span></code></pre></td></tr></table></div></figure>
 
 
-<p>pca_out.trans</p>
+<p><code>pca_out.trans</code>にはPCAの軸へ射影されたサンプルの情報が含まれています．</p>
 
 <h2>Squash clustering</h2>
 
@@ -346,6 +371,154 @@
 </pre></td><td class='code'><pre><code class=''><span class='line'>guppy classify --mrca-class -c foo.refpkg bar.jplace &gt; classify.txt</span></code></pre></td></tr></table></div></figure>
 
 
+<p>リードの分類をSQlite3で閲覧することもできるそうです．詳しくは<a href="http://fhcrc.github.io/microbiome-demo/">pplacerのデモ</a>を読んでください．</p>
+
+<hr />
+
+<h1>デモ</h1>
+
+<h2>テストデータの作成</h2>
+
+<p>リファレンス配列は<a href="http://www.ddbj.nig.ac.jp/whatsnew/061215-j.html">DDBJの16S rDNA配列</a>から作成しました（<code>ref.fa</code>）．また，リファレンス配列の<code>taxon id</code>のリスト（<code>taxid.txt</code>），および，<code>ref.fa</code>での配列名と<code>taxon id</code>を紐付けるcsvファイル（<code>ref.csv</code>）を作成しました．</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># リファレンス配列の準備（100エントリのFASTA）
+</span><span class='line'>awk '{if(/&gt;/){n++}; if(n&gt;100){exit}; print}' 16S.seq &gt; ref.fa</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ head taxid.txt
+</span><span class='line'>1334
+</span><span class='line'>81436
+</span><span class='line'>1318
+</span><span class='line'>1596
+</span><span class='line'>334344
+</span><span class='line'>76637
+</span><span class='line'>78164
+</span><span class='line'>198312
+</span><span class='line'>1520
+</span><span class='line'>2743</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ head ref_info.csv
+</span><span class='line'>"seqname","tax_id"
+</span><span class='line'>"AB002492","1334"
+</span><span class='line'>"AB003466","81436"
+</span><span class='line'>"AB006127","1318"
+</span><span class='line'>"AB008209","1596"
+</span><span class='line'>"AB010844","334344"
+</span><span class='line'>"AB012648","76637"
+</span><span class='line'>"AB015608","78164"
+</span><span class='line'>"AB017113","198312"
+</span><span class='line'>"AB020191","1520"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>メタゲノムのリードは<a href="http://bmf2.colorado.edu/fastunifrac/tutorial.psp">FastUniFracのチュートリアル</a>にあったGreenGeneの16Sの配列から作成しました．</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># メタゲノムのリードの準備（500エントリのFASTAファイル; 16S）
+</span><span class='line'>awk '{if(/&gt;/){n++}; if(n&gt;500){exit}; print}' GreenGenesCore-May09.ref.fna &gt; seq1.fa
+</span><span class='line'>awk 'NR&gt;1000{if(/&gt;/){n++}; if(n&gt;500){exit}; print}' GreenGenesCore-May09.ref.fna &gt; seq2.fa</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>本番</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># リファレンスアラインメントの計算
+</span><span class='line'>mafft --auto ref.fa &gt; ref_align.fa  
+</span><span class='line'>
+</span><span class='line'># リファレンス系統樹の推定
+</span><span class='line'>FastTree -gtr -nt -log fasttree.log &lt; ref_align.fa &gt; ref_tree.nwk 
+</span><span class='line'>
+</span><span class='line'># リファレンスパッケージの作成
+</span><span class='line'>taxit new_database -d taxonomy.db 
+</span><span class='line'>taxit taxtable -d taxonomy.db -t taxid.txt -o taxa.csv 
+</span><span class='line'>taxit create -l 16s_rRNA -P my.refpkg --taxonomy taxa.csv --aln-fasta ref_align.fa --seq-info ref_info.csv --tree-stats fasttree.log --tree-file ref_tree.nwk 
+</span><span class='line'>
+</span><span class='line'># リファレンスアラインメントへのメタゲノムのリードのアラインメント
+</span><span class='line'>mafft --auto --add seq1.fa ref_align.fa &gt; seq_align1.fa
+</span><span class='line'>mafft --auto --add seq2.fa ref_align.fa &gt; seq_align2.fa
+</span><span class='line'>
+</span><span class='line'># Place file の作成（*.jplaceがつくられる）
+</span><span class='line'>pplacer -c my.refpkg seq_align1.fa
+</span><span class='line'>pplacer -c my.refpkg seq_align2.fa
+</span><span class='line'>
+</span><span class='line'># 可視化
+</span><span class='line'>guppy fat -c my.refpkg seq_align1.jplace
+</span><span class='line'>guppy fat -c my.refpkg seq_align2.jplace
+</span><span class='line'>java -jar forester.jar -c _aptx_configuration_file seq_align1.xml &</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># サンプル間距離の計算
+</span><span class='line'>guppy kr seq_align1.jplace seq_align2.jplace
+</span><span class='line'>
+</span><span class='line'># 2サンプル間比較
+</span><span class='line'>guppy kr_heat -c my.refpkg seq_align1.jplace seq_align2.jplace
+</span><span class='line'>
+</span><span class='line'>java -jar bin/forester.jar -c _aptx_configuration_file seq_align1.seq_align2.heat.xml &</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
 <h1>補足</h1>
 
 <h2>guppy (Grand Unified Phylogenetic Placement Yanalyzer)について</h2>
@@ -368,34 +541,14 @@
 </span><span class='line'>guppy SUBCOMMAND --help</span></code></pre></td></tr></table></div></figure>
 
 
+<hr />
+
 <h1>参考</h1>
 
 <ul>
 <li><a href="http://fhcrc.github.io/microbiome-demo/">pplacerのデモ</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[系統樹を描くのにClustalWを使うな]]></title>
-    <link href="http://yuifu.github.io/blog/2013/08/06/do-not-use-clustal/"/>
-    <updated>2013-08-06T10:50:00+09:00</updated>
-    <id>http://yuifu.github.io/blog/2013/08/06/do-not-use-clustal</id>
-    <content type="html"><![CDATA[<p><a href="http://betascience.blogspot.jp/2010/03/please-dont-use-clustal-for-tree.html">Beta Science: Please don&rsquo;t use Clustal for tree construction!</a>という短いブログ記事を見つけました．</p>
-
-<p>まとめると，</p>
-
-<ul>
-<li>「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい</li>
-<li>そもそもClustalのインターフェースで提供されている系統樹推定手法（NJ法？）はそんなに良くない</li>
-<li>もはや，より高速な<a href="http://www.drive5.com/muscle/">Muscle</a>などが出ているので，多くの人はマルチプルアラインメントにすらClustalを使わない</li>
-<li>多くの人は系統樹推定に最尤法やベイズ法を用いた手法を使う（<a href="http://atgc.lirmm.fr/phyml/">PhyML</a>や<a href="http://mrbayes.sourceforge.net">Mr.Bayes</a>など）</li>
-<li><a href="http://www.phylogeny.fr/">Robust Phylogenetic Analysis For The Non-Specialist</a>が参考になる</li>
-</ul>
-
-
-<p>また，<code>ClustalW</code>はguide treeという樹形図を計算の過程で構築しますが，これは系統樹ではありません．</p>
 ]]></content>
   </entry>
   
