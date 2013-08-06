@@ -5,14 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Blog Archive - Life with Bioinformatics</title>
+  <title>系統樹を描くのにClustalWを使うな - Life with Bioinformatics</title>
   <meta name="author" content="yuifu">
 
   
-  <meta name="description" content="Blog Archive 2013 系統樹を描くのにClustalWを使うな
-Aug 06 2013 posted in 系統樹,配列 cufflinks-library-norm-method
-Jul 25 2013 posted in NGS SAM/BAMからマルチリードを除く方法
-Jul &hellip;">
+  <meta name="description" content="Beta Science: Please don&rsquo;t use Clustal for tree construction!という短いブログ記事を見つけました． まとめると， 「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +18,7 @@ Jul &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://yuifu.github.io/blog/archives">
+  <link rel="canonical" href="http://yuifu.github.io/blog/2013/08/06/do-not-use-clustal">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Life with Bioinformatics" type="application/atom+xml">
@@ -69,87 +66,97 @@ Jul &hellip;">
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Blog Archive</h1>
+    
+      <h1 class="entry-title">系統樹を描くのにClustalWを使うな</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-06T10:50:00+09:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives">
 
 
+<div class="entry-content"><p><a href="http://betascience.blogspot.jp/2010/03/please-dont-use-clustal-for-tree.html">Beta Science: Please don&rsquo;t use Clustal for tree construction!</a>という短いブログ記事を見つけました．</p>
 
-  
-  <h2>2013</h2>
+<p>まとめると，</p>
 
-<article>
-  
-<h1><a href="/blog/2013/08/06/do-not-use-clustal/">系統樹を描くのにClustalWを使うな</a></h1>
-<time datetime="2013-08-06T10:50:00+09:00" pubdate><span class='month'>Aug</span> <span class='day'>06</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/xi-tong-shu-pei-lie/'>系統樹,配列</a></span>
-</footer>
-
-
-</article>
+<ul>
+<li>「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい</li>
+<li>そもそもClustalのインターフェースで提供されている系統樹推定手法（NJ法？）はそんなに良くない</li>
+<li>もはや，より高速な<a href="http://www.drive5.com/muscle/">Muscle</a>などが出ているので，多くの人はマルチプルアラインメントにすらClustalを使わない</li>
+<li>多くの人は系統樹推定に最尤法やベイズ法を用いた手法を使う（<a href="http://atgc.lirmm.fr/phyml/">PhyML</a>や<a href="http://mrbayes.sourceforge.net">Mr.Bayes</a>など）</li>
+<li><a href="http://www.phylogeny.fr/">Robust Phylogenetic Analysis For The Non-Specialist</a>が参考になる</li>
+</ul>
 
 
-
-<article>
-  
-<h1><a href="/blog/2013/07/25/cufflinks-library-norm-method/">cufflinks-library-norm-method</a></h1>
-<time datetime="2013-07-25T15:43:00+09:00" pubdate><span class='month'>Jul</span> <span class='day'>25</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/ngs/'>NGS</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/07/19/remove-multi-reads/">SAM/BAMからマルチリードを除く方法</a></h1>
-<time datetime="2013-07-19T11:45:00+09:00" pubdate><span class='month'>Jul</span> <span class='day'>19</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/ngs/'>NGS</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/07/18/samtools-rmdup/">samtools rmdup の挙動に関する実験</a></h1>
-<time datetime="2013-07-18T21:02:00+09:00" pubdate><span class='month'>Jul</span> <span class='day'>18</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/ngs/'>NGS</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/07/17/setup-of-octopress/">Octopressの準備</a></h1>
-<time datetime="2013-07-17T17:10:00+09:00" pubdate><span class='month'>Jul</span> <span class='day'>17</span> <span class='year'>2013</span></time>
-
-
-</article>
-
+<p>また，<code>ClustalW</code>はguide treeという樹形図を計算の過程で構築しますが，これは系統樹ではありません．</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">yuifu</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-06T10:50:00+09:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/xi-tong-shu-pei-lie/'>系統樹,配列</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://yuifu.github.io/blog/2013/08/06/do-not-use-clustal/" data-via="" data-counturl="http://yuifu.github.io/blog/2013/08/06/do-not-use-clustal/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/07/25/cufflinks-library-norm-method/" title="Previous Post: cufflinks-library-norm-method">&laquo; cufflinks-library-norm-method</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>

@@ -9,8 +9,7 @@
   <meta name="author" content="yuifu">
 
   
-  <meta name="description" content="この記事では，CufflinksおよびCuffdiffの--library-norm-methodオプションで指定できる，ライブラリサイズの正規化法の違いについて述べています． 言葉の説明 ライブラリ library: サンプルのこと．
-ライブラリサイズ library size: &hellip;">
+  <meta name="description" content="Beta Science: Please don&rsquo;t use Clustal for tree construction!という短いブログ記事を見つけました． まとめると， 「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -40,7 +39,7 @@
   <header role="banner"><hgroup>
   <h1><a href="/">Life with Bioinformatics</a></h1>
   
-    <h2>バイオインフォマティクスの理論と実践</h2>
+    <h2>バイオインフォマティクスのこと</h2>
   
 </hgroup>
 
@@ -68,6 +67,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/06/do-not-use-clustal/">系統樹を描くのにClustalWを使うな</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-06T10:50:00+09:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://betascience.blogspot.jp/2010/03/please-dont-use-clustal-for-tree.html">Beta Science: Please don&rsquo;t use Clustal for tree construction!</a>という短いブログ記事を見つけました．</p>
+
+<p>まとめると，</p>
+
+<ul>
+<li>「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい</li>
+<li>そもそもClustalのインターフェースで提供されている系統樹推定手法（NJ法？）はそんなに良くない</li>
+<li>もはや，より高速な<a href="http://www.drive5.com/muscle/">Muscle</a>などが出ているので，多くの人はマルチプルアラインメントにすらClustalを使わない</li>
+<li>多くの人は系統樹推定に最尤法やベイズ法を用いた手法を使う（<a href="http://atgc.lirmm.fr/phyml/">PhyML</a>や<a href="http://mrbayes.sourceforge.net">Mr.Bayes</a>など）</li>
+<li><a href="http://www.phylogeny.fr/">Robust Phylogenetic Analysis For The Non-Specialist</a>が参考になる</li>
+</ul>
+
+
+<p>また，<code>ClustalW</code>はguide treeという樹形図を計算の過程で構築しますが，これは系統樹ではありません．</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -813,6 +861,10 @@ SAM/BAMの7列目のRNEXTは<a href="http://samtools.sourceforge.net/SAM1.pdf">T
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/08/06/do-not-use-clustal/">系統樹を描くのにClustalWを使うな</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/07/25/cufflinks-library-norm-method/">Cufflinks-library-norm-method</a>
