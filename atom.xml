@@ -4,7 +4,7 @@
   <title><![CDATA[Life with Bioinformatics]]></title>
   <link href="http://yuifu.github.io/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-08-06T16:29:16+09:00</updated>
+  <updated>2013-08-06T16:41:21+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -161,14 +161,6 @@ comments: true</p>
 
 <p>ダウンロードした圧縮ファイルを解凍すると，ディレクトリに<code>guppy</code>，<code>pplacer</code>，<code>rppr</code>という3つのプログラムがあると思います．システムがそれらのプログラムを見つけられるように，このディレクトリにパスを通してください．</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># Macの場合
-</span><span class='line'>emacs ~/.bash_profile
-</span><span class='line'>source ~/.bash_profile </span></code></pre></td></tr></table></div></figure>
-
-
 <h2>Archaeopteryxのインストール</h2>
 
 <p><code>Archaeopteryx</code>は系統樹の可視化ツールです．<a href="https://sites.google.com/site/cmzmasek/home/software/archaeopteryx">こちらのページ</a>から，<code>forester.jar</code>をダウンロードしてください．</p>
@@ -253,12 +245,6 @@ comments: true</p>
 
 <p>BLAST, HMMER, Infernalなどを使って，抽出してください</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># テストデータ（メタゲノムデータの代用）の作成
-</span><span class='line'>awk 'NR&gt;100' GreenGenesCore-May09.ref.fna &gt; test.fa </span></code></pre></td></tr></table></div></figure>
-
-
 <h2>リファレンスアラインメントに対してメタゲノムのリードをアラインメントする</h2>
 
 <p><code>-add</code>オプションで追加するメタゲノムのリードを指定します．</p>
@@ -291,7 +277,7 @@ comments: true</p>
 </span><span class='line'>guppy fat -c vaginal_16s.refpkg p4z1r36.jplace
 </span><span class='line'>
 </span><span class='line'># phyloXMLフォーマットのファイルの作成（リファレンスパッケージに分類情報が含まれない場合）
-</span><span class='line'>guppy fat GreenGenesCore-May09.ref.align.jplace </span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>guppy fat test_align.jplace </span></code></pre></td></tr></table></div></figure>
 
 
 <p>リファレンスパッケージに分類情報が含まれないときに，<code>guppy fat</code>の<code>-c</code>オプションでリファレンスパッケージを指定すると，以下のようなエラーが出ます．この場合は，<code>-c</code>オプションを使用しないとうまくいきます．しかし，可視化の際に分類情報は表示されません．</p>
@@ -299,7 +285,7 @@ comments: true</p>
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ guppy fat -c my.refpkg GreenGenesCore-May09.ref.align.jplace
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ guppy fat -c my.refpkg test_align.jplace 
 </span><span class='line'>Uncaught exception: Refpkg.Missing_element("taxonomy")
 </span><span class='line'>Fatal error: exception Refpkg.Missing_element("taxonomy")</span></code></pre></td></tr></table></div></figure>
 
@@ -338,7 +324,7 @@ comments: true</p>
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>guppy pca --prefix pca_out -c foo.refpkg *.jplace
+</pre></td><td class='code'><pre><code class=''><span class='line'>guppy epca --prefix pca_out -c foo.refpkg *.jplace
 </span><span class='line'>
 </span><span class='line'>java -jar forester.jar -c _aptx_configuration_file pca_out.xml &</span></code></pre></td></tr></table></div></figure>
 
@@ -499,7 +485,9 @@ comments: true</p>
 </span><span class='line'>java -jar forester.jar -c _aptx_configuration_file seq_align1.xml &</span></code></pre></td></tr></table></div></figure>
 
 
+<p>このように可視化されます．</p>
 
+<p><img src="http://yuifu.github.io/images/pplacer_1.png" alt="pplacer_1.png" /></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -516,6 +504,12 @@ comments: true</p>
 </span><span class='line'>
 </span><span class='line'>java -jar bin/forester.jar -c _aptx_configuration_file seq_align1.seq_align2.heat.xml &</span></code></pre></td></tr></table></div></figure>
 
+
+<p>このようになります．</p>
+
+<p><img src="http://yuifu.github.io/images/pplacer_2.png" alt="pplacer_2.png" /></p>
+
+<p><img src="http://yuifu.github.io/images/pplacer_3.png" alt="pplacer_3.png" /></p>
 
 <hr />
 
