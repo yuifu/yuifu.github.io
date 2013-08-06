@@ -4,7 +4,7 @@
   <title><![CDATA[Category: NGS | Life with Bioinformatics]]></title>
   <link href="http://yuifu.github.io/blog/categories/ngs/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-08-06T17:24:53+09:00</updated>
+  <updated>2013-08-06T18:14:00+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -12,6 +12,452 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[pplacerの使い方]]></title>
+    <link href="http://yuifu.github.io/blog/2013/08/06/pplacer-tutorial/"/>
+    <updated>2013-08-06T18:12:00+09:00</updated>
+    <id>http://yuifu.github.io/blog/2013/08/06/pplacer-tutorial</id>
+    <content type="html"><![CDATA[<h1>pplacerとは</h1>
+
+<p><a href="http://matsen.fhcrc.org/pplacer/"><code>pplacer</code></a>はメタゲノムデータ中にどのような種が多いかを可視化・比較するツールです．</p>
+
+<p>メタゲノム中に含まれる遺伝子配列ひとつひとつについて，予め作成したリファレンス系統樹（16Sなどのuniversal geneの遺伝子系統樹）上のどこに配置（placement）するべきかを計算し，メタゲノムデータに含まれる種の構成を系統樹上の枝の太さに変換します．</p>
+
+<hr />
+
+<h1>全体の流れ</h1>
+
+<p>矢印の先に使用するソフトウェアを書いてあります．</p>
+
+<ol>
+<li>必要なツールのインストール</li>
+<li>あるオーソログについての配列を集める（リファレンス配列）</li>
+<li>リファレンス配列からマルチプルアラインメントを計算する（リファレンスアラインメント） → MAFFTなど</li>
+<li>マルチプルアラインメントから系統樹を推定する（リファレンス系統樹） → FastTreeまたはRAxML/phyml</li>
+<li>上記で作られたファイルから，リファレンスパッケージを作成する → taxtastic</li>
+<li>あるオーソログに類似した配列をメタゲノムデータから集める → BLAST, HMMER, Infernalなど</li>
+<li>リファレンスアラインメントに対してメタゲノムのリードをアラインメントする → MAFFTなど</li>
+<li>メタゲノムのリードをリファレンス系統樹へ配置（placement）する → pplacer</li>
+<li>可視化，比較などを行う → guppy, Archaeopteryx</li>
+</ol>
+
+
+<h2>mothur/QIIMEユーザ向け情報</h2>
+
+<p><a href="http://matsen.fhcrc.org/pplacer/2013/05/20/v1.1.alpha14.html">pplacerのアップデート報告</a>によると，<code>mothur</code>/<code>QIIME</code>のBIOM fileとtreeをリファレンスパッケージと<code>.jplace</code>ファイルの代わりに使えるそうです．</p>
+
+<hr />
+
+<h1>フォーマットの説明</h1>
+
+<h2>リファレンスパッケージ（Reference package）の作成に必要なファイル</h2>
+
+<ul>
+<li><code>seqs.fa</code>: リファレンス配列のマルチプルアラインメント．FASTAフォーマット．</li>
+<li><code>tree.nwk</code>: リファレンスアラインメントから作成された系統樹．Newickフォーマット．</li>
+<li><code>tree_stat.txt</code>: FastTreeのログファイル，または，RAxML/phymlのstatisticsファイル．</li>
+</ul>
+
+
+<p>さらに，オプションで追加できるものがあります．詳しくは<a href="http://fhcrc.github.io/taxtastic/quickstart.html#taxonomically-equipped-reference-package-example">こちら</a>を参照してください．</p>
+
+<ul>
+<li><code>tax_ids.txt</code>: リファレンスアラインメントに含まれる配列のtaxon id のリスト．一行ごとにIDが書かれているテキストファイル．</li>
+<li><code>seq_info.csv</code>: アラインメントされた配列に関するCSVファイル．
+ヘッダーは<code>seqname</code>,<code>accession</code>,<code>tax_id</code>,<code>species_name</code>,<code>is_type</code>とする．一行ごとに，マルチプルアラインメントに含まれる配列について記述する．最低限，<code>seqname</code>,<code>tax_id</code>があればよい．</li>
+</ul>
+
+
+<h2>リファレンスパッケージ（Reference package）</h2>
+
+<ul>
+<li>リファレンスアラインメント，リファレンス系統樹，分類学的情報に関するファイルを集めたディレクトリ（*.refpkg）</li>
+<li><a href="http://github.com/fhcrc/taxtastic"><code>taxtastic</code></a>を用いて作成する</li>
+<li><a href="http://microbiome.fhcrc.org/apps/refpkg/">リファレンスパッケージの例</a></li>
+</ul>
+
+
+<h2>プレイスファイル（Place file）</h2>
+
+<ul>
+<li>リファレンス系統樹上へのリードの配置（placement）に関する情報</li>
+<li>JSONフォーマット（*.jplace）</li>
+</ul>
+
+
+<hr />
+
+<h1>必要なツールのインストール</h1>
+
+<h2>MAFFTのインストール</h2>
+
+<p><code>MAFFT</code>はマルチプルアラインメントを高速に行うツールです．</p>
+
+<p><a href="http://mafft.cbrc.jp/alignment/software/">こちら</a>からダウンロードできます．</p>
+
+<h2>FastTreeのインストール</h2>
+
+<p><code>FastTree</code>はマルチプルアラインメントから系統樹を推定するツールです．</p>
+
+<p><a href="http://meta.microbesonline.org/fasttree/#Install">Downloading and Installing FastTree</a>を参考にしてインストールしてください．</p>
+
+<p>```</p>
+
+<h1>Macの場合</h1>
+
+<p>gcc -O3 -finline-functions -funroll-loops -Wall -o FastTree FastTree.c -lm
+```</p>
+
+<h2>taxtasticのインストール</h2>
+
+<p><code>taxtastic</code>はリファレンスパッケージの作成するツールです．リファレンスパッケージは，リファレンス系統樹，リファレンスアラインメント，プロファイル，およびその他のメタデータから構成されるディレクトリです．</p>
+
+<p><a href="https://github.com/fhcrc/taxtastic/blob/master/README.rst">taxtastic/README.rst</a>を参考にしてインストールしてください．</p>
+
+<p>```</p>
+
+<h1>easy_installによるインストール</h1>
+
+<p>sudo easy_install taxtastic
+```</p>
+
+<h2>pplacerのインストール</h2>
+
+<p>LinuxまたはMax OSXに対応しています．<a href="http://matsen.fhcrc.org/pplacer/">こちらのページ</a>からバイナリファイルをダウンロードしてください．</p>
+
+<p>ダウンロードした圧縮ファイルを解凍すると，ディレクトリに<code>guppy</code>，<code>pplacer</code>，<code>rppr</code>という3つのプログラムがあると思います．システムがそれらのプログラムを見つけられるように，このディレクトリにパスを通してください．</p>
+
+<h2>Archaeopteryxのインストール</h2>
+
+<p><code>Archaeopteryx</code>は系統樹の可視化ツールです．<a href="https://sites.google.com/site/cmzmasek/home/software/archaeopteryx">こちらのページ</a>から，<code>forester.jar</code>をダウンロードしてください．</p>
+
+<p>また，<code>_aptx_configuration_file</code>というconfiguration fileを<a href="https://github.com/fhcrc/microbiome-demo/blob/master/bin/_aptx_configuration_file">こちらのページ</a>からダウンロードしてください．</p>
+
+<hr />
+
+<h1>リファレンスパッケージの作成まで</h1>
+
+<h2>あるオーソログについての配列を集める</h2>
+
+<p>16SrRNAの場合は<code>Infernal</code>などの二次構造を考慮した配列検索ツールを，タンパク質コード遺伝子であればBLASTやHMMERなどを利用することになると思います．ここでは詳しくは触れません．</p>
+
+<p>```</p>
+
+<h1>ここではテストデータを作成します（50個のエントリを含むFASTAファイル）</h1>
+
+<p>$ head -n 100 GreenGenesCore-May09.ref.fna > seq.fa
+```</p>
+
+<h2>リファレンス配列からマルチプルアラインメントを計算する</h2>
+
+<p><code>MAFFT</code>でマルチプルアラインメントを計算します．</p>
+
+<p><code>
+$ mafft --auto seq.fa &gt; seq_align.fa
+</code></p>
+
+<h2>マルチプルアラインメントから系統樹を推定する</h2>
+
+<p><code>FastTree</code>で系統樹の推定します．この際，<code>-log</code>オプションでログファイルを出力します．</p>
+
+<p><code>
+FastTree -gtr -nt -log fasttree.log &lt; seq_align.fa &gt; tree.nwk
+</code></p>
+
+<h2>リファレンスパッケージの作成</h2>
+
+<p><code>-l</code>オプションで任意の遺伝子名を表す名前を付けることができます．<code>-P</code>オプションで出力するリファレンスパッケージの名前を指定します．</p>
+
+<p>```</p>
+
+<h1>リファレンスパッケージの作成</h1>
+
+<p>taxit create -l 16s_rRNA -P my.refpkg &mdash;aln-fasta seq_align.fa &mdash;tree-stats fasttree.log &mdash;tree-file tree.nwk</p>
+
+<p>```</p>
+
+<p>また， 以下のように，分類情報を含むリファレンスを作成することもできます．</p>
+
+<p>```</p>
+
+<h1>NCBI taxonomyのデータをtaxonomy.dbとしてダウンロードする</h1>
+
+<p>taxit new_database -d taxonomy.db</p>
+
+<h1>tax_ids.txtの作成</h1>
+
+<p>awk &lsquo;/>/{sub(/>/,&ldquo;&rdquo;); print }&rsquo; seq.fa > tax_ids.txt</p>
+
+<h1>tax_ids.txtに含まれる全ての種についてminimum sub taxonomyを格納した taxa.csv を作成する</h1>
+
+<p>taxit taxtable -d taxonomy.db -t tax_ids.txt -o taxa.csv</p>
+
+<h1>リファレンスパッケージの作成</h1>
+
+<p>taxit create -l locus_name -P my.refpkg &mdash;taxonomy taxa.csv &mdash;aln-fasta seqs.fasta &mdash;seq-info seq_info.csv &mdash;tree-stats tree_stats.txt &mdash;tree-file tree.nwk</p>
+
+<p>```</p>
+
+<p>リファレンスパッケージの作成に必要なファイルのフォーマットについては，<a href="http://fhcrc.github.io/taxtastic/quickstart.html">taxtasticのQuickstart</a>を参照してください．</p>
+
+<hr />
+
+<h1>リファレンスパッケージを作成してから</h1>
+
+<h2>あるオーソログに類似した配列をメタゲノムデータから集める</h2>
+
+<p>BLAST, HMMER, Infernalなどを使って，抽出してください</p>
+
+<h2>リファレンスアラインメントに対してメタゲノムのリードをアラインメントする</h2>
+
+<p><code>-add</code>オプションで追加するメタゲノムのリードを指定します．</p>
+
+<p><code>
+mafft --auto --add test.fa seq_align.fa &gt; test_align.fa
+</code></p>
+
+<p>また，リファレンス配列とメタゲノムデータ由来の配列を混ぜた（マージした）配列について，<code>MAFFT</code>を実行することも可能だと思います．</p>
+
+<h2>メタゲノムのリードをリファレンス系統樹へ配置（placement）する</h2>
+
+<p>```</p>
+
+<h1>Place file の作成（*.jplaceがつくられる）</h1>
+
+<p>pplacer -c my.refpkg test_align.fa</p>
+
+<p>```</p>
+
+<h2>可視化</h2>
+
+<p><code>guppy</code>で可視化のために使うphyloXMLフォーマットのファイルを作成します．</p>
+
+<p>```</p>
+
+<h1>phyloXMLフォーマットのファイルの作成（リファレンスパッケージに分類情報が含まれる場合）</h1>
+
+<p>guppy fat -c vaginal_16s.refpkg p4z1r36.jplace</p>
+
+<h1>phyloXMLフォーマットのファイルの作成（リファレンスパッケージに分類情報が含まれない場合）</h1>
+
+<p>guppy fat test_align.jplace
+```</p>
+
+<p>リファレンスパッケージに分類情報が含まれないときに，<code>guppy fat</code>の<code>-c</code>オプションでリファレンスパッケージを指定すると，以下のようなエラーが出ます．この場合は，<code>-c</code>オプションを使用しないとうまくいきます．しかし，可視化の際に分類情報は表示されません．</p>
+
+<p><code>
+$ guppy fat -c my.refpkg test_align.jplace
+Uncaught exception: Refpkg.Missing_element("taxonomy")
+Fatal error: exception Refpkg.Missing_element("taxonomy")
+</code></p>
+
+<p>phyloXMLファイルができたら，<code>archaeopteryx</code>を実行します．</p>
+
+<p>```</p>
+
+<p>java -jar forester.jar -c _aptx_configuration_file GreenGenesCore-May09.ref.align.xml</p>
+
+<p>```</p>
+
+<h2>比較</h2>
+
+<p><code>guppy kr</code>は複数のplace file（.jplace）を比較し，サンプル間の距離行列を作成します．ここでの距離は，UniFracを一般化した，Kantorovich-Rubinstein (KR) metricです．KR metricは一つのplacement（リードの系統樹上での分布）から別のplacementに変換するのに要する移動の量と解釈できます．</p>
+
+<p>```</p>
+
+<h1>*.jplace はカレントディレクトリにある.jplaceファイルすべてを指定しています</h1>
+
+<p>guppy kr *.jplace
+```</p>
+
+<p><code>guppy kr_heat</code>で２つのplace file（.jplace）を比較した図を作成することができます．枝上の移動量に比例して，枝を太くなります（赤は根に向かう方向，青は葉に向かう方向の移動を表す）．つまり，２つのサンプル間で違いが大きい枝が太くなります．</p>
+
+<p><code>
+guppy kr_heat -c foo.refpkg bar1.jplace bar2.jplace
+java -jar forester.jar -c _aptx_configuration_file bar1.bar2.heat.xml &amp;
+</code></p>
+
+<h2>Edge principal components analysis</h2>
+
+<p><code>guppy pca</code>で，placementを特徴量としたPCAによりサンプル間比較ができます．詳しくは<a href="http://matsen.fhcrc.org/pplacer/demo/pca.html">こちら</a>を読んでください．</p>
+
+<p>```
+guppy epca &mdash;prefix pca_out -c foo.refpkg *.jplace</p>
+
+<p>java -jar forester.jar -c _aptx_configuration_file pca_out.xml &amp;
+```</p>
+
+<p><code>pca_out.trans</code>にはPCAの軸へ射影されたサンプルの情報が含まれています．</p>
+
+<h2>Squash clustering</h2>
+
+<p><code>guppy squash</code>で，placementに特化したサンプルの階層的クラスタリングを行えます．<code>--out-dir</code>オプションで指定したディレクトリ内に<code>cluster.tre</code>というクラスタリングの樹形を格納したファイルを作成し，また，内部ノードごとの平均を格納した<code>mass_trees</code>というサブディレクトリを作成します．</p>
+
+<p><code>
+mkdir squash_out
+guppy squash -c foo.refpkg --out-dir squash_out *.jplace
+java -jar forester.jar -c _aptx_configuration_file squash_out/cluster.tre &amp;
+</code></p>
+
+<p>クラスタリングの樹形図の6番という内部ノードについて可視化することができます．</p>
+
+<p><code>
+java -jar forester.jar -c _aptx_configuration_file squash_out/mass_trees/6.phy.fat.xml &amp;
+</code></p>
+
+<h1>メタゲノムのリードの分類</h1>
+
+<p><code>guppy classify</code>によって，メタゲノムのリードを分類できます．出力のカラムはread name, attempted rank for classification, actual rank for classification, taxonomic identifier, confidenceです．</p>
+
+<p><code>
+guppy classify --mrca-class -c foo.refpkg bar.jplace &gt; classify.txt
+</code></p>
+
+<p>リードの分類をSQlite3で閲覧することもできるそうです．詳しくは<a href="http://fhcrc.github.io/microbiome-demo/">pplacerのデモ</a>を読んでください．</p>
+
+<hr />
+
+<h1>デモ</h1>
+
+<h2>テストデータの作成</h2>
+
+<p>リファレンス配列は<a href="http://www.ddbj.nig.ac.jp/whatsnew/061215-j.html">DDBJの16S rDNA配列</a>から作成しました（<code>ref.fa</code>）．また，リファレンス配列の<code>taxon id</code>のリスト（<code>taxid.txt</code>），および，<code>ref.fa</code>での配列名と<code>taxon id</code>を紐付けるcsvファイル（<code>ref.csv</code>）を作成しました．</p>
+
+<p>```</p>
+
+<h1>リファレンス配列の準備（100エントリのFASTA）</h1>
+
+<p>awk &lsquo;{if(/>/){n++}; if(n>100){exit}; print}&rsquo; 16S.seq > ref.fa
+```</p>
+
+<p><code>
+$ head taxid.txt
+1334
+81436
+1318
+1596
+334344
+76637
+78164
+198312
+1520
+2743
+</code></p>
+
+<p><code>
+$ head ref_info.csv
+"seqname","tax_id"
+"AB002492","1334"
+"AB003466","81436"
+"AB006127","1318"
+"AB008209","1596"
+"AB010844","334344"
+"AB012648","76637"
+"AB015608","78164"
+"AB017113","198312"
+"AB020191","1520"
+</code></p>
+
+<p>メタゲノムのリードは<a href="http://bmf2.colorado.edu/fastunifrac/tutorial.psp">FastUniFracのチュートリアル</a>にあったGreenGeneの16Sの配列から作成しました．</p>
+
+<p>```</p>
+
+<h1>メタゲノムのリードの準備（500エントリのFASTAファイル; 16S）</h1>
+
+<p>awk &lsquo;{if(/>/){n++}; if(n>500){exit}; print}&rsquo; GreenGenesCore-May09.ref.fna > seq1.fa
+awk &lsquo;NR>1000{if(/>/){n++}; if(n>500){exit}; print}&rsquo; GreenGenesCore-May09.ref.fna > seq2.fa
+```</p>
+
+<h2>本番</h2>
+
+<p>```</p>
+
+<h1>リファレンスアラインメントの計算</h1>
+
+<p>mafft &mdash;auto ref.fa > ref_align.fa</p>
+
+<h1>リファレンス系統樹の推定</h1>
+
+<p>FastTree -gtr -nt -log fasttree.log &lt; ref_align.fa > ref_tree.nwk</p>
+
+<h1>リファレンスパッケージの作成</h1>
+
+<p>taxit new_database -d taxonomy.db
+taxit taxtable -d taxonomy.db -t taxid.txt -o taxa.csv
+taxit create -l 16s_rRNA -P my.refpkg &mdash;taxonomy taxa.csv &mdash;aln-fasta ref_align.fa &mdash;seq-info ref_info.csv &mdash;tree-stats fasttree.log &mdash;tree-file ref_tree.nwk</p>
+
+<h1>リファレンスアラインメントへのメタゲノムのリードのアラインメント</h1>
+
+<p>mafft &mdash;auto &mdash;add seq1.fa ref_align.fa > seq_align1.fa
+mafft &mdash;auto &mdash;add seq2.fa ref_align.fa > seq_align2.fa</p>
+
+<h1>Place file の作成（*.jplaceがつくられる）</h1>
+
+<p>pplacer -c my.refpkg seq_align1.fa
+pplacer -c my.refpkg seq_align2.fa</p>
+
+<h1>可視化</h1>
+
+<p>guppy fat -c my.refpkg seq_align1.jplace
+guppy fat -c my.refpkg seq_align2.jplace
+java -jar forester.jar -c _aptx_configuration_file seq_align1.xml &amp;
+```</p>
+
+<p>このように可視化されます．</p>
+
+<p><img src="/images/pplacer_1.png"></p>
+
+<p>```</p>
+
+<h1>サンプル間距離の計算</h1>
+
+<p>guppy kr seq_align1.jplace seq_align2.jplace</p>
+
+<h1>2サンプル間比較</h1>
+
+<p>guppy kr_heat -c my.refpkg seq_align1.jplace seq_align2.jplace</p>
+
+<p>java -jar bin/forester.jar -c _aptx_configuration_file seq_align1.seq_align2.heat.xml &amp;
+```</p>
+
+<p>このようになります．</p>
+
+<p><img src="/images/pplacer_2.png"></p>
+
+<p><img src="/images/pplacer_3.png"></p>
+
+<hr />
+
+<h1>補足</h1>
+
+<h2>guppy (Grand Unified Phylogenetic Placement Yanalyzer)について</h2>
+
+<p>```</p>
+
+<h1>サブコマンドの一覧を表示</h1>
+
+<p>guppy &mdash;cmd</p>
+
+<h1>サブコマンドの実行（SUBCOMMANDの部分に使いたいサブコマンドを挿入する）</h1>
+
+<p>guppy SUBCOMMAND [options] [files]</p>
+
+<h1>サブコマンドのヘルプ</h1>
+
+<p>guppy SUBCOMMAND &mdash;help
+```</p>
+
+<hr />
+
+<h1>参考</h1>
+
+<ul>
+<li><a href="http://fhcrc.github.io/microbiome-demo/">pplacerのデモ</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[cufflinks-library-norm-method]]></title>

@@ -9,7 +9,7 @@
   <meta name="author" content="yuifu">
 
   
-  <meta name="description" content="Beta Science: Please don&rsquo;t use Clustal for tree construction!という短いブログ記事を見つけました． まとめると， 「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい &hellip;">
+  <meta name="description" content="pplacerとは pplacerはメタゲノムデータ中にどのような種が多いかを可視化・比較するツールです． メタゲノム中に含まれる遺伝子配列ひとつひとつについて，予め作成したリファレンス系統樹（16Sなどのuniversal geneの遺伝子系統樹）上のどこに配置（placement） &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -73,7 +73,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/08/06/do-not-use-clustal/">系統樹を描くのにClustalWを使うな</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/08/06/pplacer-tutorial/">Pplacerの使い方</a></h1>
     
     
       <p class="meta">
@@ -89,72 +89,14 @@
   
 
 
-<time datetime="2013-08-06T10:50:00+09:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
+<time datetime="2013-08-06T18:12:00+09:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><a href="http://betascience.blogspot.jp/2010/03/please-dont-use-clustal-for-tree.html">Beta Science: Please don&rsquo;t use Clustal for tree construction!</a>という短いブログ記事を見つけました．</p>
-
-<p>まとめると，</p>
-
-<ul>
-<li>「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい</li>
-<li>そもそもClustalのインターフェースで提供されている系統樹推定手法（NJ法？）はそんなに良くない</li>
-<li>もはや，より高速な<a href="http://www.drive5.com/muscle/">Muscle</a>などが出ているので，多くの人はマルチプルアラインメントにすらClustalを使わない</li>
-<li>多くの人は系統樹推定に最尤法やベイズ法を用いた手法を使う（<a href="http://atgc.lirmm.fr/phyml/">PhyML</a>や<a href="http://mrbayes.sourceforge.net">Mr.Bayes</a>など）</li>
-<li><a href="http://www.phylogeny.fr/">Robust Phylogenetic Analysis For The Non-Specialist</a>が参考になる</li>
-</ul>
-
-
-<p>また，<code>ClustalW</code>はguide treeという樹形図を計算の過程で構築しますが，これは系統樹ではありません．</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/06/pplacer/">Pplacer</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-06T00:00:00+09:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><hr />
-
-<p>layout: post
-title: &ldquo;pplacerの使い方&rdquo;
-date: 2013-08-06 11:30
-comments: true</p>
-
-<h2>categories: メタゲノム NGS</h2>
-
-<h1>pplacerとは</h1>
+  <div class="entry-content"><h1>pplacerとは</h1>
 
 <p><a href="http://matsen.fhcrc.org/pplacer/"><code>pplacer</code></a>はメタゲノムデータ中にどのような種が多いかを可視化・比較するツールです．</p>
 
@@ -648,6 +590,55 @@ comments: true</p>
 <li><a href="http://fhcrc.github.io/microbiome-demo/">pplacerのデモ</a></li>
 </ul>
 
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/06/do-not-use-clustal/">系統樹を描くのにClustalWを使うな</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-06T10:50:00+09:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://betascience.blogspot.jp/2010/03/please-dont-use-clustal-for-tree.html">Beta Science: Please don&rsquo;t use Clustal for tree construction!</a>という短いブログ記事を見つけました．</p>
+
+<p>まとめると，</p>
+
+<ul>
+<li>「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい</li>
+<li>そもそもClustalのインターフェースで提供されている系統樹推定手法（NJ法？）はそんなに良くない</li>
+<li>もはや，より高速な<a href="http://www.drive5.com/muscle/">Muscle</a>などが出ているので，多くの人はマルチプルアラインメントにすらClustalを使わない</li>
+<li>多くの人は系統樹推定に最尤法やベイズ法を用いた手法を使う（<a href="http://atgc.lirmm.fr/phyml/">PhyML</a>や<a href="http://mrbayes.sourceforge.net">Mr.Bayes</a>など）</li>
+<li><a href="http://www.phylogeny.fr/">Robust Phylogenetic Analysis For The Non-Specialist</a>が参考になる</li>
+</ul>
+
+
+<p>また，<code>ClustalW</code>はguide treeという樹形図を計算の過程で構築しますが，これは系統樹ではありません．</p>
 </div>
   
   
@@ -1401,11 +1392,11 @@ SAM/BAMの7列目のRNEXTは<a href="http://samtools.sourceforge.net/SAM1.pdf">T
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/08/06/do-not-use-clustal/">系統樹を描くのにClustalWを使うな</a>
+        <a href="/blog/2013/08/06/pplacer-tutorial/">Pplacerの使い方</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2013/08/06/pplacer/">Pplacer</a>
+        <a href="/blog/2013/08/06/do-not-use-clustal/">系統樹を描くのにClustalWを使うな</a>
       </li>
     
       <li class="post">

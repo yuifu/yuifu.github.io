@@ -4,7 +4,7 @@
   <title><![CDATA[Life with Bioinformatics]]></title>
   <link href="http://yuifu.github.io/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-08-06T17:24:53+09:00</updated>
+  <updated>2013-08-06T18:14:00+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -14,42 +14,11 @@
 
   
   <entry>
-    <title type="html"><![CDATA[系統樹を描くのにClustalWを使うな]]></title>
-    <link href="http://yuifu.github.io/blog/2013/08/06/do-not-use-clustal/"/>
-    <updated>2013-08-06T10:50:00+09:00</updated>
-    <id>http://yuifu.github.io/blog/2013/08/06/do-not-use-clustal</id>
-    <content type="html"><![CDATA[<p><a href="http://betascience.blogspot.jp/2010/03/please-dont-use-clustal-for-tree.html">Beta Science: Please don&rsquo;t use Clustal for tree construction!</a>という短いブログ記事を見つけました．</p>
-
-<p>まとめると，</p>
-
-<ul>
-<li>「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい</li>
-<li>そもそもClustalのインターフェースで提供されている系統樹推定手法（NJ法？）はそんなに良くない</li>
-<li>もはや，より高速な<a href="http://www.drive5.com/muscle/">Muscle</a>などが出ているので，多くの人はマルチプルアラインメントにすらClustalを使わない</li>
-<li>多くの人は系統樹推定に最尤法やベイズ法を用いた手法を使う（<a href="http://atgc.lirmm.fr/phyml/">PhyML</a>や<a href="http://mrbayes.sourceforge.net">Mr.Bayes</a>など）</li>
-<li><a href="http://www.phylogeny.fr/">Robust Phylogenetic Analysis For The Non-Specialist</a>が参考になる</li>
-</ul>
-
-
-<p>また，<code>ClustalW</code>はguide treeという樹形図を計算の過程で構築しますが，これは系統樹ではありません．</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pplacer]]></title>
-    <link href="http://yuifu.github.io/blog/2013/08/06/pplacer/"/>
-    <updated>2013-08-06T00:00:00+09:00</updated>
-    <id>http://yuifu.github.io/blog/2013/08/06/pplacer</id>
-    <content type="html"><![CDATA[<hr />
-
-<p>layout: post
-title: &ldquo;pplacerの使い方&rdquo;
-date: 2013-08-06 11:30
-comments: true</p>
-
-<h2>categories: メタゲノム NGS</h2>
-
-<h1>pplacerとは</h1>
+    <title type="html"><![CDATA[pplacerの使い方]]></title>
+    <link href="http://yuifu.github.io/blog/2013/08/06/pplacer-tutorial/"/>
+    <updated>2013-08-06T18:12:00+09:00</updated>
+    <id>http://yuifu.github.io/blog/2013/08/06/pplacer-tutorial</id>
+    <content type="html"><![CDATA[<h1>pplacerとは</h1>
 
 <p><a href="http://matsen.fhcrc.org/pplacer/"><code>pplacer</code></a>はメタゲノムデータ中にどのような種が多いかを可視化・比較するツールです．</p>
 
@@ -543,6 +512,28 @@ comments: true</p>
 <li><a href="http://fhcrc.github.io/microbiome-demo/">pplacerのデモ</a></li>
 </ul>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[系統樹を描くのにClustalWを使うな]]></title>
+    <link href="http://yuifu.github.io/blog/2013/08/06/do-not-use-clustal/"/>
+    <updated>2013-08-06T10:50:00+09:00</updated>
+    <id>http://yuifu.github.io/blog/2013/08/06/do-not-use-clustal</id>
+    <content type="html"><![CDATA[<p><a href="http://betascience.blogspot.jp/2010/03/please-dont-use-clustal-for-tree.html">Beta Science: Please don&rsquo;t use Clustal for tree construction!</a>という短いブログ記事を見つけました．</p>
+
+<p>まとめると，</p>
+
+<ul>
+<li>「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい</li>
+<li>そもそもClustalのインターフェースで提供されている系統樹推定手法（NJ法？）はそんなに良くない</li>
+<li>もはや，より高速な<a href="http://www.drive5.com/muscle/">Muscle</a>などが出ているので，多くの人はマルチプルアラインメントにすらClustalを使わない</li>
+<li>多くの人は系統樹推定に最尤法やベイズ法を用いた手法を使う（<a href="http://atgc.lirmm.fr/phyml/">PhyML</a>や<a href="http://mrbayes.sourceforge.net">Mr.Bayes</a>など）</li>
+<li><a href="http://www.phylogeny.fr/">Robust Phylogenetic Analysis For The Non-Specialist</a>が参考になる</li>
+</ul>
+
+
+<p>また，<code>ClustalW</code>はguide treeという樹形図を計算の過程で構築しますが，これは系統樹ではありません．</p>
 ]]></content>
   </entry>
   
