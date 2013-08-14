@@ -4,7 +4,7 @@
   <title><![CDATA[Life with Bioinformatics]]></title>
   <link href="http://yuifu.github.io/atom.xml" rel="self"/>
   <link href="http://yuifu.github.io/"/>
-  <updated>2013-08-12T15:19:12+09:00</updated>
+  <updated>2013-08-14T09:02:00+09:00</updated>
   <id>http://yuifu.github.io/</id>
   <author>
     <name><![CDATA[yuifu]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ゲノムサイズのデータベース]]></title>
+    <link href="http://yuifu.github.io/blog/2013/08/14/genome-size-database/"/>
+    <updated>2013-08-14T08:44:00+09:00</updated>
+    <id>http://yuifu.github.io/blog/2013/08/14/genome-size-database</id>
+    <content type="html"><![CDATA[<h1>真核生物</h1>
+
+<p>NARの2006年のDatabase Issueに<a href="http://nar.oxfordjournals.org/content/35/suppl_1/D332.long">Eukaryotic genome size databases</a>という論文があり，以下のデータベースを紹介していました．</p>
+
+<p>全ゲノム配列によるものではなく，実験的な推定値です．</p>
+
+<ul>
+<li><a href="data.kew.org/cvalues/">Plant DNA C-values Database</a></li>
+<li><a href="www.genomesize.com">Animal Genome Size Database</a></li>
+<li><a href="www.zbi.ee/fungal-genomesize/">Fungal Genome Size Database</a></li>
+</ul>
+
+
+<h1>原核生物</h1>
+
+<p>上記のAnimal Genome Size Databaseのサブページとしてありますが，2005年以降アップデートしていないようです．実験的な推定値と全ゲノム配列による値の両方が入っているようです．</p>
+
+<ul>
+<li><a href="http://www.genomesize.com/prokaryotes/">Prokaryote Genome Size Database</a></li>
+</ul>
+
+
+<p>このページに，全ゲノム配列によるものはこちらをみてほしいと書いてあったものが以下です．</p>
+
+<ul>
+<li><a href="http://cmr.jcvi.org/tigr-scripts/CMR/CmrHomePage.cgi">Comprehensive Microbial Resource</a></li>
+<li><a href="http://www.genomesonline.org/cgi-bin/GOLD/index.cgi">GOLD (Genomes OnLine Database)</a></li>
+<li><a href="http://www.cbs.dtu.dk/services/GenomeAtlas/">Genome Atlas</a></li>
+</ul>
+
+
+<h1>細胞サイズ</h1>
+
+<p>上記のAnimal Genome Size Databaseのサブページとしてありますが，2005年以降アップデートしていないようです．</p>
+
+<ul>
+<li>[Cell Size Database](<a href="http://www.genomesize.com/cellsize/">http://www.genomesize.com/cellsize/</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[pplacerの使い方]]></title>
