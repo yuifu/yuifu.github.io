@@ -9,8 +9,7 @@
   <meta name="author" content="yuifu">
 
   
-  <meta name="description" content=" hoge
-fuga Recent Posts ゲノムサイズのデータベース Pplacerの使い方 系統樹を描くのにClustalWを使うな Cufflinks-library-norm-method SAM/BAMからマルチリードを除く方法 ">
+  <meta name="description" content=" Blog Archives Recent Posts ゲノムサイズのデータベース Pplacerの使い方 系統樹を描くのにClustalWを使うな Cufflinks-library-norm-method SAM/BAMからマルチリードを除く方法 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ fuga Recent Posts ゲノムサイズのデータベース Pplacerの使い方 �
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://yuifu.github.io">
+  <link rel="canonical" href="http://yuifu.github.io/.old">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Haruka Ozaki / 尾崎 遼" type="application/atom+xml">
@@ -64,17 +63,15 @@ fuga Recent Posts ゲノムサイズのデータベース Pplacerの使い方 �
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article role="article">
+      <div class="blog-index">
   
-  <p>hoge
-fuga</p>
-
   
-</article>
-
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
 </div>
-
 <aside class="sidebar">
   
     <section>
@@ -110,7 +107,6 @@ fuga</p>
 
   
 </aside>
-
 
     </div>
   </div>
