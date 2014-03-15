@@ -9,7 +9,7 @@
   <meta name="author" content="yuifu">
 
   
-  <meta name="description" content="MOCCS: Motif Centrality Analysis of ChIP-Seq Mar 15th, 2014 Hikari Yoshitane, Haruka Ozaki, Hideki Terajima*, Ngoc-Hien Du, Yutaka Suzuki, Taihei &hellip;">
+  <meta name="description" content="MOCCS: Motif Centrality Analysis of ChIP-Seq Mar 15th, 2014 　転写因子などのDNA結合タンパク質の結合配列の解明は、標的遺伝子の予測や生物学的役割の理解に重要である。これまでは、生化学的・ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,16 +85,33 @@
 <time datetime="2014-03-15T11:45:00+09:00" pubdate data-updated="true">Mar 15<span>th</span>, 2014</time></p>
   </header>
   
-  <ul>
-<li>Hikari Yoshitane<em>, Haruka Ozaki</em>, Hideki Terajima*, Ngoc-Hien Du, Yutaka Suzuki, Taihei Fujimori, Naoki Kosaka, Shigeki Shimba, Sumio Sugano, Toshihisa Takagi, Wataru Iwasaki, and Yoshitaka Fukada  <a href="www.ncbi.nlm.nih.gov/pubmed/24591654">CLOCK-controlled polyphonic regulations of circadian rhythms through canonical and non-canonical E-boxes.</a>  Molecular and Cellular Biology, (2014, in press)
+  <p>　転写因子などのDNA結合タンパク質の結合配列の解明は、標的遺伝子の予測や生物学的役割の理解に重要である。これまでは、生化学的・分子生物学的手法により検出されたタンパク質の結合部位の配列を収集し、そこから位置特異的重み行列（Position weight matrix）など要約された情報を抽出することに焦点が置かれてきた。
+　近年、ChIP-Seq（全ゲノムクロマチン免疫沈降シーケンシング）の普及によって転写因子とDNAの結合をゲノムワイドに検出することが可能になった。これにより、ゲノム上でどのDNA配列が実際に認識されているかを調べることが期待される。しかし、個々の配列がゲノム全体でどの程度認識されているかを調べる手法は存在していなかった。そのため、我々はMOCCS（<strong>mo</strong>tif <strong>c</strong>entrality analysis of <strong>C</strong>hIP-<strong>S</strong>eq）という新しい手法を開発、これを時計タンパク質CLOCKのChIP-Seqデータに適用し、以下の論文に報告した。ここでは、MOCCSの詳細について解説する。</p>
+
+<ul>
+<li>Hikari Yoshitane*, Haruka Ozaki*, Hideki Terajima*, Ngoc-Hien Du, Yutaka Suzuki, Taihei Fujimori, Naoki Kosaka, Shigeki Shimba, Sumio Sugano, Toshihisa Takagi, Wataru Iwasaki, and Yoshitaka Fukada  <a href="www.ncbi.nlm.nih.gov/pubmed/24591654">CLOCK-controlled polyphonic regulations of circadian rhythms through canonical and non-canonical E-boxes.</a>  Molecular and Cellular Biology, (2014, in press)
 
 <ul>
 <li>* Equal contributions</li>
-<li>あああ<a href="http://www.biochem.s.u-tokyo.ac.jp/fukada-lab/index-j.html">論文全体の説明</a></li>
+<li><a href="http://www.biochem.s.u-tokyo.ac.jp/fukada-lab/index-j.html">論文全体の説明</a></li>
 </ul>
 </li>
 </ul>
 
+
+<p>　一般に、ChIP-Seqによって決定された結合サイト周辺で、既知の結合配列の頻度分布を調べると，結合サイトを中心としたピーク様の分布を示すことが経験的に知られていた。MOCCSでは、この性質をDNA結合タンパク質の結合配列の抽出に利用している。すなわち、あるDNA配列の頻度分布がピーク様分布を示していれば、その配列は結合配列であるという仮定を置く．この仮定の下で、配列の頻度分布を要約する量を定義し、特定の長さの全塩基配列から結合配列を列挙するのがMOCCSである．以下、論文の内容に即して説明する。</p>
+
+<p>　我々は時計タンパク質CLOCKのChIP-Seq解析により、約8,000のCLOCK結合サイトを決定した。このデータをもとにCLOCK結合配列の抽出を試みた。まず、MEMEによりモチーフ探索により、先行研究の通り、CLOCKの既知の結合配列であるCACGTGが抽出された（図1）。一方で、CLOCKはCACGTGに類似した配列にも結合すると報告されてきたが、実際にゲノム全体でそれぞれの配列がどの程度使用されているのかをMEMEの結果から解釈することは困難であった．<br/>
+　ChIP-Seqの性質から、CLOCKに認識されうる配列はCLOCK結合サイト周辺に高頻度に出現すると想定される。実際、CACGTGはCLOCK結合サイトの中心にピークを持つ頻度分布を示す（図２）。このピークの鋭さを定量するために、CLOCK結合部位の中心からの距離を横軸に取り、累積の出現回数を縦軸に相対値としてプロットした（図3、赤線）。一方、ある配列がCLOCK結合サイトの周辺にランダムに出現する場合は図３の青線のようになる。つまり、頻度分布のピークが鋭いほど、図３の赤線は青線から離れる。そこで、この赤と青の線で囲まれた領域の面積をAUC（Area under curve）として定量した。明確なピーク様分布を示す場合，AUCは大きくなる。このAUCが大きい配列をCLOCK結合モチーフとして抽出した。</p>
+
+<p>　今回の論文では、CLOCKの典型的な認識モチーフであるCACGTGに類似した配列がどの程度ゲノム全体で使用されているかに興味があったため、探索する塩基配列の長さは6 bpとした。また、CLOCKは遺伝子の転写開始部位の近傍に結合する傾向を示したため、マウスの全遺伝子のプロモータ配列（TSS上流501 bp）を用いて全ての6-merについてAUCを計算し、その分散の値を用いてAUCを正規化した。<br/>
+　このAUCの結果をそのまま出力すると、上位３配列はCACGTG、ACGTGC、ACACGTであた（図4）。しかし、ACGTGCおよびACACGTはCACGTGから一塩基ずれた配列であった。そこで今回は、このようにすでにAUCで上位にある配列と重なりのある配列は除去した。最後に、正規化したAUCが5以上という基準を用いて、非古典的なCLOCK結合配列を抽出した（図５、表１）。<br/>
+　MOCCSの結果、AUCが最も高かったのはCACGTGであった（表１）。これはCACGTGが最もよく使用される結合配列であることを示し、MOCCSが先行研究の知見を再現できていると考えられた。また、CACG[ACGT]Gが全て抽出されたことから、5番目（２番目）の位置は塩基についてあまり選択的でないことが分かった．<br/>
+　さらに、MOCCSで抽出された結合配列のほぼ全てがルシフェラーゼアッセイで機能が確認された（表１、図６）。唯一、TACGTAではCLOCK依存的な転写活性化が誘導されなかった。表１の他の配列は出現頻度が1000回以上であったのに対し、TACGTAは約100回であった。そのため、TACGTAはノイズが強く出たことによる偽陽性であると考えられた。</p>
+
+<p>　このようにMOCCSは、ChIP-Seqデータから結合配列を抽出するために強力なパワーを発揮するが、最後に他のデータに適用する場合に注意すべき点を述べる。MOCCSは、その性質上、各配列の頻度分布をある程度正確に求める必要がある。そのため、検出された結合サイトが少ない場合には適用が難しい。また、同じ理由から、探索する配列の長さが長くなると直接適用するのが難しいと考えられる。</p>
+
+<p>　MOCCSは適用可能なChIP-Seqデータに対しては、有意な結合配列を全て列挙するという点において有用な解析手法であると考えられる。他分野の研究者にも活用していただけると嬉しい限りである。</p>
 
   
 </article>
