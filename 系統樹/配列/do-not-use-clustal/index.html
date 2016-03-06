@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>系統樹を描くのにClustalWを使うな • </title>
+    <meta name="description" content="Beta Science: Please don&#39;t use Clustal for tree construction!という短いブログ記事を見つけました．
+">
+    <meta name="keywords" content="">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="系統樹を描くのにClustalWを使うな">
+	<meta name="twitter:description" content="Beta Science: Please don&#39;t use Clustal for tree construction!という短いブログ記事を見つけました．
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="系統樹を描くのにClustalWを使うな">
+	<meta property="og:description" content="Beta Science: Please don&#39;t use Clustal for tree construction!という短いブログ記事を見つけました．
+">
+	<meta property="og:url" content="/%E7%B3%BB%E7%B5%B1%E6%A8%B9/%E9%85%8D%E5%88%97/do-not-use-clustal/">
+	<meta property="og:site_name" content="">
+
+    <link rel="canonical" href="/%E7%B3%BB%E7%B5%B1%E6%A8%B9/%E9%85%8D%E5%88%97/do-not-use-clustal/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title=" Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title"></a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/"></a></li>
+	
+    
+    <li><a href="/index.html" >Top</a></li>
+  
+    
+    <li><a href="/cv" >CV (en)</a></li>
+  
+    
+    <li><a href="/profile" >Profile</a></li>
+  
+    
+    <li><a href="/research" >Research</a></li>
+  
+    
+    <li><a href="/publications" >Publications</a></li>
+  
+    
+    <li><a href="/blog" >Blog</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5> <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/index.html">
+        
+        <div class="title">Top</div>
+        
+      </a>
+    </li><li>
+      <a href="/cv">
+        
+        <div class="title">CV (en)</div>
+        
+      </a>
+    </li><li>
+      <a href="/profile">
+        
+        <div class="title">Profile</div>
+        
+      </a>
+    </li><li>
+      <a href="/research">
+        
+        <div class="title">Research</div>
+        
+      </a>
+    </li><li>
+      <a href="/publications">
+        
+        <div class="title">Publications</div>
+        
+      </a>
+    </li><li>
+      <a href="/blog">
+        
+        <div class="title">Blog</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/系統樹/" itemprop="url">
+        <span itemprop="title">系統樹</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>系統樹を描くのにClustalWを使うな</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p><a href="http://betascience.blogspot.jp/2010/03/please-dont-use-clustal-for-tree.html">Beta Science: Please don&#39;t use Clustal for tree construction!</a>という短いブログ記事を見つけました．</p>
+
+<p>まとめると，</p>
+
+<ul>
+<li>「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい</li>
+<li>そもそもClustalのインターフェースで提供されている系統樹推定手法（NJ法？）はそんなに良くない</li>
+<li>もはや，より高速な<a href="http://www.drive5.com/muscle/">Muscle</a>などが出ているので，多くの人はマルチプルアラインメントにすらClustalを使わない</li>
+<li>多くの人は系統樹推定に最尤法やベイズ法を用いた手法を使う（<a href="http://atgc.lirmm.fr/phyml/">PhyML</a>や<a href="http://mrbayes.sourceforge.net">Mr.Bayes</a>など）</li>
+<li><a href="http://www.phylogeny.fr/">Robust Phylogenetic Analysis For The Non-Specialist</a>が参考になる</li>
+</ul>
+
+<p>また，<code>ClustalW</code>はguide treeという樹形図を計算の過程で構築しますが，これは系統樹ではありません．</p>
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author"></span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=系統樹を描くのにClustalWを使うな&amp;url=/%E7%B3%BB%E7%B5%B1%E6%A8%B9/%E9%85%8D%E5%88%97/do-not-use-clustal/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/%E7%B3%BB%E7%B5%B1%E6%A8%B9/%E9%85%8D%E5%88%97/do-not-use-clustal/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/%E7%B3%BB%E7%B5%B1%E6%A8%B9/%E9%85%8D%E5%88%97/do-not-use-clustal/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2013-08-06T10:50:00Z" itemprop="datePublished">August 06, 2013</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					<hr />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	var disqus_shortname = '';
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2016 <a href=""></a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

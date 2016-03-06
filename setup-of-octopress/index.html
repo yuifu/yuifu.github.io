@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Octopressの準備 • </title>
+    <meta name="description" content="git, ruby, octopress などのインストール
+
+こちらのブログを参考にしました．
+">
+    <meta name="keywords" content="">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="Octopressの準備">
+	<meta name="twitter:description" content="git, ruby, octopress などのインストール
+
+こちらのブログを参考にしました．
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Octopressの準備">
+	<meta property="og:description" content="git, ruby, octopress などのインストール
+
+こちらのブログを参考にしました．
+">
+	<meta property="og:url" content="/setup-of-octopress/">
+	<meta property="og:site_name" content="">
+
+    <link rel="canonical" href="/setup-of-octopress/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title=" Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title"></a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/"></a></li>
+	
+    
+    <li><a href="/index.html" >Top</a></li>
+  
+    
+    <li><a href="/cv" >CV (en)</a></li>
+  
+    
+    <li><a href="/profile" >Profile</a></li>
+  
+    
+    <li><a href="/research" >Research</a></li>
+  
+    
+    <li><a href="/publications" >Publications</a></li>
+  
+    
+    <li><a href="/blog" >Blog</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5> <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/index.html">
+        
+        <div class="title">Top</div>
+        
+      </a>
+    </li><li>
+      <a href="/cv">
+        
+        <div class="title">CV (en)</div>
+        
+      </a>
+    </li><li>
+      <a href="/profile">
+        
+        <div class="title">Profile</div>
+        
+      </a>
+    </li><li>
+      <a href="/research">
+        
+        <div class="title">Research</div>
+        
+      </a>
+    </li><li>
+      <a href="/publications">
+        
+        <div class="title">Publications</div>
+        
+      </a>
+    </li><li>
+      <a href="/blog">
+        
+        <div class="title">Blog</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+		<div class="page-title">
+			<h1>Octopressの準備</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<h2 id="git-ruby-octopress">git, ruby, octopress などのインストール</h2>
+
+<p><a href="http://onigra.github.io/blog/2013/04/28/introduction-of-octopress/">こちらのブログ</a>を参考にしました．</p>
+
+<h2 id="github-user-organization-pages">Github User/Organization pages</h2>
+
+<p><a href="http://octopress.org/docs/deploying/github/">Octopressのページ</a> を参考にしました． 
+基本的にはこの通りにやればよいとのですが，githubのレポジトリを作成する際に <code>username.github.com</code> ではなく <code>username.github.io</code> にするようにするとうまくいきました．</p>
+
+<h2 id=">新しいポストの作成</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">rake new_post['test']
+rake generate
+rake deploy
+</code></pre></div>
+<h2 id=">新しいページの作成</h2>
+
+<p><a href="http://onigra.github.io/blog/2013/04/28/introduction-of-octopress/">こちらのブログ</a>を参考にしました．</p>
+<div class="highlight"><pre><code class="language-" data-lang="">rake new_page['about'] 
+</code></pre></div>
+<p><code>source/about/index.markdown</code> を編集して内容を追加する．
+<code>source/_includes/custom/navigation.html</code> を編集して，ナビゲーションにリンクを追加する </p>
+<div class="highlight"><pre><code class="language-" data-lang="">rake generate
+rake deploy
+</code></pre></div>
+<h2 id=">デフォルトとは異なるテーマのインストール（オプション）</h2>
+
+<p><a href="http://onigra.github.io/blog/2013/04/28/introduction-of-octopress/">こちらのブログ</a>を参考にしました．</p>
+<div class="highlight"><pre><code class="language-" data-lang="">git clone git://github.com/lucaslew/whitespace.git .themes/whitespace
+rake install['whitespace']
+</code></pre></div>
+<h2 id=">途中で内容をプレビューしたいとき</h2>
+<div class="highlight"><pre><code class="language-" data-lang="">git generate
+git preview
+</code></pre></div>
+<h2 id="tex">tex プラグインのインストール</h2>
+
+<p><a href="http://www.mk-mode.com/octopress/2013/01/03/octopress-display-tex-formula/">こちらのブログ</a>を参考にしました．</p>
+
+<h2 id="todo">TODO</h2>
+
+<ul>
+<li>Rが，自分のローカルにあるpygmentでは対応していないので，対応できるようにする．</li>
+</ul>
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author"></span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=Octopressの準備&amp;url=/setup-of-octopress/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/setup-of-octopress/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/setup-of-octopress/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2013-07-17T17:10:00Z" itemprop="datePublished">July 17, 2013</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					<hr />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	var disqus_shortname = '';
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2016 <a href=""></a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>samtools rmdup の挙動に関する実験 • </title>
+    <meta name="description" content="samtools rmdup について
+
+samtools rmdupは，potential PCR duplicates を除くのによく使われる便利なツールです．
+">
+    <meta name="keywords" content="">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="samtools rmdup の挙動に関する実験">
+	<meta name="twitter:description" content="samtools rmdup について
+
+samtools rmdupは，potential PCR duplicates を除くのによく使われる便利なツールです．
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="samtools rmdup の挙動に関する実験">
+	<meta property="og:description" content="samtools rmdup について
+
+samtools rmdupは，potential PCR duplicates を除くのによく使われる便利なツールです．
+">
+	<meta property="og:url" content="/ngs/samtools-rmdup/">
+	<meta property="og:site_name" content="">
+
+    <link rel="canonical" href="/ngs/samtools-rmdup/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title=" Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title"></a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/"></a></li>
+	
+    
+    <li><a href="/index.html" >Top</a></li>
+  
+    
+    <li><a href="/cv" >CV (en)</a></li>
+  
+    
+    <li><a href="/profile" >Profile</a></li>
+  
+    
+    <li><a href="/research" >Research</a></li>
+  
+    
+    <li><a href="/publications" >Publications</a></li>
+  
+    
+    <li><a href="/blog" >Blog</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5> <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/index.html">
+        
+        <div class="title">Top</div>
+        
+      </a>
+    </li><li>
+      <a href="/cv">
+        
+        <div class="title">CV (en)</div>
+        
+      </a>
+    </li><li>
+      <a href="/profile">
+        
+        <div class="title">Profile</div>
+        
+      </a>
+    </li><li>
+      <a href="/research">
+        
+        <div class="title">Research</div>
+        
+      </a>
+    </li><li>
+      <a href="/publications">
+        
+        <div class="title">Publications</div>
+        
+      </a>
+    </li><li>
+      <a href="/blog">
+        
+        <div class="title">Blog</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/NGS/" itemprop="url">
+        <span itemprop="title">Ngs</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>samtools rmdup の挙動に関する実験</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<h2 id="samtools-rmdup">samtools rmdup について</h2>
+
+<p><code>samtools rmdup</code>は，potential PCR duplicates を除くのによく使われる便利なツールです．</p>
+
+<p><a href="http://samtools.sourceforge.net/samtools.shtml">samtoolsの公式</a>では以下のように説明してあります．</p>
+
+<blockquote>
+<p>samtools rmdup [-sS] <input.srt.bam> <out.bam></p>
+
+<p>Remove potential PCR duplicates: if multiple read pairs have identical external coordinates, only retain the pair with highest mapping quality. In the paired-end mode, this command ONLY works with FR orientation and requires ISIZE is correctly set. It does not work for unpaired reads (e.g. two ends mapped to different chromosomes or orphan reads).</p>
+
+<p>OPTIONS:</p>
+
+<p>-s      Remove duplicate for single-end reads. By default, the command works for paired-end reads only.</p>
+
+<p>-S      Treat paired-end reads and single-end reads.</p>
+</blockquote>
+
+<p>しかし，この説明ではオプションを使った場合にどのような挙動をするのかよくわからなかっため，簡単な実験を行いました．</p>
+
+<h2 id=">実験</h2>
+
+<p>まず，座標が同一な，ペアエンドのリード（ペアの両方または片方のみがマップされているもの）およびシングルエンドのリードから成るテストデータを作成しました．
+リード名はそれぞれ以下の通り．</p>
+
+<ul>
+<li>test_pe_* はペアエンドでかつ両方のセグメントがマップされているリード（0x1）を表す</li>
+<li>test1_peu_* はペアの片方のセグメントのみがマップされているリード（0x1と0x8）を表す</li>
+<li>test_se_* はシングルエンドのリードを表す</li>
+<li>末尾の0と1は，互いに同じ座標の異なるリードであることを示す</li>
+</ul>
+<div class="highlight"><pre><code class="language-" data-lang="">$ samtools view test.bam
+test_pe_0     99     chr1     160502     50     101M     =     160543     142     TGGGCTTGCTCTGCTGGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACA     @@@FFFFFHHHGGHHJJIIJJIIJHIIIIJJJGHIJJJJJJJJIJHIJJJJJIJJJIGIJIJJIJIJJJIHHEBB==CBBBBBDDB&lt;BDDDDDD@BDDDD&gt;     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:92A2G5     YT:Z:UU     NH:i:1
+test_pe_1     99     chr1     160502     50     101M     =     160543     142     TGGGCTTGCTCTGCTGGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACA     @@@FFFFFHHHGGHHJJIIJJIIJHIIIIJJJGHIJJJJJJJJIJHIJJJJJIJJJIGIJIJJIJIJJJIHHEBB==CBBBBBDDB&lt;BDDDDDD@BDDDD&gt;     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:92A2G5     YT:Z:UU     NH:i:1
+test_se_0     0     chr1     160500     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test_se_1     0     chr1     160500     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test1_peu_0     137     chr1     160517     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test1_peu_1     137     chr1     160517     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test_pe_0     147     chr1     160543     50     101M     =     160502     -142     TCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGCCAGTTGATTGACAGCTCAACTGGTTG     &gt;CBBBDDBDDDDBA?CDDDEEDDDDDDDBBBDDBDDDDDDDFFHHFGGHDBJJIIHGIJIIHGGEGIIJJJJIGEIJJIJIJJJIHIJHHGDHDFFFD@C@     AS:i:-12     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:51A2G46     YT:Z:UU     NH:i:1
+test_pe_1     147     chr1     160543     50     101M     =     160502     -142     TCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGCCAGTTGATTGACAGCTCAACTGGTTG     &gt;CBBBDDBDDDDBA?CDDDEEDDDDDDDBBBDDBDDDDDDDFFHHFGGHDBJJIIHGIJIIHGGEGIIJJJJIGEIJJIJIJJJIHIJHHGDHDFFFD@C@     AS:i:-12     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:51A2G46     YT:Z:UU     NH:i:1
+</code></pre></div>
+<p>このテストデータに対して<code>samtools rmdup</code>を実行します．</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ samtools rmdup test.bam test_rmdup.bam
+$ samtools rmdup -s test.bam test_rmdup_s.bam
+$ samtools rmdup -S test.bam test_rmdup_S.bam
+</code></pre></div>
+<p>結果を見てみます．ここではSAM/BAMの１列目のリード名（QNAME）のみを出力しています．</p>
+<div class="highlight"><pre><code class="language-" data-lang=""># test.bam
+$ samtools view test.bam |awk '{print $1}'
+test_pe_0
+test_pe_1
+test_se_0
+test_se_1
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup したもの
+$ samtools view test_rmdup.bam |awk '{print $1}'
+test_pe_0
+test_se_0
+test_se_1
+test1_peu_0
+test1_peu_1
+test_pe_0
+
+# samtools rmdup -s したもの
+$ samtools view test_rmdup_s.bam |awk '{print $1}'
+test_pe_0
+test_pe_1
+test_se_0
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup -S したもの
+$ samtools view test_rmdup_S.bam |awk '{print $1}'
+test_pe_0
+test_se_0
+test1_peu_0
+test_pe_0
+</code></pre></div>
+<p>これらの結果から，</p>
+
+<ul>
+<li>ペアの両方のセグメントがマップされている場合（0x1），デフォルトのときと<code>-S</code>がついているとき除かれる．</li>
+<li>ペアの片方のセグメントのみがマップされている場合（0x1と0x8），<code>-S</code>がついているとき除かれる</li>
+<li>シングルエンドの場合，<code>-s</code>もしくは<code>-S</code>がついているとき除かれる</li>
+</ul>
+
+<p>ということが分かりました．</p>
+
+<h2 id=">なにが挙動を決めているのか</h2>
+
+<p>ペアの片方のセグメントのみがマップされている場合に，デフォルトでは除かれないことがわかりました．最初は，FLAG列をみてペアエンドかどうかを判定していると思い込んでいたので驚きました．</p>
+
+<p>テストデータの<code>test_pe_*</code>と<code>test1_peu_*</code>を眺めていると，後者では７列目が<code>*</code>となっていました（それまで気付いていませんでした…）．
+SAM/BAMの7列目のRNEXTは<a href="http://samtools.sourceforge.net/SAM1.pdf">The SAM Format Specification (PDF)</a>によると，以下のような説明がなされています．</p>
+
+<blockquote>
+<p>If RNEXT is ‘*’, no assumptions can be made on PNEXT and bit 0x20.</p>
+</blockquote>
+
+<p>この記述から，rmdupは RNEXTとPNEXTのみを参照しているように思えたのでさらに実験しました．</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ samtools view test2.bam
+test_pe_0     99     chr1     160502     50     101M     *     0     0     TGGGCTTGCTCTGCTGGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACA     @@@FFFFFHHHGGHHJJIIJJIIJHIIIIJJJGHIJJJJJJJJIJHIJJJJJIJJJIGIJIJJIJIJJJIHHEBB==CBBBBBDDB&lt;BDDDDDD@BDDDD&gt;     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:92A2G5     YT:Z:UU     NH:i:1
+test_pe_1     99     chr1     160502     50     101M     *     0     0     TGGGCTTGCTCTGCTGGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACA     @@@FFFFFHHHGGHHJJIIJJIIJHIIIIJJJGHIJJJJJJJJIJHIJJJJJIJJJIGIJIJJIJIJJJIHHEBB==CBBBBBDDB&lt;BDDDDDD@BDDDD&gt;     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:92A2G5     YT:Z:UU     NH:i:1
+test_se_0     0     chr1     160500     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test_se_1     0     chr1     160500     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test1_peu_0     137     chr1     160517     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test1_peu_1     137     chr1     160517     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test_pe_0     147     chr1     160543     50     101M     *     0     0     TCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGCCAGTTGATTGACAGCTCAACTGGTTG     &gt;CBBBDDBDDDDBA?CDDDEEDDDDDDDBBBDDBDDDDDDDFFHHFGGHDBJJIIHGIJIIHGGEGIIJJJJIGEIJJIJIJJJIHIJHHGDHDFFFD@C@     AS:i:-12     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:51A2G46     YT:Z:UU     NH:i:1
+test_pe_1     147     chr1     160543     50     101M     *     0     0     TCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGCCAGTTGATTGACAGCTCAACTGGTTG     &gt;CBBBDDBDDDDBA?CDDDEEDDDDDDDBBBDDBDDDDDDDFFHHFGGHDBJJIIHGIJIIHGGEGIIJJJJIGEIJJIJIJJJIHIJHHGDHDFFFD@C@     AS:i:-12     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:51A2G46     YT:Z:UU     NH:i:1
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang="">samtools rmdup test2.bam test_rmdup2.bam
+samtools rmdup -s test2.bam test_rmdup_s2.bam
+samtools rmdup -S test2.bam test_rmdup_S2.bam
+</code></pre></div><div class="highlight"><pre><code class="language-" data-lang=""># test2.bam
+$ samtools view test2.bam |awk '{print $1}'
+test_pe_0
+test_pe_1
+test_se_0
+test_se_1
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup したとき
+$ samtools view test_2.bam |awk '{print $1}'
+test_pe_0
+test_pe_1
+test_se_0
+test_se_1
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup -s したとき
+$ samtools view test__s2.bam |awk '{print $1}'
+test_pe_0
+test_pe_1
+test_se_0
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup -S したとき
+$ samtools view test__S2.bam |awk '{print $1}'
+test_pe_0
+test_se_0
+test1_peu_0
+test_pe_0
+</code></pre></div>
+<p>今度は，デフォルトのときでも，ペアの両方のセグメントがマップされているリードが除かれなくなりました．
+このことから，ペアエンドのリードを除くかどうかの判定には，（FLAGは関係なく）RNEXTおよびPNEXTのみを参照していると考えられました．
+一方で，<code>-s</code>のときに，ペアの片方のみマップされたリードが除かれないことから，シングルエンドの判定にはFLAGを使っていると考えられます．</p>
+
+<h2 id=">まとめ</h2>
+
+<ul>
+<li>デフォルト: ペアエンドでペアの両方がマップされるものについて，PCR duplicatesかどうかを判定する</li>
+<li><code>-s</code>: FLAGで0x1 (template having multiple segments in sequencing) がセットされていないリードについて，PCR duplicatesかどうかを判定する</li>
+<li><code>-S</code>: すべてのリードをシングルエンドとして，PCR duplicatesかどうかを判定する</li>
+</ul>
+
+<p>余談ですが，<a href="http://samtools.sourceforge.net/samtools.shtml">samtoolsの公式</a>には</p>
+
+<blockquote>
+<p>-S      Treat paired-end reads and single-end reads.</p>
+</blockquote>
+
+<p>と書いてある一方で，例えば<a href="https://wikis.utexas.edu/display/bioiteam/Removing+duplicates+from+alignment+output">こちらのページ</a>には</p>
+
+<blockquote>
+<p>-S      Treat paired-end reads as single-end reads.</p>
+</blockquote>
+
+<p>と書いてあり，この書き方の方が分かりやすい気がしました．</p>
+
+<p>もし勘違いなどあれば，コメントか<a href="https://twitter.com/yuifu">twitter</a>でご指摘いただけると幸いです．</p>
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author"></span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=samtools%20rmdup%20の挙動に関する実験&amp;url=/ngs/samtools-rmdup/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/ngs/samtools-rmdup/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/ngs/samtools-rmdup/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2013-07-18T21:02:00Z" itemprop="datePublished">July 18, 2013</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					<hr />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	var disqus_shortname = '';
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2016 <a href=""></a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

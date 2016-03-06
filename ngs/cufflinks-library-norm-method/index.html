@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>cufflinks-library-norm-method • </title>
+    <meta name="description" content="この記事では，CufflinksおよびCuffdiffの--library-norm-methodオプションで指定できる，ライブラリサイズの正規化法の違いについて述べています．
+">
+    <meta name="keywords" content="">
+    
+    	<!-- Twitter Cards -->
+	<meta name="twitter:title" content="cufflinks-library-norm-method">
+	<meta name="twitter:description" content="この記事では，CufflinksおよびCuffdiffの--library-norm-methodオプションで指定できる，ライブラリサイズの正規化法の違いについて述べています．
+">
+	
+	
+	
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:image" content="/images/">
+	
+	<!-- Open Graph -->
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="cufflinks-library-norm-method">
+	<meta property="og:description" content="この記事では，CufflinksおよびCuffdiffの--library-norm-methodオプションで指定できる，ライブラリサイズの正規化法の違いについて述べています．
+">
+	<meta property="og:url" content="/ngs/cufflinks-library-norm-method/">
+	<meta property="og:site_name" content="">
+
+    <link rel="canonical" href="/ngs/cufflinks-library-norm-method/">
+
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title=" Atom Feed">
+    <link href="/sitemap.xml" type="application/xml" rel="sitemap" title="Sitemap">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="cleartype" content="on">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- HTML5 Shiv and Media Query Support for IE -->
+    <!--[if lt IE 9]>
+      <script src="/js/vendor/html5shiv.min.js"></script>
+      <script src="/js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="js-body">
+    <!--[if lt IE 9]><div class="upgrade notice-warning"><strong>Your browser is quite old!</strong> Why not <a href="http://whatbrowser.org/">upgrade to a newer one</a> to better enjoy this site?</div><![endif]-->
+
+    <header id="masthead">
+  <div class="inner-wrap">
+    <a href="/" class="site-title"></a>
+    <nav role="navigation" class="menu top-menu">
+        <ul class="menu-item">
+	<li class="home"><a href="/"></a></li>
+	
+    
+    <li><a href="/index.html" >Top</a></li>
+  
+    
+    <li><a href="/cv" >CV (en)</a></li>
+  
+    
+    <li><a href="/profile" >Profile</a></li>
+  
+    
+    <li><a href="/research" >Research</a></li>
+  
+    
+    <li><a href="/publications" >Publications</a></li>
+  
+    
+    <li><a href="/blog" >Blog</a></li>
+  
+</ul>
+    </nav>
+  </div><!-- /.inner-wrap -->
+</header><!-- /.masthead -->
+    <nav role="navigation" id="js-menu" class="sliding-menu-content">
+  <h5> <span>Table of Contents</span></h5>
+  <ul class="menu-item">
+    <li>
+      <a href="/index.html">
+        
+        <div class="title">Top</div>
+        
+      </a>
+    </li><li>
+      <a href="/cv">
+        
+        <div class="title">CV (en)</div>
+        
+      </a>
+    </li><li>
+      <a href="/profile">
+        
+        <div class="title">Profile</div>
+        
+      </a>
+    </li><li>
+      <a href="/research">
+        
+        <div class="title">Research</div>
+        
+      </a>
+    </li><li>
+      <a href="/publications">
+        
+        <div class="title">Publications</div>
+        
+      </a>
+    </li><li>
+      <a href="/blog">
+        
+        <div class="title">Blog</div>
+        
+      </a>
+    </li>
+  </ul>
+</nav>
+<button type="button" id="js-menu-trigger" class="sliding-menu-button lines-button x2" role="button" aria-label="Toggle Navigation">
+  <span class="nav-lines"></span>
+</button>
+
+<div id="js-menu-screen" class="menu-screen"></div>
+
+
+    <div id="page-wrapper">
+      <script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<div id="main" role="main">
+	<article class="wrap" itemscope itemtype="http://schema.org/Article">
+		
+		
+  <nav class="breadcrumbs">
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="" itemprop="url">
+        <span itemprop="title">Home</span>
+      </a> › 
+    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a href="/NGS/" itemprop="url">
+        <span itemprop="title">Ngs</span>
+      </a>
+    </span>
+  </nav><!-- /.breadcrumbs -->
+
+		<div class="page-title">
+			<h1>cufflinks-library-norm-method</h1>
+		</div>
+		<div class="inner-wrap">
+			<div id="content" class="page-content" itemprop="articleBody">
+				<p>この記事では，CufflinksおよびCuffdiffの<code>--library-norm-method</code>オプションで指定できる，ライブラリサイズの正規化法の違いについて述べています．</p>
+
+<h2 id=">言葉の説明</h2>
+
+<ul>
+<li>ライブラリ library: サンプルのこと．</li>
+<li>ライブラリサイズ library size: ライブラリのリード数のこと．Sequecning depthともいう．</li>
+<li>size factor（scaling factor）: 各ライブラリのFPKMやフラグメントカウントを割るための値．
+各ライブラリについて計算される値です．正規化因子とかスケーリング因子とか呼ばれたりします．<br>
+通常，他のライブラリに比べてFPKMやフラグメントカウントが大きいライブラリのスケーリング因子は，大きくなります．<br></li>
+<li>フラグメント fragment: ペアエンドで読んだときの2つのreadを一組にした概念．</li>
+</ul>
+
+<blockquote>
+<p>In paired-end RNA-Seq experiments, fragments are sequenced from both ends, providing two reads for each fragment.    <a href="http://cufflinks.cbcb.umd.edu/howitworks.html">Cufflinks RNA-Seq analysis tools - Background</a></p>
+</blockquote>
+
+<p>-FPKM: Fragments Per Kilobase of exon per Million fragments mapped (FPKM) のこと．
+<a href="http://cufflinks.cbcb.umd.edu/howitworks.html#hqua">Cufflinks RNA-Seq analysis tools - Background</a>を参照のこと．</p>
+
+<h2 id="library-norm-method">library-norm-method</h2>
+
+<p><code>classic-fpkm</code>，<code>geometric</code>，<code>quartile</code>の3種類があります．</p>
+
+<h3 id="classic-fpkm">classic-fpkm</h3>
+
+<ul>
+<li>size factorは1．つまり，FPKMやフラグメントカウントに対してスケーリングを行わない</li>
+<li>Cufflinksでのみ使用可能</li>
+</ul>
+
+<h3 id="geometric">geometric</h3>
+
+<ul>
+<li>まず，各遺伝子について，フラグメントカウントの全ライブラリについての幾何平均を求める．<br>
+次に，その幾何平均に対する各ライブラリでのフラグメントカウントの比を計算する．<br>
+最後に，その比の全遺伝子についてのメディアンを計算する．このメディアンをsize factorとして，FPKMとフラグメントカウントのスケーリングを行う．<br></li>
+<li>幾何平均 geometric mean</li>
+<li>Cuffdiffでのデフォルト</li>
+<li><a href="http://genomebiology.com/2010/11/10/R106">Anders and Huber (Genome Biology, 2010)</a> を参照</li>
+<li>DESeqで使われているのと同じもの</li>
+</ul>
+
+<p>$$
+\hat{s}<em>{j} = {\rm median}</em>{i} \frac{ k_{ij} } { \left (\prod_{v=1}^{m} k_{iv}  \right )^{1/m} }
+$$</p>
+
+<p><code>j</code>: ライブラリ(j=1,...,m)
+<code>i</code>: 遺伝子
+<code>k_{ij}</code>: ライブラリ<code>j</code>における遺伝子<code>i</code></p>
+
+<h3 id="quartile">quartile</h3>
+
+<ul>
+<li>各ライブラリでのフラグメントカウントの第３四分位点の，全てのライブラリについての第３四分位点の平均値に対する比をsize factorとして，FPKMとフラグメントカウントのスケーリングを行う</li>
+<li>いわゆるquantile normalization とは全く異なる</li>
+</ul>
+
+<p>$$
+\hat{s}<em>{j} =  \frac{ {\rm 3Q}</em>{i} (k_{ij}) } { \sum_{v=1}^{m} {\rm 3Q}<em>{i} (k</em>{iv}) }
+$$</p>
+
+<p><code>3Q_{i}</code>: k_{i,j} の全遺伝子についての分布から，第３四分位点を選ぶ関数だと思ってください．</p>
+
+<h2 id=">参考</h2>
+
+<p><a href="http://cufflinks.cbcb.umd.edu/manual.html">Cufflinks RNA-Seq analysis tools - User&#39;s Manual</a></p>
+
+				<hr />
+				<footer class="page-footer">
+					
+
+<div class="author-image">
+	<img src="/images/bio-photo.jpg" alt="">
+</div><!-- ./author-image -->
+<div class="author-content">
+	<h3 class="author-name" >Written by <span itemprop="author"></span></h3>
+	<p class="author-bio"></p>
+</div><!-- ./author-content -->
+					<div class="inline-btn">
+	<a class="btn-social twitter" href="https://twitter.com/intent/tweet?text=cufflinks-library-norm-method&amp;url=/ngs/cufflinks-library-norm-method/&amp;via=" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Share on Twitter</a>
+	<a class="btn-social facebook" href="https://www.facebook.com/sharer/sharer.php?u=/ngs/cufflinks-library-norm-method/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i> Share on Facebook</a>
+	<a class="btn-social google-plus"  href="https://plus.google.com/share?url=/ngs/cufflinks-library-norm-method/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i> Share on Google+</a>
+</div><!-- /.share-this -->
+
+					<div class="page-meta">
+	<p>Updated <time datetime="2013-07-25T15:43:00Z" itemprop="datePublished">July 25, 2013</time></p>
+</div><!-- /.page-meta -->
+				</footer><!-- /.footer -->
+				<aside>
+					<hr />
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+	var disqus_shortname = '';
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+				</aside>
+			</div><!-- /.content -->
+		</div><!-- /.inner-wrap -->
+		
+	</article><!-- ./wrap -->
+</div><!-- /#main -->
+
+      <footer role="contentinfo" id="site-footer">
+	<nav role="navigation" class="menu bottom-menu">
+		<ul class="menu-item">
+		
+      
+			<li><a href="" ></a></li>
+		
+		</ul>
+	</nav><!-- /.bottom-menu -->
+	<p class="copyright">&#169; 2016 <a href=""></a> powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> + <a href="http://mmistakes.github.io/skinny-bones-jekyll/" rel="nofollow">Skinny Bones</a>.</p>
+</footer>
+    </div>
+
+    <script src="/js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="/js/main.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,935 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title></title>
+  <generator uri="https://github.com/jekyll/jekyll">Jekyll v3.1.1</generator>
+    <icon>/apple-touch-icon-precomposed.png</icon>
+  <subtitle></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="/" rel="alternate" type="text/html"/>
+  <updated>2016-03-06T19:59:33+09:00</updated>
+  <id>/</id>
+  <author>
+    <name></name>
+    <uri>/</uri>
+    
+  </author>
+
+  
+  <entry>
+    <title>Fuga</title>
+    <link href="/fuga/"/>
+    <updated>2016-03-06T18:55:11+09:00</updated>
+    <id>/fuga</id>
+    <author>
+      <name></name>
+      <uri>/</uri>
+      
+    </author>
+    <content type="html">
+      
+      
+    </content>
+  </entry>
+  
+  <entry>
+    <title>ゲノムサイズのデータベース</title>
+    <link href="/database/genome-size-database/"/>
+    <updated>2013-08-14T08:44:00+09:00</updated>
+    <id>/database/genome-size-database</id>
+    <author>
+      <name></name>
+      <uri>/</uri>
+      
+    </author>
+    <content type="html">
+      
+      &lt;h1 id=&quot;&gt;真核生物&lt;/h1&gt;
+
+&lt;p&gt;NARの2006年のDatabase Issueに&lt;a href=&quot;http://nar.oxfordjournals.org/content/35/suppl_1/D332.long&quot;&gt;Eukaryotic genome size databases&lt;/a&gt;という論文があり，以下のデータベースを紹介していました．&lt;/p&gt;
+
+&lt;p&gt;全ゲノム配列によるものではなく，実験的な推定値です．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;data.kew.org/cvalues/&quot;&gt;Plant DNA C-values Database&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;www.genomesize.com&quot;&gt;Animal Genome Size Database&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;www.zbi.ee/fungal-genomesize/&quot;&gt;Fungal Genome Size Database&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;&gt;原核生物&lt;/h1&gt;
+
+&lt;p&gt;上記のAnimal Genome Size Databaseのサブページとしてありますが，2005年以降アップデートしていないようです．実験的な推定値と全ゲノム配列による値の両方が入っているようです．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.genomesize.com/prokaryotes/&quot;&gt;Prokaryote Genome Size Database&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;このページに，全ゲノム配列によるものはこちらをみてほしいと書いてあったものが以下です．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://cmr.jcvi.org/tigr-scripts/CMR/CmrHomePage.cgi&quot;&gt;Comprehensive Microbial Resource&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.genomesonline.org/cgi-bin/GOLD/index.cgi&quot;&gt;GOLD (Genomes OnLine Database)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.cbs.dtu.dk/services/GenomeAtlas/&quot;&gt;Genome Atlas&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;&gt;細胞サイズ&lt;/h1&gt;
+
+&lt;p&gt;上記のAnimal Genome Size Databaseのサブページとしてありますが，2005年以降アップデートしていないようです．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.genomesize.com/cellsize/&quot;&gt;Cell Size Database&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>pplacerの使い方</title>
+    <link href="/ngs/%E3%83%A1%E3%82%BF%E3%82%B2%E3%83%8E%E3%83%A0/pplacer-tutorial/"/>
+    <updated>2013-08-06T18:12:00+09:00</updated>
+    <id>/ngs/%E3%83%A1%E3%82%BF%E3%82%B2%E3%83%8E%E3%83%A0/pplacer-tutorial</id>
+    <author>
+      <name></name>
+      <uri>/</uri>
+      
+    </author>
+    <content type="html">
+      
+      &lt;h1 id=&quot;pplacer&quot;&gt;pplacerとは&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://matsen.fhcrc.org/pplacer/&quot;&gt;&lt;code&gt;pplacer&lt;/code&gt;&lt;/a&gt;はメタゲノムデータ中にどのような種が多いかを可視化・比較するツールです．&lt;/p&gt;
+
+&lt;p&gt;メタゲノム中に含まれる遺伝子配列ひとつひとつについて，予め作成したリファレンス系統樹（16Sなどのuniversal geneの遺伝子系統樹）上のどこに配置（placement）するべきかを計算し，メタゲノムデータに含まれる種の構成を系統樹上の枝の太さに変換します．&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h1 id=&quot;&gt;全体の流れ&lt;/h1&gt;
+
+&lt;p&gt;矢印の先に使用するソフトウェアを書いてあります．&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;必要なツールのインストール&lt;/li&gt;
+&lt;li&gt;あるオーソログについての配列を集める（リファレンス配列）&lt;/li&gt;
+&lt;li&gt;リファレンス配列からマルチプルアラインメントを計算する（リファレンスアラインメント） → MAFFTなど&lt;/li&gt;
+&lt;li&gt;マルチプルアラインメントから系統樹を推定する（リファレンス系統樹） → FastTreeまたはRAxML/phyml&lt;/li&gt;
+&lt;li&gt;上記で作られたファイルから，リファレンスパッケージを作成する → taxtastic&lt;/li&gt;
+&lt;li&gt;あるオーソログに類似した配列をメタゲノムデータから集める → BLAST, HMMER, Infernalなど&lt;/li&gt;
+&lt;li&gt;リファレンスアラインメントに対してメタゲノムのリードをアラインメントする → MAFFTなど&lt;/li&gt;
+&lt;li&gt;メタゲノムのリードをリファレンス系統樹へ配置（placement）する → pplacer&lt;/li&gt;
+&lt;li&gt;可視化，比較などを行う → guppy, Archaeopteryx&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;mothur-qiime&quot;&gt;mothur/QIIMEユーザ向け情報&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://matsen.fhcrc.org/pplacer/2013/05/20/v1.1.alpha14.html&quot;&gt;pplacerのアップデート報告&lt;/a&gt;によると，&lt;code&gt;mothur&lt;/code&gt;/&lt;code&gt;QIIME&lt;/code&gt;のBIOM fileとtreeをリファレンスパッケージと&lt;code&gt;.jplace&lt;/code&gt;ファイルの代わりに使えるそうです．&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h1 id=&quot;&gt;フォーマットの説明&lt;/h1&gt;
+
+&lt;h2 id=&quot;reference-package&quot;&gt;リファレンスパッケージ（Reference package）の作成に必要なファイル&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;seqs.fa&lt;/code&gt;: リファレンス配列のマルチプルアラインメント．FASTAフォーマット．&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tree.nwk&lt;/code&gt;: リファレンスアラインメントから作成された系統樹．Newickフォーマット．&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tree_stat.txt&lt;/code&gt;: FastTreeのログファイル，または，RAxML/phymlのstatisticsファイル．&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;さらに，オプションで追加できるものがあります．詳しくは&lt;a href=&quot;http://fhcrc.github.io/taxtastic/quickstart.html#taxonomically-equipped-reference-package-example&quot;&gt;こちら&lt;/a&gt;を参照してください．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;tax_ids.txt&lt;/code&gt;: リファレンスアラインメントに含まれる配列のtaxon id のリスト．一行ごとにIDが書かれているテキストファイル．&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;seq_info.csv&lt;/code&gt;: アラインメントされた配列に関するCSVファイル．
+ヘッダーは&lt;code&gt;seqname&lt;/code&gt;,&lt;code&gt;accession&lt;/code&gt;,&lt;code&gt;tax_id&lt;/code&gt;,&lt;code&gt;species_name&lt;/code&gt;,&lt;code&gt;is_type&lt;/code&gt;とする．一行ごとに，マルチプルアラインメントに含まれる配列について記述する．最低限，&lt;code&gt;seqname&lt;/code&gt;,&lt;code&gt;tax_id&lt;/code&gt;があればよい．&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;reference-package&quot;&gt;リファレンスパッケージ（Reference package）&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;リファレンスアラインメント，リファレンス系統樹，分類学的情報に関するファイルを集めたディレクトリ（*.refpkg）&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://github.com/fhcrc/taxtastic&quot;&gt;&lt;code&gt;taxtastic&lt;/code&gt;&lt;/a&gt;を用いて作成する&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://microbiome.fhcrc.org/apps/refpkg/&quot;&gt;リファレンスパッケージの例&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;place-file&quot;&gt;プレイスファイル（Place file）&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;リファレンス系統樹上へのリードの配置（placement）に関する情報&lt;/li&gt;
+&lt;li&gt;JSONフォーマット（*.jplace） &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr&gt;
+
+&lt;h1 id=&quot;&gt;必要なツールのインストール&lt;/h1&gt;
+
+&lt;h2 id=&quot;mafft&quot;&gt;MAFFTのインストール&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;MAFFT&lt;/code&gt;はマルチプルアラインメントを高速に行うツールです．&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://mafft.cbrc.jp/alignment/software/&quot;&gt;こちら&lt;/a&gt;からダウンロードできます．&lt;/p&gt;
+
+&lt;h2 id=&quot;fasttree&quot;&gt;FastTreeのインストール&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;FastTree&lt;/code&gt;はマルチプルアラインメントから系統樹を推定するツールです．&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://meta.microbesonline.org/fasttree/#Install&quot;&gt;Downloading and Installing FastTree&lt;/a&gt;を参考にしてインストールしてください．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;
+# Macの場合
+gcc -O3 -finline-functions -funroll-loops -Wall -o FastTree FastTree.c -lm 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;taxtastic&quot;&gt;taxtasticのインストール&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;taxtastic&lt;/code&gt;はリファレンスパッケージの作成するツールです．リファレンスパッケージは，リファレンス系統樹，リファレンスアラインメント，プロファイル，およびその他のメタデータから構成されるディレクトリです．&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/fhcrc/taxtastic/blob/master/README.rst&quot;&gt;taxtastic/README.rst&lt;/a&gt;を参考にしてインストールしてください．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# easy_installによるインストール
+sudo easy_install taxtastic 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;pplacer&quot;&gt;pplacerのインストール&lt;/h2&gt;
+
+&lt;p&gt;LinuxまたはMax OSXに対応しています．&lt;a href=&quot;http://matsen.fhcrc.org/pplacer/&quot;&gt;こちらのページ&lt;/a&gt;からバイナリファイルをダウンロードしてください．&lt;/p&gt;
+
+&lt;p&gt;ダウンロードした圧縮ファイルを解凍すると，ディレクトリに&lt;code&gt;guppy&lt;/code&gt;，&lt;code&gt;pplacer&lt;/code&gt;，&lt;code&gt;rppr&lt;/code&gt;という3つのプログラムがあると思います．システムがそれらのプログラムを見つけられるように，このディレクトリにパスを通してください．&lt;/p&gt;
+
+&lt;h2 id=&quot;archaeopteryx&quot;&gt;Archaeopteryxのインストール&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;Archaeopteryx&lt;/code&gt;は系統樹の可視化ツールです．&lt;a href=&quot;https://sites.google.com/site/cmzmasek/home/software/archaeopteryx&quot;&gt;こちらのページ&lt;/a&gt;から，&lt;code&gt;forester.jar&lt;/code&gt;をダウンロードしてください．&lt;/p&gt;
+
+&lt;p&gt;また，&lt;code&gt;_aptx_configuration_file&lt;/code&gt;というconfiguration fileを&lt;a href=&quot;https://github.com/fhcrc/microbiome-demo/blob/master/bin/_aptx_configuration_file&quot;&gt;こちらのページ&lt;/a&gt;からダウンロードしてください．&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h1 id=&quot;&gt;リファレンスパッケージの作成まで&lt;/h1&gt;
+
+&lt;h2 id=&quot;&gt;あるオーソログについての配列を集める&lt;/h2&gt;
+
+&lt;p&gt;16SrRNAの場合は&lt;code&gt;Infernal&lt;/code&gt;などの二次構造を考慮した配列検索ツールを，タンパク質コード遺伝子であればBLASTやHMMERなどを利用することになると思います．ここでは詳しくは触れません．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# ここではテストデータを作成します（50個のエントリを含むFASTAファイル）
+$ head -n 100 GreenGenesCore-May09.ref.fna &amp;gt; seq.fa
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;&gt;リファレンス配列からマルチプルアラインメントを計算する&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;MAFFT&lt;/code&gt;でマルチプルアラインメントを計算します．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;$ mafft --auto seq.fa &amp;gt; seq_align.fa 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;&gt;マルチプルアラインメントから系統樹を推定する&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;FastTree&lt;/code&gt;で系統樹の推定します．この際，&lt;code&gt;-log&lt;/code&gt;オプションでログファイルを出力します．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;FastTree -gtr -nt -log fasttree.log &amp;lt; seq_align.fa &amp;gt; tree.nwk
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;&gt;リファレンスパッケージの作成&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;-l&lt;/code&gt;オプションで任意の遺伝子名を表す名前を付けることができます．&lt;code&gt;-P&lt;/code&gt;オプションで出力するリファレンスパッケージの名前を指定します．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# リファレンスパッケージの作成
+taxit create -l 16s_rRNA -P my.refpkg --aln-fasta seq_align.fa --tree-stats fasttree.log --tree-file tree.nwk
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;また， 以下のように，分類情報を含むリファレンスを作成することもできます．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# NCBI taxonomyのデータをtaxonomy.dbとしてダウンロードする
+taxit new_database -d taxonomy.db
+
+# tax_ids.txtの作成
+awk &#39;/&amp;gt;/{sub(/&amp;gt;/,&quot;&quot;); print }&#39; seq.fa &amp;gt; tax_ids.txt
+
+# tax_ids.txtに含まれる全ての種についてminimum sub taxonomyを格納した taxa.csv を作成する
+taxit taxtable -d taxonomy.db -t tax_ids.txt -o taxa.csv 
+
+# リファレンスパッケージの作成
+taxit create -l locus_name -P my.refpkg --taxonomy taxa.csv --aln-fasta seqs.fasta --seq-info seq_info.csv --tree-stats tree_stats.txt --tree-file tree.nwk
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;リファレンスパッケージの作成に必要なファイルのフォーマットについては，&lt;a href=&quot;http://fhcrc.github.io/taxtastic/quickstart.html&quot;&gt;taxtasticのQuickstart&lt;/a&gt;を参照してください．&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h1 id=&quot;&gt;リファレンスパッケージを作成してから&lt;/h1&gt;
+
+&lt;h2 id=&quot;&gt;あるオーソログに類似した配列をメタゲノムデータから集める&lt;/h2&gt;
+
+&lt;p&gt;BLAST, HMMER, Infernalなどを使って，抽出してください&lt;/p&gt;
+
+&lt;h2 id=&quot;&gt;リファレンスアラインメントに対してメタゲノムのリードをアラインメントする&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;-add&lt;/code&gt;オプションで追加するメタゲノムのリードを指定します．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;mafft --auto --add test.fa seq_align.fa &amp;gt; test_align.fa
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;また，リファレンス配列とメタゲノムデータ由来の配列を混ぜた（マージした）配列について，&lt;code&gt;MAFFT&lt;/code&gt;を実行することも可能だと思います．&lt;/p&gt;
+
+&lt;h2 id=&quot;placement&quot;&gt;メタゲノムのリードをリファレンス系統樹へ配置（placement）する&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# Place file の作成（*.jplaceがつくられる）
+pplacer -c my.refpkg test_align.fa
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;&gt;可視化&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;guppy&lt;/code&gt;で可視化のために使うphyloXMLフォーマットのファイルを作成します．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# phyloXMLフォーマットのファイルの作成（リファレンスパッケージに分類情報が含まれる場合）
+guppy fat -c vaginal_16s.refpkg p4z1r36.jplace
+
+# phyloXMLフォーマットのファイルの作成（リファレンスパッケージに分類情報が含まれない場合）
+guppy fat test_align.jplace 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;リファレンスパッケージに分類情報が含まれないときに，&lt;code&gt;guppy fat&lt;/code&gt;の&lt;code&gt;-c&lt;/code&gt;オプションでリファレンスパッケージを指定すると，以下のようなエラーが出ます．この場合は，&lt;code&gt;-c&lt;/code&gt;オプションを使用しないとうまくいきます．しかし，可視化の際に分類情報は表示されません．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;$ guppy fat -c my.refpkg test_align.jplace 
+Uncaught exception: Refpkg.Missing_element(&quot;taxonomy&quot;)
+Fatal error: exception Refpkg.Missing_element(&quot;taxonomy&quot;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;phyloXMLファイルができたら，&lt;code&gt;archaeopteryx&lt;/code&gt;を実行します．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;
+java -jar forester.jar -c _aptx_configuration_file GreenGenesCore-May09.ref.align.xml
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;&gt;比較&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;guppy kr&lt;/code&gt;は複数のplace file（.jplace）を比較し，サンプル間の距離行列を作成します．ここでの距離は，UniFracを一般化した，Kantorovich-Rubinstein (KR) metricです．KR metricは一つのplacement（リードの系統樹上での分布）から別のplacementに変換するのに要する移動の量と解釈できます．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# *.jplace はカレントディレクトリにある.jplaceファイルすべてを指定しています
+guppy kr *.jplace 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;guppy kr_heat&lt;/code&gt;で２つのplace file（.jplace）を比較した図を作成することができます．枝上の移動量に比例して，枝を太くなります（赤は根に向かう方向，青は葉に向かう方向の移動を表す）．つまり，２つのサンプル間で違いが大きい枝が太くなります．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;guppy kr_heat -c foo.refpkg bar1.jplace bar2.jplace
+java -jar forester.jar -c _aptx_configuration_file bar1.bar2.heat.xml &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;edge-principal-components-analysis&quot;&gt;Edge principal components analysis&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;guppy pca&lt;/code&gt;で，placementを特徴量としたPCAによりサンプル間比較ができます．詳しくは&lt;a href=&quot;http://matsen.fhcrc.org/pplacer/demo/pca.html&quot;&gt;こちら&lt;/a&gt;を読んでください．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;guppy epca --prefix pca_out -c foo.refpkg *.jplace
+
+java -jar forester.jar -c _aptx_configuration_file pca_out.xml &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;pca_out.trans&lt;/code&gt;にはPCAの軸へ射影されたサンプルの情報が含まれています．&lt;/p&gt;
+
+&lt;h2 id=&quot;squash-clustering&quot;&gt;Squash clustering&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;guppy squash&lt;/code&gt;で，placementに特化したサンプルの階層的クラスタリングを行えます．&lt;code&gt;--out-dir&lt;/code&gt;オプションで指定したディレクトリ内に&lt;code&gt;cluster.tre&lt;/code&gt;というクラスタリングの樹形を格納したファイルを作成し，また，内部ノードごとの平均を格納した&lt;code&gt;mass_trees&lt;/code&gt;というサブディレクトリを作成します．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;mkdir squash_out
+guppy squash -c foo.refpkg --out-dir squash_out *.jplace
+java -jar forester.jar -c _aptx_configuration_file squash_out/cluster.tre &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;クラスタリングの樹形図の6番という内部ノードについて可視化することができます．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;java -jar forester.jar -c _aptx_configuration_file squash_out/mass_trees/6.phy.fat.xml &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1 id=&quot;&gt;メタゲノムのリードの分類&lt;/h1&gt;
+
+&lt;p&gt;&lt;code&gt;guppy classify&lt;/code&gt;によって，メタゲノムのリードを分類できます．出力のカラムはread name, attempted rank for classification, actual rank for classification, taxonomic identifier, confidenceです．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;guppy classify --mrca-class -c foo.refpkg bar.jplace &amp;gt; classify.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;リードの分類をSQlite3で閲覧することもできるそうです．詳しくは&lt;a href=&quot;http://fhcrc.github.io/microbiome-demo/&quot;&gt;pplacerのデモ&lt;/a&gt;を読んでください．&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h1 id=&quot;&gt;デモ&lt;/h1&gt;
+
+&lt;h2 id=&quot;&gt;テストデータの作成&lt;/h2&gt;
+
+&lt;p&gt;リファレンス配列は&lt;a href=&quot;http://www.ddbj.nig.ac.jp/whatsnew/061215-j.html&quot;&gt;DDBJの16S rDNA配列&lt;/a&gt;から作成しました（&lt;code&gt;ref.fa&lt;/code&gt;）．また，リファレンス配列の&lt;code&gt;taxon id&lt;/code&gt;のリスト（&lt;code&gt;taxid.txt&lt;/code&gt;），および，&lt;code&gt;ref.fa&lt;/code&gt;での配列名と&lt;code&gt;taxon id&lt;/code&gt;を紐付けるcsvファイル（&lt;code&gt;ref.csv&lt;/code&gt;）を作成しました．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# リファレンス配列の準備（100エントリのFASTA）
+awk &#39;{if(/&amp;gt;/){n++}; if(n&amp;gt;100){exit}; print}&#39; 16S.seq &amp;gt; ref.fa
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;$ head taxid.txt
+1334
+81436
+1318
+1596
+334344
+76637
+78164
+198312
+1520
+2743
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;$ head ref_info.csv
+&quot;seqname&quot;,&quot;tax_id&quot;
+&quot;AB002492&quot;,&quot;1334&quot;
+&quot;AB003466&quot;,&quot;81436&quot;
+&quot;AB006127&quot;,&quot;1318&quot;
+&quot;AB008209&quot;,&quot;1596&quot;
+&quot;AB010844&quot;,&quot;334344&quot;
+&quot;AB012648&quot;,&quot;76637&quot;
+&quot;AB015608&quot;,&quot;78164&quot;
+&quot;AB017113&quot;,&quot;198312&quot;
+&quot;AB020191&quot;,&quot;1520&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;メタゲノムのリードは&lt;a href=&quot;http://bmf2.colorado.edu/fastunifrac/tutorial.psp&quot;&gt;FastUniFracのチュートリアル&lt;/a&gt;にあったGreenGeneの16Sの配列から作成しました．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# メタゲノムのリードの準備（500エントリのFASTAファイル; 16S）
+awk &#39;{if(/&amp;gt;/){n++}; if(n&amp;gt;500){exit}; print}&#39; GreenGenesCore-May09.ref.fna &amp;gt; seq1.fa
+awk &#39;NR&amp;gt;1000{if(/&amp;gt;/){n++}; if(n&amp;gt;500){exit}; print}&#39; GreenGenesCore-May09.ref.fna &amp;gt; seq2.fa
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;&gt;本番&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# リファレンスアラインメントの計算
+mafft --auto ref.fa &amp;gt; ref_align.fa  
+
+# リファレンス系統樹の推定
+FastTree -gtr -nt -log fasttree.log &amp;lt; ref_align.fa &amp;gt; ref_tree.nwk 
+
+# リファレンスパッケージの作成
+taxit new_database -d taxonomy.db 
+taxit taxtable -d taxonomy.db -t taxid.txt -o taxa.csv 
+taxit create -l 16s_rRNA -P my.refpkg --taxonomy taxa.csv --aln-fasta ref_align.fa --seq-info ref_info.csv --tree-stats fasttree.log --tree-file ref_tree.nwk 
+
+# リファレンスアラインメントへのメタゲノムのリードのアラインメント
+mafft --auto --add seq1.fa ref_align.fa &amp;gt; seq_align1.fa
+mafft --auto --add seq2.fa ref_align.fa &amp;gt; seq_align2.fa
+
+# Place file の作成（*.jplaceがつくられる）
+pplacer -c my.refpkg seq_align1.fa
+pplacer -c my.refpkg seq_align2.fa
+
+# 可視化
+guppy fat -c my.refpkg seq_align1.jplace
+guppy fat -c my.refpkg seq_align2.jplace
+java -jar forester.jar -c _aptx_configuration_file seq_align1.xml &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;このように可視化されます．&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/pplacer_1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# サンプル間距離の計算
+guppy kr seq_align1.jplace seq_align2.jplace
+
+# 2サンプル間比較
+guppy kr_heat -c my.refpkg seq_align1.jplace seq_align2.jplace
+
+java -jar bin/forester.jar -c _aptx_configuration_file seq_align1.seq_align2.heat.xml &amp;amp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;このようになります．&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/pplacer_2.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/pplacer_3.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h1 id=&quot;&gt;補足&lt;/h1&gt;
+
+&lt;h2 id=&quot;guppy-grand-unified-phylogenetic-placement-yanalyzer&quot;&gt;guppy (Grand Unified Phylogenetic Placement Yanalyzer)について&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# サブコマンドの一覧を表示
+guppy --cmd
+
+# サブコマンドの実行（SUBCOMMANDの部分に使いたいサブコマンドを挿入する）
+guppy SUBCOMMAND [options] [files] 
+
+# サブコマンドのヘルプ
+guppy SUBCOMMAND --help
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+
+&lt;h1 id=&quot;&gt;参考&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://fhcrc.github.io/microbiome-demo/&quot;&gt;pplacerのデモ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>系統樹を描くのにClustalWを使うな</title>
+    <link href="/%E7%B3%BB%E7%B5%B1%E6%A8%B9/%E9%85%8D%E5%88%97/do-not-use-clustal/"/>
+    <updated>2013-08-06T10:50:00+09:00</updated>
+    <id>/%E7%B3%BB%E7%B5%B1%E6%A8%B9/%E9%85%8D%E5%88%97/do-not-use-clustal</id>
+    <author>
+      <name></name>
+      <uri>/</uri>
+      
+    </author>
+    <content type="html">
+      
+      &lt;p&gt;&lt;a href=&quot;http://betascience.blogspot.jp/2010/03/please-dont-use-clustal-for-tree.html&quot;&gt;Beta Science: Please don&amp;#39;t use Clustal for tree construction!&lt;/a&gt;という短いブログ記事を見つけました．&lt;/p&gt;
+
+&lt;p&gt;まとめると，&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい&lt;/li&gt;
+&lt;li&gt;そもそもClustalのインターフェースで提供されている系統樹推定手法（NJ法？）はそんなに良くない&lt;/li&gt;
+&lt;li&gt;もはや，より高速な&lt;a href=&quot;http://www.drive5.com/muscle/&quot;&gt;Muscle&lt;/a&gt;などが出ているので，多くの人はマルチプルアラインメントにすらClustalを使わない&lt;/li&gt;
+&lt;li&gt;多くの人は系統樹推定に最尤法やベイズ法を用いた手法を使う（&lt;a href=&quot;http://atgc.lirmm.fr/phyml/&quot;&gt;PhyML&lt;/a&gt;や&lt;a href=&quot;http://mrbayes.sourceforge.net&quot;&gt;Mr.Bayes&lt;/a&gt;など）&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.phylogeny.fr/&quot;&gt;Robust Phylogenetic Analysis For The Non-Specialist&lt;/a&gt;が参考になる&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;また，&lt;code&gt;ClustalW&lt;/code&gt;はguide treeという樹形図を計算の過程で構築しますが，これは系統樹ではありません．&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>cufflinks-library-norm-method</title>
+    <link href="/ngs/cufflinks-library-norm-method/"/>
+    <updated>2013-07-25T15:43:00+09:00</updated>
+    <id>/ngs/cufflinks-library-norm-method</id>
+    <author>
+      <name></name>
+      <uri>/</uri>
+      
+    </author>
+    <content type="html">
+      
+      &lt;p&gt;この記事では，CufflinksおよびCuffdiffの&lt;code&gt;--library-norm-method&lt;/code&gt;オプションで指定できる，ライブラリサイズの正規化法の違いについて述べています．&lt;/p&gt;
+
+&lt;h2 id=&quot;&gt;言葉の説明&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ライブラリ library: サンプルのこと．&lt;/li&gt;
+&lt;li&gt;ライブラリサイズ library size: ライブラリのリード数のこと．Sequecning depthともいう．&lt;/li&gt;
+&lt;li&gt;size factor（scaling factor）: 各ライブラリのFPKMやフラグメントカウントを割るための値．
+各ライブラリについて計算される値です．正規化因子とかスケーリング因子とか呼ばれたりします．&lt;br&gt;
+通常，他のライブラリに比べてFPKMやフラグメントカウントが大きいライブラリのスケーリング因子は，大きくなります．&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;フラグメント fragment: ペアエンドで読んだときの2つのreadを一組にした概念．&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;In paired-end RNA-Seq experiments, fragments are sequenced from both ends, providing two reads for each fragment.    &lt;a href=&quot;http://cufflinks.cbcb.umd.edu/howitworks.html&quot;&gt;Cufflinks RNA-Seq analysis tools - Background&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;-FPKM: Fragments Per Kilobase of exon per Million fragments mapped (FPKM) のこと．
+&lt;a href=&quot;http://cufflinks.cbcb.umd.edu/howitworks.html#hqua&quot;&gt;Cufflinks RNA-Seq analysis tools - Background&lt;/a&gt;を参照のこと．&lt;/p&gt;
+
+&lt;h2 id=&quot;library-norm-method&quot;&gt;library-norm-method&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;classic-fpkm&lt;/code&gt;，&lt;code&gt;geometric&lt;/code&gt;，&lt;code&gt;quartile&lt;/code&gt;の3種類があります．&lt;/p&gt;
+
+&lt;h3 id=&quot;classic-fpkm&quot;&gt;classic-fpkm&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;size factorは1．つまり，FPKMやフラグメントカウントに対してスケーリングを行わない&lt;/li&gt;
+&lt;li&gt;Cufflinksでのみ使用可能&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;geometric&quot;&gt;geometric&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;まず，各遺伝子について，フラグメントカウントの全ライブラリについての幾何平均を求める．&lt;br&gt;
+次に，その幾何平均に対する各ライブラリでのフラグメントカウントの比を計算する．&lt;br&gt;
+最後に，その比の全遺伝子についてのメディアンを計算する．このメディアンをsize factorとして，FPKMとフラグメントカウントのスケーリングを行う．&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;幾何平均 geometric mean&lt;/li&gt;
+&lt;li&gt;Cuffdiffでのデフォルト&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://genomebiology.com/2010/11/10/R106&quot;&gt;Anders and Huber (Genome Biology, 2010)&lt;/a&gt; を参照&lt;/li&gt;
+&lt;li&gt;DESeqで使われているのと同じもの&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;$$
+\hat{s}&lt;em&gt;{j} = {\rm median}&lt;/em&gt;{i} \frac{ k_{ij} } { \left (\prod_{v=1}^{m} k_{iv}  \right )^{1/m} }
+$$&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;j&lt;/code&gt;: ライブラリ(j=1,...,m)
+&lt;code&gt;i&lt;/code&gt;: 遺伝子
+&lt;code&gt;k_{ij}&lt;/code&gt;: ライブラリ&lt;code&gt;j&lt;/code&gt;における遺伝子&lt;code&gt;i&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;quartile&quot;&gt;quartile&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;各ライブラリでのフラグメントカウントの第３四分位点の，全てのライブラリについての第３四分位点の平均値に対する比をsize factorとして，FPKMとフラグメントカウントのスケーリングを行う&lt;/li&gt;
+&lt;li&gt;いわゆるquantile normalization とは全く異なる&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;$$
+\hat{s}&lt;em&gt;{j} =  \frac{ {\rm 3Q}&lt;/em&gt;{i} (k_{ij}) } { \sum_{v=1}^{m} {\rm 3Q}&lt;em&gt;{i} (k&lt;/em&gt;{iv}) }
+$$&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;3Q_{i}&lt;/code&gt;: k_{i,j} の全遺伝子についての分布から，第３四分位点を選ぶ関数だと思ってください．&lt;/p&gt;
+
+&lt;h2 id=&quot;&gt;参考&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://cufflinks.cbcb.umd.edu/manual.html&quot;&gt;Cufflinks RNA-Seq analysis tools - User&amp;#39;s Manual&lt;/a&gt;&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>SAM/BAMからマルチリードを除く方法</title>
+    <link href="/ngs/remove-multi-reads/"/>
+    <updated>2013-07-19T11:45:00+09:00</updated>
+    <id>/ngs/remove-multi-reads</id>
+    <author>
+      <name></name>
+      <uri>/</uri>
+      
+    </author>
+    <content type="html">
+      
+      &lt;h2 id=&quot;&gt;マルチリードについて&lt;/h2&gt;
+
+&lt;p&gt;ゲノム上の複数箇所にマップされたリードをmultiple mapped reads, multi-reads, reads with multiple hits などと呼びます． 
+もしくは，一つのリードに対して複数のアラインメントが出力されるもの，とも言えます．&lt;/p&gt;
+
+&lt;p&gt;このマルチリードは，しばしば解析の前に除かれます．では，どうやって除いたらいいでしょうか．&lt;/p&gt;
+
+&lt;h2 id=&quot;mapq&quot;&gt;MAPQを使う&lt;/h2&gt;
+
+&lt;p&gt;MAPQ（SAM/BAMの５列目）が適切にセットされているなら，これを使うことができます．
+適切というのは，ユニークなアラインメントでMAPQが50，アラインメントが２つだとMAPQが3，アラインメントが3以上だとMAPQが0に設定されている状態です．&lt;/p&gt;
+
+&lt;p&gt;このとき，&lt;code&gt;samtools view -q&lt;/code&gt;を使って，以下のように書けます．&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;-q INT      Skip alignments with MAPQ smaller than INT [0]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;samtools view -q 4 hoge.bam &amp;gt; hoge.uniq.bam
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;nh&quot;&gt;NHを使う&lt;/h2&gt;
+
+&lt;p&gt;NHタグは，SAM/BAMファイルに，あるリードに対するアラインメントがいくつ入力されたかを &lt;code&gt;NH:i:[0-9]+&lt;/code&gt;という形式で記録しています．&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;NH      i      Number of reported alignments that contains the query in the current record &lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;（&lt;a href=&quot;http://samtools.sourceforge.net/SAM1.pdf&quot;&gt;The SAM Format Specification (PDF)&lt;/a&gt;）&lt;/p&gt;
+
+&lt;p&gt;そのため，スクリプト言語で（私はNHの分布が知りたかったので，こちらの方法を使ってました）．
+以下は，Perlで書いた例です．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-perl&quot; data-lang=&quot;perl&quot;&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;I&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hoge.bam&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;O&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;gt; hoge.uniq.bam&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;&amp;lt;I&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^@/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# header&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;O&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/NH:i:([0-9]+)/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# NH: Number of reported alignments that contains the query in the current record&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+               &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;O&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;I&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;O&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;flag&quot;&gt;FLAGは使えなさそう&lt;/h2&gt;
+
+&lt;p&gt;掲示板などを読んでいるとFLAG（SAM/BAMの２列目）のビットを使って，すなわち&lt;code&gt;samtools view -F ***&lt;/code&gt;を使う方法が提案されることがしばしばあります．
+これはおそらく&lt;code&gt;0x100&lt;/code&gt;(secondary alignment)のことを指しているのだと思うのですが，以下の例で示す通り，マルチヒットのリードを除くには不適切です．&lt;/p&gt;
+
+&lt;p&gt;=====&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;read1      339     chr1    181938  3       2M107N99M       =       181891  -255    ACCGGAGGATGTTGGGATGGCAGAGGCGGTTCATGAGCTGCACCTCCCGCAGCATGTTGGCCTTGTTGCTCGCCAGCGTGTTCATCTTCAGCGCCATCACC   BDDDCACCC&amp;lt;&amp;lt;3DDDDCDDDDDD@@9BBCCDCC@49CCCCA&amp;lt;DB?CDFFFFHHHHJJJJJIIJIJJJJJJJGJJJJIJJJJJJIJJJJHHHHHFFEDD?@B   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101        YT:Z:UU XS:A:-  NH:i:2  CC:Z:=  CP:i:182045     HI:i:0:0
+read1      83      chr1    182045  3       101M    =       181891  -255    ACCGGAGGATGTTGGGATGGCAGAGGCGGTTCATGAGCTGCACCTCCCGCAGCATGTTGGCCTTGTTGCTCGCCAGCGTGTTCATCTTCAGCGCCATCACC   BDDDCACCC&amp;lt;&amp;lt;3DDDDCDDDDDD@@9BBCCDCC@49CCCCA&amp;lt;DB?CDFFFFHHHHJJJJJIIJIJJJJJJJGJJJJIJJJJJJIJJJJHHHHHFFEDD?@B   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101        YT:Z:UU NH:i:2  HI:i:11
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;これは，ペアエンドのリードをTopHatでアラインメントして得られた，あるリード &lt;code&gt;read1&lt;/code&gt;に対する2つのアラインメントです．
+どちらも&lt;code&gt;NH:i:2&lt;/code&gt;であることから，各リードに対して，ファイル中に2つのアラインメントが出力されていることがわかります．これは，MAPQ（５列目）が&lt;code&gt;3&lt;/code&gt;になっていることからも分かります．
+一方で，FLAG（２列目）が，read1では&lt;code&gt;339&lt;/code&gt;（0x1, 0x2, 0x10, 0x40, 0x100）で，read2では&lt;code&gt;83&lt;/code&gt;（0x1, 0x2, 0x10, 0x20）となっています．２つのアラインメントにEdit distanceなどで違いがないにも関わらず，片方だけに&lt;code&gt;0x100&lt;/code&gt;が付いています．&lt;/p&gt;
+
+&lt;p&gt;つまり，マルチヒットのリードを除くという目的には不適切だと言えます．&lt;/p&gt;
+
+&lt;h2 id=&quot;&gt;参考&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://seqanswers.com/forums/showthread.php?t=19491&quot;&gt;Remove reads which are not uniquely mapped - SEQanswers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;flag&quot;&gt;（参考）FLAGのビットの意味&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://samtools.sourceforge.net/SAM1.pdf&quot;&gt;The SAM Format Specification (PDF)&lt;/a&gt;&lt;/p&gt;
+
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align: left&quot;&gt;Bit&lt;/th&gt;
+&lt;th style=&quot;text-align: right&quot;&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;0x1&lt;/td&gt;
+&lt;td style=&quot;text-align: right&quot;&gt;template having multiple segments in sequencing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;0x2&lt;/td&gt;
+&lt;td style=&quot;text-align: right&quot;&gt;each segment properly aligned according to the aligner&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;0x4&lt;/td&gt;
+&lt;td style=&quot;text-align: right&quot;&gt;segment unmapped&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;0x8&lt;/td&gt;
+&lt;td style=&quot;text-align: right&quot;&gt;next segment in the template unmapped&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;0x10&lt;/td&gt;
+&lt;td style=&quot;text-align: right&quot;&gt;SEQ being reverse complemented&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;0x20&lt;/td&gt;
+&lt;td style=&quot;text-align: right&quot;&gt;SEQ of the next segment in the template being reversed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;0x40&lt;/td&gt;
+&lt;td style=&quot;text-align: right&quot;&gt;the first segment in the template&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;0x80&lt;/td&gt;
+&lt;td style=&quot;text-align: right&quot;&gt;the last segment in the template&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;0x100&lt;/td&gt;
+&lt;td style=&quot;text-align: right&quot;&gt;secondary alignment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;0x200&lt;/td&gt;
+&lt;td style=&quot;text-align: right&quot;&gt;not passing quality controls&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: left&quot;&gt;0x400&lt;/td&gt;
+&lt;td style=&quot;text-align: right&quot;&gt;PCR or optical duplicate&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>samtools rmdup の挙動に関する実験</title>
+    <link href="/ngs/samtools-rmdup/"/>
+    <updated>2013-07-18T21:02:00+09:00</updated>
+    <id>/ngs/samtools-rmdup</id>
+    <author>
+      <name></name>
+      <uri>/</uri>
+      
+    </author>
+    <content type="html">
+      
+      &lt;h2 id=&quot;samtools-rmdup&quot;&gt;samtools rmdup について&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;samtools rmdup&lt;/code&gt;は，potential PCR duplicates を除くのによく使われる便利なツールです．&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://samtools.sourceforge.net/samtools.shtml&quot;&gt;samtoolsの公式&lt;/a&gt;では以下のように説明してあります．&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;samtools rmdup [-sS] &lt;input.srt.bam&gt; &lt;out.bam&gt;&lt;/p&gt;
+
+&lt;p&gt;Remove potential PCR duplicates: if multiple read pairs have identical external coordinates, only retain the pair with highest mapping quality. In the paired-end mode, this command ONLY works with FR orientation and requires ISIZE is correctly set. It does not work for unpaired reads (e.g. two ends mapped to different chromosomes or orphan reads).&lt;/p&gt;
+
+&lt;p&gt;OPTIONS:&lt;/p&gt;
+
+&lt;p&gt;-s      Remove duplicate for single-end reads. By default, the command works for paired-end reads only.&lt;/p&gt;
+
+&lt;p&gt;-S      Treat paired-end reads and single-end reads.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;しかし，この説明ではオプションを使った場合にどのような挙動をするのかよくわからなかっため，簡単な実験を行いました．&lt;/p&gt;
+
+&lt;h2 id=&quot;&gt;実験&lt;/h2&gt;
+
+&lt;p&gt;まず，座標が同一な，ペアエンドのリード（ペアの両方または片方のみがマップされているもの）およびシングルエンドのリードから成るテストデータを作成しました．
+リード名はそれぞれ以下の通り．&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;test_pe_* はペアエンドでかつ両方のセグメントがマップされているリード（0x1）を表す&lt;/li&gt;
+&lt;li&gt;test1_peu_* はペアの片方のセグメントのみがマップされているリード（0x1と0x8）を表す&lt;/li&gt;
+&lt;li&gt;test_se_* はシングルエンドのリードを表す&lt;/li&gt;
+&lt;li&gt;末尾の0と1は，互いに同じ座標の異なるリードであることを示す&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;$ samtools view test.bam
+test_pe_0     99     chr1     160502     50     101M     =     160543     142     TGGGCTTGCTCTGCTGGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACA     @@@FFFFFHHHGGHHJJIIJJIIJHIIIIJJJGHIJJJJJJJJIJHIJJJJJIJJJIGIJIJJIJIJJJIHHEBB==CBBBBBDDB&amp;lt;BDDDDDD@BDDDD&amp;gt;     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:92A2G5     YT:Z:UU     NH:i:1
+test_pe_1     99     chr1     160502     50     101M     =     160543     142     TGGGCTTGCTCTGCTGGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACA     @@@FFFFFHHHGGHHJJIIJJIIJHIIIIJJJGHIJJJJJJJJIJHIJJJJJIJJJIGIJIJJIJIJJJIHHEBB==CBBBBBDDB&amp;lt;BDDDDDD@BDDDD&amp;gt;     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:92A2G5     YT:Z:UU     NH:i:1
+test_se_0     0     chr1     160500     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&amp;gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test_se_1     0     chr1     160500     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&amp;gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test1_peu_0     137     chr1     160517     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&amp;gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test1_peu_1     137     chr1     160517     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&amp;gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test_pe_0     147     chr1     160543     50     101M     =     160502     -142     TCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGCCAGTTGATTGACAGCTCAACTGGTTG     &amp;gt;CBBBDDBDDDDBA?CDDDEEDDDDDDDBBBDDBDDDDDDDFFHHFGGHDBJJIIHGIJIIHGGEGIIJJJJIGEIJJIJIJJJIHIJHHGDHDFFFD@C@     AS:i:-12     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:51A2G46     YT:Z:UU     NH:i:1
+test_pe_1     147     chr1     160543     50     101M     =     160502     -142     TCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGCCAGTTGATTGACAGCTCAACTGGTTG     &amp;gt;CBBBDDBDDDDBA?CDDDEEDDDDDDDBBBDDBDDDDDDDFFHHFGGHDBJJIIHGIJIIHGGEGIIJJJJIGEIJJIJIJJJIHIJHHGDHDFFFD@C@     AS:i:-12     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:51A2G46     YT:Z:UU     NH:i:1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;このテストデータに対して&lt;code&gt;samtools rmdup&lt;/code&gt;を実行します．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;$ samtools rmdup test.bam test_rmdup.bam
+$ samtools rmdup -s test.bam test_rmdup_s.bam
+$ samtools rmdup -S test.bam test_rmdup_S.bam
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;結果を見てみます．ここではSAM/BAMの１列目のリード名（QNAME）のみを出力しています．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# test.bam
+$ samtools view test.bam |awk &#39;{print $1}&#39;
+test_pe_0
+test_pe_1
+test_se_0
+test_se_1
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup したもの
+$ samtools view test_rmdup.bam |awk &#39;{print $1}&#39;
+test_pe_0
+test_se_0
+test_se_1
+test1_peu_0
+test1_peu_1
+test_pe_0
+
+# samtools rmdup -s したもの
+$ samtools view test_rmdup_s.bam |awk &#39;{print $1}&#39;
+test_pe_0
+test_pe_1
+test_se_0
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup -S したもの
+$ samtools view test_rmdup_S.bam |awk &#39;{print $1}&#39;
+test_pe_0
+test_se_0
+test1_peu_0
+test_pe_0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;これらの結果から，&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ペアの両方のセグメントがマップされている場合（0x1），デフォルトのときと&lt;code&gt;-S&lt;/code&gt;がついているとき除かれる．&lt;/li&gt;
+&lt;li&gt;ペアの片方のセグメントのみがマップされている場合（0x1と0x8），&lt;code&gt;-S&lt;/code&gt;がついているとき除かれる&lt;/li&gt;
+&lt;li&gt;シングルエンドの場合，&lt;code&gt;-s&lt;/code&gt;もしくは&lt;code&gt;-S&lt;/code&gt;がついているとき除かれる&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ということが分かりました．&lt;/p&gt;
+
+&lt;h2 id=&quot;&gt;なにが挙動を決めているのか&lt;/h2&gt;
+
+&lt;p&gt;ペアの片方のセグメントのみがマップされている場合に，デフォルトでは除かれないことがわかりました．最初は，FLAG列をみてペアエンドかどうかを判定していると思い込んでいたので驚きました．&lt;/p&gt;
+
+&lt;p&gt;テストデータの&lt;code&gt;test_pe_*&lt;/code&gt;と&lt;code&gt;test1_peu_*&lt;/code&gt;を眺めていると，後者では７列目が&lt;code&gt;*&lt;/code&gt;となっていました（それまで気付いていませんでした…）．
+SAM/BAMの7列目のRNEXTは&lt;a href=&quot;http://samtools.sourceforge.net/SAM1.pdf&quot;&gt;The SAM Format Specification (PDF)&lt;/a&gt;によると，以下のような説明がなされています．&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;If RNEXT is ‘*’, no assumptions can be made on PNEXT and bit 0x20.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;この記述から，rmdupは RNEXTとPNEXTのみを参照しているように思えたのでさらに実験しました．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;$ samtools view test2.bam
+test_pe_0     99     chr1     160502     50     101M     *     0     0     TGGGCTTGCTCTGCTGGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACA     @@@FFFFFHHHGGHHJJIIJJIIJHIIIIJJJGHIJJJJJJJJIJHIJJJJJIJJJIGIJIJJIJIJJJIHHEBB==CBBBBBDDB&amp;lt;BDDDDDD@BDDDD&amp;gt;     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:92A2G5     YT:Z:UU     NH:i:1
+test_pe_1     99     chr1     160502     50     101M     *     0     0     TGGGCTTGCTCTGCTGGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACA     @@@FFFFFHHHGGHHJJIIJJIIJHIIIIJJJGHIJJJJJJJJIJHIJJJJJIJJJIGIJIJJIJIJJJIHHEBB==CBBBBBDDB&amp;lt;BDDDDDD@BDDDD&amp;gt;     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:92A2G5     YT:Z:UU     NH:i:1
+test_se_0     0     chr1     160500     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&amp;gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test_se_1     0     chr1     160500     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&amp;gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test1_peu_0     137     chr1     160517     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&amp;gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test1_peu_1     137     chr1     160517     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&amp;gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test_pe_0     147     chr1     160543     50     101M     *     0     0     TCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGCCAGTTGATTGACAGCTCAACTGGTTG     &amp;gt;CBBBDDBDDDDBA?CDDDEEDDDDDDDBBBDDBDDDDDDDFFHHFGGHDBJJIIHGIJIIHGGEGIIJJJJIGEIJJIJIJJJIHIJHHGDHDFFFD@C@     AS:i:-12     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:51A2G46     YT:Z:UU     NH:i:1
+test_pe_1     147     chr1     160543     50     101M     *     0     0     TCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGCCAGTTGATTGACAGCTCAACTGGTTG     &amp;gt;CBBBDDBDDDDBA?CDDDEEDDDDDDDBBBDDBDDDDDDDFFHHFGGHDBJJIIHGIJIIHGGEGIIJJJJIGEIJJIJIJJJIHIJHHGDHDFFFD@C@     AS:i:-12     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:51A2G46     YT:Z:UU     NH:i:1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;samtools rmdup test2.bam test_rmdup2.bam
+samtools rmdup -s test2.bam test_rmdup_s2.bam
+samtools rmdup -S test2.bam test_rmdup_S2.bam
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# test2.bam
+$ samtools view test2.bam |awk &#39;{print $1}&#39;
+test_pe_0
+test_pe_1
+test_se_0
+test_se_1
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup したとき
+$ samtools view test_2.bam |awk &#39;{print $1}&#39;
+test_pe_0
+test_pe_1
+test_se_0
+test_se_1
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup -s したとき
+$ samtools view test__s2.bam |awk &#39;{print $1}&#39;
+test_pe_0
+test_pe_1
+test_se_0
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup -S したとき
+$ samtools view test__S2.bam |awk &#39;{print $1}&#39;
+test_pe_0
+test_se_0
+test1_peu_0
+test_pe_0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;今度は，デフォルトのときでも，ペアの両方のセグメントがマップされているリードが除かれなくなりました．
+このことから，ペアエンドのリードを除くかどうかの判定には，（FLAGは関係なく）RNEXTおよびPNEXTのみを参照していると考えられました．
+一方で，&lt;code&gt;-s&lt;/code&gt;のときに，ペアの片方のみマップされたリードが除かれないことから，シングルエンドの判定にはFLAGを使っていると考えられます．&lt;/p&gt;
+
+&lt;h2 id=&quot;&gt;まとめ&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;デフォルト: ペアエンドでペアの両方がマップされるものについて，PCR duplicatesかどうかを判定する&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-s&lt;/code&gt;: FLAGで0x1 (template having multiple segments in sequencing) がセットされていないリードについて，PCR duplicatesかどうかを判定する&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-S&lt;/code&gt;: すべてのリードをシングルエンドとして，PCR duplicatesかどうかを判定する&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;余談ですが，&lt;a href=&quot;http://samtools.sourceforge.net/samtools.shtml&quot;&gt;samtoolsの公式&lt;/a&gt;には&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;-S      Treat paired-end reads and single-end reads.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;と書いてある一方で，例えば&lt;a href=&quot;https://wikis.utexas.edu/display/bioiteam/Removing+duplicates+from+alignment+output&quot;&gt;こちらのページ&lt;/a&gt;には&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;-S      Treat paired-end reads as single-end reads.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;と書いてあり，この書き方の方が分かりやすい気がしました．&lt;/p&gt;
+
+&lt;p&gt;もし勘違いなどあれば，コメントか&lt;a href=&quot;https://twitter.com/yuifu&quot;&gt;twitter&lt;/a&gt;でご指摘いただけると幸いです．&lt;/p&gt;
+
+    </content>
+  </entry>
+  
+  <entry>
+    <title>Octopressの準備</title>
+    <link href="/setup-of-octopress/"/>
+    <updated>2013-07-17T17:10:00+09:00</updated>
+    <id>/setup-of-octopress</id>
+    <author>
+      <name></name>
+      <uri>/</uri>
+      
+    </author>
+    <content type="html">
+      
+      &lt;h2 id=&quot;git-ruby-octopress&quot;&gt;git, ruby, octopress などのインストール&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://onigra.github.io/blog/2013/04/28/introduction-of-octopress/&quot;&gt;こちらのブログ&lt;/a&gt;を参考にしました．&lt;/p&gt;
+
+&lt;h2 id=&quot;github-user-organization-pages&quot;&gt;Github User/Organization pages&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://octopress.org/docs/deploying/github/&quot;&gt;Octopressのページ&lt;/a&gt; を参考にしました． 
+基本的にはこの通りにやればよいとのですが，githubのレポジトリを作成する際に &lt;code&gt;username.github.com&lt;/code&gt; ではなく &lt;code&gt;username.github.io&lt;/code&gt; にするようにするとうまくいきました．&lt;/p&gt;
+
+&lt;h2 id=&quot;&gt;新しいポストの作成&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;rake new_post[&#39;test&#39;]
+rake generate
+rake deploy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;&gt;新しいページの作成&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://onigra.github.io/blog/2013/04/28/introduction-of-octopress/&quot;&gt;こちらのブログ&lt;/a&gt;を参考にしました．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;rake new_page[&#39;about&#39;] 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;source/about/index.markdown&lt;/code&gt; を編集して内容を追加する．
+&lt;code&gt;source/_includes/custom/navigation.html&lt;/code&gt; を編集して，ナビゲーションにリンクを追加する &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;rake generate
+rake deploy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;&gt;デフォルトとは異なるテーマのインストール（オプション）&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://onigra.github.io/blog/2013/04/28/introduction-of-octopress/&quot;&gt;こちらのブログ&lt;/a&gt;を参考にしました．&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;git clone git://github.com/lucaslew/whitespace.git .themes/whitespace
+rake install[&#39;whitespace&#39;]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;&gt;途中で内容をプレビューしたいとき&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;git generate
+git preview
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;tex&quot;&gt;tex プラグインのインストール&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.mk-mode.com/octopress/2013/01/03/octopress-display-tex-formula/&quot;&gt;こちらのブログ&lt;/a&gt;を参考にしました．&lt;/p&gt;
+
+&lt;h2 id=&quot;todo&quot;&gt;TODO&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Rが，自分のローカルにあるpygmentでは対応していないので，対応できるようにする．&lt;/li&gt;
+&lt;/ul&gt;
+
+    </content>
+  </entry>
+  
+  
+</feed>
