@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>系統樹を描くのにClustalWを使うな – Haruka Ozaki, Ph.D. – Computational biolology & Bioinformatics</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="Beta Science: Please don’t use Clustal for tree construction!という短いブログ記事を見つけました．
+
+" />
+    <meta property="og:description" content="Beta Science: Please don’t use Clustal for tree construction!という短いブログ記事を見つけました．
+
+" />
+    
+    <meta name="author" content="Haruka Ozaki, Ph.D." />
+
+    
+    <meta property="og:title" content="系統樹を描くのにClustalWを使うな" />
+    <meta property="twitter:title" content="系統樹を描くのにClustalWを使うな" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Haruka Ozaki, Ph.D. - Computational biolology & Bioinformatics" href="/feed.xml" />
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars2.githubusercontent.com/u/2063184" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Haruka Ozaki, Ph.D.</a></h1>
+            <p class="site-description">Computational biolology & Bioinformatics</p>
+          </div>
+
+          <nav>
+            <a href="/cv/cv">CV (en)</a>
+            <a href="/profile/profile">Profile</a>
+            <a href="/research/research">Research</a>
+            <a href="/publications/publications">Publications</a>
+            <a href="/blog">Blog</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>系統樹を描くのにClustalWを使うな</h1>
+
+  <div class="entry">
+    <p><a href="http://betascience.blogspot.jp/2010/03/please-dont-use-clustal-for-tree.html">Beta Science: Please don’t use Clustal for tree construction!</a>という短いブログ記事を見つけました．</p>
+
+<p>まとめると，</p>
+
+<ul>
+  <li>「Clustalで系統樹描きました」じゃなくて，どの方法で系統樹描いたかまで答えられるようにしといてほしい</li>
+  <li>そもそもClustalのインターフェースで提供されている系統樹推定手法（NJ法？）はそんなに良くない</li>
+  <li>もはや，より高速な<a href="http://www.drive5.com/muscle/">Muscle</a>などが出ているので，多くの人はマルチプルアラインメントにすらClustalを使わない</li>
+  <li>多くの人は系統樹推定に最尤法やベイズ法を用いた手法を使う（<a href="http://atgc.lirmm.fr/phyml/">PhyML</a>や<a href="http://mrbayes.sourceforge.net">Mr.Bayes</a>など）</li>
+  <li><a href="http://www.phylogeny.fr/">Robust Phylogenetic Analysis For The Non-Specialist</a>が参考になる</li>
+</ul>
+
+<p>また，<code>ClustalW</code>はguide treeという樹形図を計算の過程で構築しますが，これは系統樹ではありません．</p>
+
+
+  </div>
+
+  <div class="date">
+    Written on August  6, 2013
+  </div>
+
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+
+<a href="https://www.facebook.com/yuifu.cb"><i class="svg-icon facebook"></i></a>
+
+<a href="https://github.com/yuifu"><i class="svg-icon github"></i></a>
+
+
+
+
+<a href="https://www.twitter.com/yuifu"><i class="svg-icon twitter"></i></a>
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>

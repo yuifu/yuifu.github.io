@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SAM/BAMからマルチリードを除く方法 – Haruka Ozaki, Ph.D. – Computational biolology & Bioinformatics</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="マルチリードについて
+ゲノム上の複数箇所にマップされたリードをmultiple mapped reads, multi-reads, reads with multiple hits などと呼びます． 
+もしくは，一つのリードに対して複数のアラインメントが出力されるもの，とも言えます．
+
+" />
+    <meta property="og:description" content="マルチリードについて
+ゲノム上の複数箇所にマップされたリードをmultiple mapped reads, multi-reads, reads with multiple hits などと呼びます． 
+もしくは，一つのリードに対して複数のアラインメントが出力されるもの，とも言えます．
+
+" />
+    
+    <meta name="author" content="Haruka Ozaki, Ph.D." />
+
+    
+    <meta property="og:title" content="SAM/BAMからマルチリードを除く方法" />
+    <meta property="twitter:title" content="SAM/BAMからマルチリードを除く方法" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Haruka Ozaki, Ph.D. - Computational biolology & Bioinformatics" href="/feed.xml" />
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars2.githubusercontent.com/u/2063184" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Haruka Ozaki, Ph.D.</a></h1>
+            <p class="site-description">Computational biolology & Bioinformatics</p>
+          </div>
+
+          <nav>
+            <a href="/cv/cv">CV (en)</a>
+            <a href="/profile/profile">Profile</a>
+            <a href="/research/research">Research</a>
+            <a href="/publications/publications">Publications</a>
+            <a href="/blog">Blog</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>SAM/BAMからマルチリードを除く方法</h1>
+
+  <div class="entry">
+    <h2 id="section">マルチリードについて</h2>
+<p>ゲノム上の複数箇所にマップされたリードをmultiple mapped reads, multi-reads, reads with multiple hits などと呼びます． 
+もしくは，一つのリードに対して複数のアラインメントが出力されるもの，とも言えます．</p>
+
+<p>このマルチリードは，しばしば解析の前に除かれます．では，どうやって除いたらいいでしょうか．</p>
+
+<h2 id="mapq">MAPQを使う</h2>
+
+<p>MAPQ（SAM/BAMの５列目）が適切にセットされているなら，これを使うことができます．
+適切というのは，ユニークなアラインメントでMAPQが50，アラインメントが２つだとMAPQが3，アラインメントが3以上だとMAPQが0に設定されている状態です．</p>
+
+<p>このとき，<code>samtools view -q</code>を使って，以下のように書けます．</p>
+
+<blockquote>
+  <p>-q INT      Skip alignments with MAPQ smaller than INT [0]</p>
+</blockquote>
+
+<pre><code>samtools view -q 4 hoge.bam &gt; hoge.uniq.bam
+</code></pre>
+
+<h2 id="nh">NHを使う</h2>
+<p>NHタグは，SAM/BAMファイルに，あるリードに対するアラインメントがいくつ入力されたかを <code>NH:i:[0-9]+</code>という形式で記録しています．</p>
+
+<blockquote>
+  <p>NH      i      Number of reported alignments that contains the query in the current record</p>
+</blockquote>
+
+<p>（<a href="http://samtools.sourceforge.net/SAM1.pdf">The SAM Format Specification (PDF)</a>）</p>
+
+<p>そのため，スクリプト言語で（私はNHの分布が知りたかったので，こちらの方法を使ってました）．
+以下は，Perlで書いた例です．</p>
+
+<pre><code class="language-perl">open(I, "hoge.bam");
+open(O, "&gt; hoge.uniq.bam");
+
+while(&lt;I&gt;){
+     if(/^@/){ # header
+          print O $_;
+          next;
+     }
+     if(/NH:i:([0-9]+)/){  # NH: Number of reported alignments that contains the query in the current record
+          if($1 == 1){
+               print O $_;
+          }
+     }
+}
+close(I);
+close(O);
+
+</code></pre>
+
+<h2 id="flag">FLAGは使えなさそう</h2>
+<p>掲示板などを読んでいるとFLAG（SAM/BAMの２列目）のビットを使って，すなわち<code>samtools view -F ***</code>を使う方法が提案されることがしばしばあります．
+これはおそらく<code> 0x100</code>(secondary alignment)のことを指しているのだと思うのですが，以下の例で示す通り，マルチヒットのリードを除くには不適切です．</p>
+
+<p>=====</p>
+
+<pre><code>read1      339     chr1    181938  3       2M107N99M       =       181891  -255    ACCGGAGGATGTTGGGATGGCAGAGGCGGTTCATGAGCTGCACCTCCCGCAGCATGTTGGCCTTGTTGCTCGCCAGCGTGTTCATCTTCAGCGCCATCACC   BDDDCACCC&lt;&lt;3DDDDCDDDDDD@@9BBCCDCC@49CCCCA&lt;DB?CDFFFFHHHHJJJJJIIJIJJJJJJJGJJJJIJJJJJJIJJJJHHHHHFFEDD?@B   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101        YT:Z:UU XS:A:-  NH:i:2  CC:Z:=  CP:i:182045     HI:i:0:0
+read1      83      chr1    182045  3       101M    =       181891  -255    ACCGGAGGATGTTGGGATGGCAGAGGCGGTTCATGAGCTGCACCTCCCGCAGCATGTTGGCCTTGTTGCTCGCCAGCGTGTTCATCTTCAGCGCCATCACC   BDDDCACCC&lt;&lt;3DDDDCDDDDDD@@9BBCCDCC@49CCCCA&lt;DB?CDFFFFHHHHJJJJJIIJIJJJJJJJGJJJJIJJJJJJIJJJJHHHHHFFEDD?@B   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101        YT:Z:UU NH:i:2  HI:i:11
+</code></pre>
+
+<p>これは，ペアエンドのリードをTopHatでアラインメントして得られた，あるリード <code>read1</code>に対する2つのアラインメントです．
+どちらも<code>NH:i:2</code>であることから，各リードに対して，ファイル中に2つのアラインメントが出力されていることがわかります．これは，MAPQ（５列目）が<code>3</code>になっていることからも分かります．
+一方で，FLAG（２列目）が，read1では<code>339</code>（0x1, 0x2, 0x10, 0x40, 0x100）で，read2では<code>83</code>（0x1, 0x2, 0x10, 0x20）となっています．２つのアラインメントにEdit distanceなどで違いがないにも関わらず，片方だけに<code>0x100</code>が付いています．</p>
+
+<p>つまり，マルチヒットのリードを除くという目的には不適切だと言えます．</p>
+
+<h2 id="section-1">参考</h2>
+<ul>
+  <li><a href="http://seqanswers.com/forums/showthread.php?t=19491">Remove reads which are not uniquely mapped - SEQanswers</a></li>
+</ul>
+
+<h2 id="flag-1">（参考）FLAGのビットの意味</h2>
+
+<p><a href="http://samtools.sourceforge.net/SAM1.pdf">The SAM Format Specification (PDF)</a></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Bit</th>
+      <th style="text-align: right">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">0x1</td>
+      <td style="text-align: right">template having multiple segments in sequencing</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">0x2</td>
+      <td style="text-align: right">each segment properly aligned according to the aligner</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">0x4</td>
+      <td style="text-align: right">segment unmapped</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">0x8</td>
+      <td style="text-align: right">next segment in the template unmapped</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">0x10</td>
+      <td style="text-align: right">SEQ being reverse complemented</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">0x20</td>
+      <td style="text-align: right">SEQ of the next segment in the template being reversed</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">0x40</td>
+      <td style="text-align: right">the first segment in the template</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">0x80</td>
+      <td style="text-align: right">the last segment in the template</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">0x100</td>
+      <td style="text-align: right">secondary alignment</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">0x200</td>
+      <td style="text-align: right">not passing quality controls</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">0x400</td>
+      <td style="text-align: right">PCR or optical duplicate</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+
+  <div class="date">
+    Written on July 19, 2013
+  </div>
+
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+
+<a href="https://www.facebook.com/yuifu.cb"><i class="svg-icon facebook"></i></a>
+
+<a href="https://github.com/yuifu"><i class="svg-icon github"></i></a>
+
+
+
+
+<a href="https://www.twitter.com/yuifu"><i class="svg-icon twitter"></i></a>
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>

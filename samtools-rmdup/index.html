@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>samtools rmdup の挙動に関する実験 – Haruka Ozaki, Ph.D. – Computational biolology & Bioinformatics</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="samtools rmdup について
+samtools rmdupは，potential PCR duplicates を除くのによく使われる便利なツールです．
+
+" />
+    <meta property="og:description" content="samtools rmdup について
+samtools rmdupは，potential PCR duplicates を除くのによく使われる便利なツールです．
+
+" />
+    
+    <meta name="author" content="Haruka Ozaki, Ph.D." />
+
+    
+    <meta property="og:title" content="samtools rmdup の挙動に関する実験" />
+    <meta property="twitter:title" content="samtools rmdup の挙動に関する実験" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Haruka Ozaki, Ph.D. - Computational biolology & Bioinformatics" href="/feed.xml" />
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars2.githubusercontent.com/u/2063184" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Haruka Ozaki, Ph.D.</a></h1>
+            <p class="site-description">Computational biolology & Bioinformatics</p>
+          </div>
+
+          <nav>
+            <a href="/cv/cv">CV (en)</a>
+            <a href="/profile/profile">Profile</a>
+            <a href="/research/research">Research</a>
+            <a href="/publications/publications">Publications</a>
+            <a href="/blog">Blog</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>samtools rmdup の挙動に関する実験</h1>
+
+  <div class="entry">
+    <h2 id="samtools-rmdup-">samtools rmdup について</h2>
+<p><code>samtools rmdup</code>は，potential PCR duplicates を除くのによく使われる便利なツールです．</p>
+
+<p><a href="http://samtools.sourceforge.net/samtools.shtml">samtoolsの公式</a>では以下のように説明してあります．
+&gt; samtools rmdup [-sS] <input.srt.bam> <out.bam>
+&gt;
+&gt; Remove potential PCR duplicates: if multiple read pairs have identical external coordinates, only retain the pair with highest mapping quality. In the paired-end mode, this command ONLY works with FR orientation and requires ISIZE is correctly set. It does not work for unpaired reads (e.g. two ends mapped to different chromosomes or orphan reads).
+&gt;  
+&gt; OPTIONS:
+&gt;
+&gt; -s      Remove duplicate for single-end reads. By default, the command works for paired-end reads only.
+&gt;
+&gt; -S      Treat paired-end reads and single-end reads.</out.bam></input.srt.bam></p>
+
+<p>しかし，この説明ではオプションを使った場合にどのような挙動をするのかよくわからなかっため，簡単な実験を行いました．</p>
+
+<h2 id="section">実験</h2>
+
+<p>まず，座標が同一な，ペアエンドのリード（ペアの両方または片方のみがマップされているもの）およびシングルエンドのリードから成るテストデータを作成しました．
+リード名はそれぞれ以下の通り．</p>
+
+<ul>
+  <li>test_pe_* はペアエンドでかつ両方のセグメントがマップされているリード（0x1）を表す</li>
+  <li>test1_peu_* はペアの片方のセグメントのみがマップされているリード（0x1と0x8）を表す</li>
+  <li>test_se_* はシングルエンドのリードを表す</li>
+  <li>末尾の0と1は，互いに同じ座標の異なるリードであることを示す</li>
+</ul>
+
+<pre><code>$ samtools view test.bam
+test_pe_0     99     chr1     160502     50     101M     =     160543     142     TGGGCTTGCTCTGCTGGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACA     @@@FFFFFHHHGGHHJJIIJJIIJHIIIIJJJGHIJJJJJJJJIJHIJJJJJIJJJIGIJIJJIJIJJJIHHEBB==CBBBBBDDB&lt;BDDDDDD@BDDDD&gt;     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:92A2G5     YT:Z:UU     NH:i:1
+test_pe_1     99     chr1     160502     50     101M     =     160543     142     TGGGCTTGCTCTGCTGGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACA     @@@FFFFFHHHGGHHJJIIJJIIJHIIIIJJJGHIJJJJJJJJIJHIJJJJJIJJJIGIJIJJIJIJJJIHHEBB==CBBBBBDDB&lt;BDDDDDD@BDDDD&gt;     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:92A2G5     YT:Z:UU     NH:i:1
+test_se_0     0     chr1     160500     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test_se_1     0     chr1     160500     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test1_peu_0     137     chr1     160517     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test1_peu_1     137     chr1     160517     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test_pe_0     147     chr1     160543     50     101M     =     160502     -142     TCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGCCAGTTGATTGACAGCTCAACTGGTTG     &gt;CBBBDDBDDDDBA?CDDDEEDDDDDDDBBBDDBDDDDDDDFFHHFGGHDBJJIIHGIJIIHGGEGIIJJJJIGEIJJIJIJJJIHIJHHGDHDFFFD@C@     AS:i:-12     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:51A2G46     YT:Z:UU     NH:i:1
+test_pe_1     147     chr1     160543     50     101M     =     160502     -142     TCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGCCAGTTGATTGACAGCTCAACTGGTTG     &gt;CBBBDDBDDDDBA?CDDDEEDDDDDDDBBBDDBDDDDDDDFFHHFGGHDBJJIIHGIJIIHGGEGIIJJJJIGEIJJIJIJJJIHIJHHGDHDFFFD@C@     AS:i:-12     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:51A2G46     YT:Z:UU     NH:i:1
+</code></pre>
+
+<p>このテストデータに対して<code>samtools rmdup</code>を実行します．</p>
+
+<pre><code>$ samtools rmdup test.bam test_rmdup.bam
+$ samtools rmdup -s test.bam test_rmdup_s.bam
+$ samtools rmdup -S test.bam test_rmdup_S.bam
+</code></pre>
+
+<p>結果を見てみます．ここではSAM/BAMの１列目のリード名（QNAME）のみを出力しています．</p>
+
+<pre><code># test.bam
+$ samtools view test.bam |awk '{print $1}'
+test_pe_0
+test_pe_1
+test_se_0
+test_se_1
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup したもの
+$ samtools view test_rmdup.bam |awk '{print $1}'
+test_pe_0
+test_se_0
+test_se_1
+test1_peu_0
+test1_peu_1
+test_pe_0
+
+# samtools rmdup -s したもの
+$ samtools view test_rmdup_s.bam |awk '{print $1}'
+test_pe_0
+test_pe_1
+test_se_0
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup -S したもの
+$ samtools view test_rmdup_S.bam |awk '{print $1}'
+test_pe_0
+test_se_0
+test1_peu_0
+test_pe_0
+</code></pre>
+
+<p>これらの結果から，</p>
+
+<ul>
+  <li>ペアの両方のセグメントがマップされている場合（0x1），デフォルトのときと<code>-S</code>がついているとき除かれる．</li>
+  <li>ペアの片方のセグメントのみがマップされている場合（0x1と0x8），<code>-S</code>がついているとき除かれる</li>
+  <li>シングルエンドの場合，<code>-s</code>もしくは<code>-S</code>がついているとき除かれる</li>
+</ul>
+
+<p>ということが分かりました．</p>
+
+<h2 id="section-1">なにが挙動を決めているのか</h2>
+<p>ペアの片方のセグメントのみがマップされている場合に，デフォルトでは除かれないことがわかりました．最初は，FLAG列をみてペアエンドかどうかを判定していると思い込んでいたので驚きました．</p>
+
+<p>テストデータの<code>test_pe_*</code>と<code>test1_peu_*</code>を眺めていると，後者では７列目が<code>*</code>となっていました（それまで気付いていませんでした…）．
+SAM/BAMの7列目のRNEXTは<a href="http://samtools.sourceforge.net/SAM1.pdf">The SAM Format Specification (PDF)</a>によると，以下のような説明がなされています．
+&gt; If RNEXT is ‘*’, no assumptions can be made on PNEXT and bit 0x20.</p>
+
+<p>この記述から，rmdupは RNEXTとPNEXTのみを参照しているように思えたのでさらに実験しました．</p>
+
+<pre><code>$ samtools view test2.bam
+test_pe_0     99     chr1     160502     50     101M     *     0     0     TGGGCTTGCTCTGCTGGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACA     @@@FFFFFHHHGGHHJJIIJJIIJHIIIIJJJGHIJJJJJJJJIJHIJJJJJIJJJIGIJIJJIJIJJJIHHEBB==CBBBBBDDB&lt;BDDDDDD@BDDDD&gt;     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:92A2G5     YT:Z:UU     NH:i:1
+test_pe_1     99     chr1     160502     50     101M     *     0     0     TGGGCTTGCTCTGCTGGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACA     @@@FFFFFHHHGGHHJJIIJJIIJHIIIIJJJGHIJJJJJJJJIJHIJJJJJIJJJIGIJIJJIJIJJJIHHEBB==CBBBBBDDB&lt;BDDDDDD@BDDDD&gt;     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:92A2G5     YT:Z:UU     NH:i:1
+test_se_0     0     chr1     160500     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test_se_1     0     chr1     160500     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test1_peu_0     137     chr1     160517     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test1_peu_1     137     chr1     160517     50     101M     *     0     0     GGAATGGAGATTTCGCTCTCAGCTTCTCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGC     @CCFFFFFGFHHHJJJJJJJJIJJJIJIJJJJJIJJJJJJJJJJJJJEHIHIJJJJJJIJJHHHHHHFDDDBDDDDDDD&gt;BDBDDDDDDDDDDDDDDDDDD     AS:i:-10     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:77A2G20     YT:Z:UU     NH:i:1
+test_pe_0     147     chr1     160543     50     101M     *     0     0     TCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGCCAGTTGATTGACAGCTCAACTGGTTG     &gt;CBBBDDBDDDDBA?CDDDEEDDDDDDDBBBDDBDDDDDDDFFHHFGGHDBJJIIHGIJIIHGGEGIIJJJJIGEIJJIJIJJJIHIJHHGDHDFFFD@C@     AS:i:-12     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:51A2G46     YT:Z:UU     NH:i:1
+test_pe_1     147     chr1     160543     50     101M     *     0     0     TCTGTCTGCCTCCTCTTCTCTGATATCGGTCCGAGTCGTGCGCCGTAAGGGGGTCGAACAGCTCTCCAGCGCAGCCAGTTGATTGACAGCTCAACTGGTTG     &gt;CBBBDDBDDDDBA?CDDDEEDDDDDDDBBBDDBDDDDDDDFFHHFGGHDBJJIIHGIJIIHGGEGIIJJJJIGEIJJIJIJJJIHIJHHGDHDFFFD@C@     AS:i:-12     XN:i:0     XM:i:2     XO:i:0     XG:i:0     NM:i:2     MD:Z:51A2G46     YT:Z:UU     NH:i:1
+</code></pre>
+
+<pre><code>samtools rmdup test2.bam test_rmdup2.bam
+samtools rmdup -s test2.bam test_rmdup_s2.bam
+samtools rmdup -S test2.bam test_rmdup_S2.bam
+</code></pre>
+
+<pre><code># test2.bam
+$ samtools view test2.bam |awk '{print $1}'
+test_pe_0
+test_pe_1
+test_se_0
+test_se_1
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup したとき
+$ samtools view test_2.bam |awk '{print $1}'
+test_pe_0
+test_pe_1
+test_se_0
+test_se_1
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup -s したとき
+$ samtools view test__s2.bam |awk '{print $1}'
+test_pe_0
+test_pe_1
+test_se_0
+test1_peu_0
+test1_peu_1
+test_pe_0
+test_pe_1
+
+# samtools rmdup -S したとき
+$ samtools view test__S2.bam |awk '{print $1}'
+test_pe_0
+test_se_0
+test1_peu_0
+test_pe_0
+</code></pre>
+
+<p>今度は，デフォルトのときでも，ペアの両方のセグメントがマップされているリードが除かれなくなりました．
+このことから，ペアエンドのリードを除くかどうかの判定には，（FLAGは関係なく）RNEXTおよびPNEXTのみを参照していると考えられました．
+一方で，<code>-s</code>のときに，ペアの片方のみマップされたリードが除かれないことから，シングルエンドの判定にはFLAGを使っていると考えられます．</p>
+
+<h2 id="section-2">まとめ</h2>
+
+<ul>
+  <li>デフォルト: ペアエンドでペアの両方がマップされるものについて，PCR duplicatesかどうかを判定する</li>
+  <li><code>-s</code>: FLAGで0x1 (template having multiple segments in sequencing) がセットされていないリードについて，PCR duplicatesかどうかを判定する</li>
+  <li><code>-S</code>: すべてのリードをシングルエンドとして，PCR duplicatesかどうかを判定する</li>
+</ul>
+
+<p>余談ですが，<a href="http://samtools.sourceforge.net/samtools.shtml">samtoolsの公式</a>には</p>
+
+<blockquote>
+  <p>-S      Treat paired-end reads and single-end reads.</p>
+</blockquote>
+
+<p>と書いてある一方で，例えば<a href="https://wikis.utexas.edu/display/bioiteam/Removing+duplicates+from+alignment+output">こちらのページ</a>には</p>
+
+<blockquote>
+  <p>-S      Treat paired-end reads as single-end reads.</p>
+</blockquote>
+
+<p>と書いてあり，この書き方の方が分かりやすい気がしました．</p>
+
+<p>もし勘違いなどあれば，コメントか<a href="https://twitter.com/yuifu">twitter</a>でご指摘いただけると幸いです．</p>
+
+
+  </div>
+
+  <div class="date">
+    Written on July 18, 2013
+  </div>
+
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+
+<a href="https://www.facebook.com/yuifu.cb"><i class="svg-icon facebook"></i></a>
+
+<a href="https://github.com/yuifu"><i class="svg-icon github"></i></a>
+
+
+
+
+<a href="https://www.twitter.com/yuifu"><i class="svg-icon twitter"></i></a>
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
