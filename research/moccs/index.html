@@ -1,234 +1,62 @@
-
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>MOCCS: motif centrality analysis of ChIP-Seq - Haruka Ozaki / 尾崎 遼</title>
-  <meta name="author" content="yuifu">
-
-  
-  <meta name="description" content="MOCCS: Motif Centrality Analysis of ChIP-Seq Mar 15th, 2014 MOCCSとは何か 　MOCCS（Motif Centrality Analysis of ChIP-Seq）は，様々なChIP- &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://yuifu.github.io/research/moccs">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Haruka Ozaki / 尾崎 遼" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-</head>
-
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Haruka Ozaki / 尾崎 遼</a></h1>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:yuifu.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Top</a></li>	
-  <li><a href="/cv">CV (en)</a></li>	
-  <li><a href="/profile">Profile</a></li>	
-  <li><a href="/research">Research</a></li>	
-  <li><a href="/publications">Publications</a></li>
-  <li><a href="/blog/archives">Blog</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article role="article">
-  
-  <header>
-    <h1 class="entry-title">MOCCS: Motif Centrality Analysis of ChIP-Seq</h1>
-    <p class="meta">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-15T18:45:00+09:00" pubdate data-updated="true">Mar 15<span>th</span>, 2014</time></p>
-  </header>
-  
-  <h2>MOCCSとは何か</h2>
-
-<p>　MOCCS（Motif Centrality Analysis of ChIP-Seq）は，<strong>様々なChIP-Seqのデータから転写因子が認識する配列を正確に抽出できる</strong>新しい解析手法です．<br/>
+<h2 id="moccs">MOCCSとは何か</h2>
+<p>　MOCCS（Motif Centrality Analysis of ChIP-Seq）は，__様々なChIP-Seqのデータから転写因子が認識する配列を正確に抽出できる__新しい解析手法です．<br />
 　既存のモチーフ探索ツールが位置特異的重み行列（Position weight matrix）など要約された情報を抽出するのに対し，MOCCSは個々の配列がゲノム全体でどの程度認識されているかを評価します．</p>
 
-<p>MOCCSのソフトウェアはGitHubにて公開しています。<br/>
-<a href="https://github.com/yuifu/moccs">https://github.com/yuifu/moccs</a></p>
+<p>MOCCSのソフトウェアはGitHubにて公開しています。<br />
+https://github.com/yuifu/moccs</p>
 
 <p>　私たちはMOCCSを開発し，時計タンパク質CLOCKのChIP-Seqデータに適用し，以下の論文に報告しました．</p>
 
 <ul>
-<li>Hikari Yoshitane*, Haruka Ozaki*, Hideki Terajima*, Ngoc-Hien Du, Yutaka Suzuki, Taihei Fujimori, Naoki Kosaka, Shigeki Shimba, Sumio Sugano, Toshihisa Takagi, Wataru Iwasaki#, and Yoshitaka Fukada#  <a href="http://mcb.asm.org/content/34/10/1776">CLOCK-controlled polyphonic regulations of circadian rhythms through canonical and non-canonical E-boxes.</a>  Molecular and Cellular Biology, 34(10):1776 (2014)
-
-<ul>
-<li><a href="http://www.biochem.s.u-tokyo.ac.jp/fukada-lab/research-highlights/rh2008/yoshitane2014-j.html">論文全体の説明</a></li>
-<li>* Equal contributions, # Corresponding authors</li>
+  <li>Hikari Yoshitane*, Haruka Ozaki*, Hideki Terajima*, Ngoc-Hien Du, Yutaka Suzuki, Taihei Fujimori, Naoki Kosaka, Shigeki Shimba, Sumio Sugano, Toshihisa Takagi, Wataru Iwasaki#, and Yoshitaka Fukada#  <a href="http://mcb.asm.org/content/34/10/1776">CLOCK-controlled polyphonic regulations of circadian rhythms through canonical and non-canonical E-boxes.</a>  Molecular and Cellular Biology, 34(10):1776 (2014)
+    <ul>
+      <li><a href="http://www.biochem.s.u-tokyo.ac.jp/fukada-lab/research-highlights/rh2008/yoshitane2014-j.html">論文全体の説明</a></li>
+      <li>* Equal contributions, # Corresponding authors</li>
+    </ul>
+  </li>
 </ul>
-</li>
-</ul>
 
-
-<h2>手法の概要</h2>
-
+<h2 id="section">手法の概要</h2>
 <p>　一般に，ChIP-Seqによって決定された転写因子結合サイト周辺での既知の認識配列の出現頻度を調べると，結合サイトを中心としたピーク様の分布を示します（図１）．MOCCSはこの性質を転写因子の認識配列の抽出に利用します．すなわち，転写因子結合サイト周辺での長さkの塩基配列（k-mer）の出現頻度がピーク様の分布となる配列を認識配列とし，全てのk-merの中から認識配列を列挙するというのがMOCCSのアイデアです．</p>
 
-<p><img class="center" src="/images/moccs/figure1.png" width="300"></p>
+<p><img src="/images/moccs/figure1.png" alt="" /></p>
 
 <p>　このピーク様の分布の鋭さを定量するために，まず，結合部位の中心からの距離を横軸に取り，累積の出現回数を縦軸に相対値としてプロットします（図２）．元の分布がピーク様の分布を示す場合，この曲線は上に凸の形になります（図２，赤線）．一方，ある配列が転写因子結合サイトの周辺にランダムに出現する場合は図２の青線のようになります．つまり，頻度分布のピークが鋭いほど，図２の赤線は青線から離れる形になります．この赤線と青線で囲まれた領域の面積をAUC（Area under curve）として定量すると，明確なピーク様分布を示す場合，AUCは大きくなることが分かります（図２）．</p>
 
-<p><img class="center" src="/images/moccs/figure2.png" width="600"></p>
+<p><img src="/images/moccs/figure2.png" alt="" /></p>
 
 <p>　MOCCSは，全てのk-merについて，転写因子結合サイト周辺の頻度分布を調べ，AUCを計算し，AUCが閾値より高いk-merを列挙することで，転写因子の認識配列として抽出することができます（図３）．</p>
 
-<p><img class="center" src="/images/moccs/figure3.png" width="400"></p>
+<p><img src="/images/moccs/figure3.png" alt="" /></p>
 
 <p>　</p>
 
-<h2>具体例: CLOCK ChIP-Seq解析</h2>
+<h2 id="clock-chip-seq">具体例: CLOCK ChIP-Seq解析</h2>
+<p>### CLOCK結合サイト周辺配列
+　まず，CLOCK ChIP-Seqデータからのピーク検出により，約8,000のCLOCK結合サイトを決定しました．この結合サイト周辺±250 bpの配列を解析に使用しました．MEMEによるモチーフ探索をおこなったところ．先行研究の通り，CLOCKの既知の認識配列であるCACGTGが抽出されました（図４）．また，CLOCK結合サイト周辺におけるCACGTGの分布をみるとピーク様の分布を示すことが分かります（図５）．</p>
 
-<h3>CLOCK結合サイト周辺配列</h3>
+<p><img src="/images/moccs/figure_1.png" alt="" />
+<img src="/images/moccs/figure_2.png" alt="" /></p>
 
-<p>　まず，CLOCK ChIP-Seqデータからのピーク検出により，約8,000のCLOCK結合サイトを決定しました．この結合サイト周辺±250 bpの配列を解析に使用しました．MEMEによるモチーフ探索をおこなったところ．先行研究の通り，CLOCKの既知の認識配列であるCACGTGが抽出されました（図４）．また，CLOCK結合サイト周辺におけるCACGTGの分布をみるとピーク様の分布を示すことが分かります（図５）．</p>
-
-<p><img class="center" src="/images/moccs/figure_1.png" width="400">
-<img class="center" src="/images/moccs/figure_2.png" width="400"></p>
-
-<h3>MOCCS解析</h3>
-
+<h3 id="moccs-1">MOCCS解析</h3>
 <p>　この研究では，CLOCKの典型的な認識モチーフであるCACGTGに類似した配列がどの程度ゲノム全体で使用されているかに興味があったため，探索する塩基配列の長さは6 bpとしました．また，CLOCKは遺伝子の転写開始部位の近傍に結合する傾向を示したため，マウスの全遺伝子のプロモータ配列（TSS上流501 bp）を用いて全ての6-merについてAUCを計算し，その分散の値を用いてAUCを正規化しました．</p>
 
 <p>　AUCの計算結果をそのまま出力すると，上位３配列はCACGTG，ACGTGC，ACACGTでした（図６）．しかし，ACGTGCおよびACACGTはCACGTGから一塩基ずれた配列であるため，このようにすでにAUCで上位にある配列と重なりのある配列は除去しました．最後に，正規化したAUCが5以上という基準を用いて，CLOCK認識配列を抽出しました（図７，表１）．</p>
 
-<p><img class="center" src="/images/moccs/figure_4.png" width="400">
-<img class="center" src="/images/moccs/figure_5.png" width="400">
-<img class="center" src="/images/moccs/table_1.png" width="600"></p>
+<p><img src="/images/moccs/figure_4.png" alt="" />
+<img src="/images/moccs/figure_5.png" alt="" />
+<img src="/images/moccs/table_1.png" alt="" /></p>
 
-<h3>結果と考察</h3>
-
+<h3 id="section-1">結果と考察</h3>
 <p>　MOCCSの結果，AUCが最も高かったのはCACGTGでした（表１）．これは．CACGTGが最もよく使用される認識配列であることを示していて，MOCCSが先行研究の知見を再現できたと考えられます．また，CACG[ACGT]Gが全て抽出されたことから，ゲノム全体のレベルでは5番目（２番目）の位置は塩基についてあまり選択的でないことが分かりました．さらに，これまで知られていなかった，CACGTGと２塩基異なる配列が有意な認識配列として見つかりました．</p>
 
 <p>　MOCCSで抽出された認識配列が実際に機能を示すかを確かめるため，CLOCK依存的な転写活性化の誘導の有無をルシフェラーゼアッセイにより調べました．その結果，表１のほぼ全ての配列において機能が確認されました（図８）．これは，MOCCSが実際に機能する認識配列を正確に予測できたことを表しており，MOCCSの有用性を示すものです．唯一機能を示さなかったTACGTAについては，出現回数が少ないことによってAUCの値がノイズの影響を受けた可能性が考えられます．</p>
 
-<p><img class="center" src="/images/moccs/figure_6.png" width="300"></p>
+<p><img src="/images/moccs/figure_6.png" alt="" /></p>
 
 <p>　</p>
 
-<h2>連絡先</h2>
-
+<h2 id="section-2">連絡先</h2>
 <p>MOCCSは様々なChIP-Seqデータから有意なDNA結合タンパク質の認識配列を列挙することができる手法です．興味のある方は harukao AT cb.k.u-tokyo.ac.jp までメールにてご連絡ください．</p>
 
 <p>　</p>
-
-  
-</article>
-
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2013/08/14/genome-size-database/">ゲノムサイズのデータベース</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/06/pplacer-tutorial/">Pplacerの使い方</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/06/do-not-use-clustal/">系統樹を描くのにClustalWを使うな</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/25/cufflinks-library-norm-method/">Cufflinks-library-norm-method</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/19/remove-multi-reads/">SAM/BAMからマルチリードを除く方法</a>
-      </li>
-    
-  </ul>
-</section>
-
-
-
-
-
-  
-</aside>
-
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - yuifu -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
-</footer>
-  
-
-
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
-</html>

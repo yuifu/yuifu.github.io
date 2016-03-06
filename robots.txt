@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://yuifu.github.io/sitemap.xml 
