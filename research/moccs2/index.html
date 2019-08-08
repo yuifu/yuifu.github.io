@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MOCCS2 – Haruka Ozaki, Ph.D. – Computational biolology & Bioinformatics</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="Computational biolology & Bioinformatics">
+    <meta property="og:description" content="Computational biolology & Bioinformatics" />
+    
+    <meta name="author" content="Haruka Ozaki, Ph.D." />
+
+    
+    <meta property="og:title" content="MOCCS2" />
+    <meta property="twitter:title" content="MOCCS2" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Haruka Ozaki, Ph.D. - Computational biolology & Bioinformatics" href="/feed.xml" />
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars2.githubusercontent.com/u/2063184" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Haruka Ozaki, Ph.D.</a></h1>
+            <p class="site-description">Computational biolology & Bioinformatics</p>
+          </div>
+
+          <nav>
+            <a href="/cv/cv">CV (en)</a>
+            <a href="/profile/profile">Profile</a>
+            <a href="/research/research">Research</a>
+            <a href="/publications/publications">Publications</a>
+            <a href="/blog">Blog</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="page">
+
+  <h1>MOCCS2</h1>
+
+  <div class="entry">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#moccs2とは">MOCCS2とは？</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#moccsとは">MOCCSとは？</a></li>
+<li class="toc-entry toc-h3"><a href="#moccs2における改良点">MOCCS2における改良点</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#アルゴリズムの概要">アルゴリズムの概要</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#aucによる認識配列の抽出">AUCによる認識配列の抽出</a></li>
+<li class="toc-entry toc-h3"><a href="#moccs2スコアによるaucのばらつきの補正">MOCCS2スコアによるAUCのばらつきの補正</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#moccs2の使用例１-dbpおよびe4bp4-chip-seqデータの解析">MOCCS2の使用例１: DBPおよびE4BP4 ChIP-seqデータの解析</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#chip-seq解析">ChIP-seq解析</a></li>
+<li class="toc-entry toc-h3"><a href="#moccs2解析">MOCCS2解析</a></li>
+<li class="toc-entry toc-h3"><a href="#実験による検証">実験による検証</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#moccs2の使用例２-clock-chip-seqデータの再解析">MOCCS2の使用例２: CLOCK ChIP-Seqデータの再解析</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#moccs解析">MOCCS解析</a></li>
+<li class="toc-entry toc-h3"><a href="#実験による検証-1">実験による検証</a></li>
+<li class="toc-entry toc-h3"><a href="#moccs2による再解析">MOCCS2による再解析</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#連絡先">連絡先</a></li>
+</ul><h2 id="moccs2とは">
+<a class="anchor" href="#moccs2%E3%81%A8%E3%81%AF" aria-hidden="true"><span class="octicon octicon-link"></span></a>MOCCS2とは？</h2>
+<p>MOCCS2 (MOCCS version 2.0) は、様々なChIP-Seqのデータから転写因子が認識する配列を正確に抽出できるバイオインフォマティクス手法 MOCCS を偽陽性が少なくなるように改良したソフトウェアです。</p>
+
+<p>MOCCS2のソフトウェアはGitHubにて公開しています。 <a href="https://github.com/yuifu/moccs">https://github.com/yuifu/moccs</a></p>
+
+<p>私たちはMOCCS2を開発するとともに、時計タンパク質DBPおよびMOCCS2に適用し、以下の論文に報告しました。</p>
+
+<ul>
+  <li>Hikari Yoshitane*, Yoshimasa Asano, Aya Sagami, Seinosuke Sakai, Yutaka Suzuki, Hitoshi Okamura, Wataru Iwasaki, Haruka Ozaki, and Yoshitaka Fukada*. Functional D-box sequences reset the circadian clock and drive mRNA rhythms. Communications Biology (2019) DOI: 10.1038/s42003-019-0522-3
+    <ul>
+      <li>TODO: <a href="">プレスリリース</a>
+</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="moccsとは">
+<a class="anchor" href="#moccs%E3%81%A8%E3%81%AF" aria-hidden="true"><span class="octicon octicon-link"></span></a>MOCCSとは？</h3>
+<p>MOCCS（Motif Centrality Analysis of ChIP-Seq）は、<strong>様々なChIP-Seqのデータから転写因子が認識する配列を正確に抽出できる</strong> 新しいバイオインフォマティクス手法です。既存のモチーフ探索ツールが位置特異的重み行列（Position weight matrix）など要約された情報を抽出するのに対し、MOCCSは個々の配列がゲノム全体でどの程度認識されているかを評価します。</p>
+
+<p>MOCCSについて、以下の論文にて報告しています。</p>
+
+<ul>
+  <li>Yoshitane H*, Ozaki H*, Terajima H*, Du NH, Suzuki Y, Fujimori T, Kosaka N, Shimba S, Sugano S, Takagi T, Iwasaki W#, Fukada Y#. <a href="http://mcb.asm.org/content/34/10/1776">CLOCK-controlled polyphonic regulation of circadian rhythms through canonical and noncanonical E-boxes.</a> <em>Molecular and cellular biology</em>. 2014 May 15;34(10):1776-87. (* Equal contributions, # Corresponding authors) <a href="http://www.biochem.s.u-tokyo.ac.jp/fukada-lab/research-highlights/rh2008/yoshitane2014-j.html">日本語プレスリリース</a>
+</li>
+  <li>Ozaki H, Iwasaki W. <a href="https://www.ncbi.nlm.nih.gov/pubmed/26971251">MOCCS: Clarifying DNA-binding motif ambiguity using ChIP-seq data.</a> <em>Computational biology and chemistry</em>. 2016 Aug 1;63:62-72. <a href="http://yuifu.github.io/pdf/2016_moccs.pdf">Preprint</a>
+</li>
+</ul>
+
+<h3 id="moccs2における改良点">
+<a class="anchor" href="#moccs2%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E6%94%B9%E8%89%AF%E7%82%B9" aria-hidden="true"><span class="octicon octicon-link"></span></a>MOCCS2における改良点</h3>
+
+<p>MOCCSでは候補認識配列の転写因子結合への集中度合いを <strong>AUC</strong> という指標で評価しますが、候補認識配列の出現回数が小さい場合にAUCの値のばらつきが大きく偽陽性が生じうるという課題がありました。</p>
+
+<p>MOCCS2では、そのようなk-merの出現回数に応じたAUCのばらつきの大きさを補正した <strong>‘MOCCS2スコア’</strong> を採用し、より偽陽性の少ない転写因子の認識配列を抽出することが可能になりました。MOCCS2では、全てのk-merについてAUCとMOCCS2スコアを計算していますが、MOCC2スコアを用いることを推奨しています。</p>
+
+<h2 id="アルゴリズムの概要">
+<a class="anchor" href="#%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0%E3%81%AE%E6%A6%82%E8%A6%81" aria-hidden="true"><span class="octicon octicon-link"></span></a>アルゴリズムの概要</h2>
+<h3 id="aucによる認識配列の抽出">
+<a class="anchor" href="#auc%E3%81%AB%E3%82%88%E3%82%8B%E8%AA%8D%E8%AD%98%E9%85%8D%E5%88%97%E3%81%AE%E6%8A%BD%E5%87%BA" aria-hidden="true"><span class="octicon octicon-link"></span></a>AUCによる認識配列の抽出</h3>
+<p>　一般に、ChIP-Seqによって決定された転写因子結合サイト周辺での既知の認識配列の出現頻度を調べると、結合サイトを中心としたピーク様の分布を示します（図１）。MOCCSはこの性質を転写因子の認識配列の抽出に利用します。すなわち、転写因子結合サイト周辺での長さkの塩基配列（k-mer）の出現頻度がピーク様の分布となる配列を認識配列とし、全てのk-merの中から認識配列を列挙するというのがMOCCSのアイデアです。</p>
+
+<p><img src="/images/moccs/figure1.png" alt="Drawing" style="width: 300px;" align="middle"></p>
+
+<p>　このピーク様の分布の鋭さを定量するために、まず、結合部位の中心からの距離を横軸に取り、累積の出現回数を縦軸に相対値としてプロットします（図２）。元の分布がピーク様の分布を示す場合、この曲線は上に凸の形になります（図２、赤線）。一方、ある配列が転写因子結合サイトの周辺にランダムに出現する場合は図２の青線のようになります。つまり、頻度分布のピークが鋭いほど、図２の赤線は青線から離れる形になります。この赤線と青線で囲まれた領域の面積をAUC（Area under curve）として定量すると、明確なピーク様分布を示す場合、AUCは大きくなることが分かります（図２）。</p>
+
+<p><img src="/images/moccs/figure2.png" alt="Drawing" style="width: 600px;" align="middle"></p>
+
+<p>　MOCCSは、全てのk-merについて、転写因子結合サイト周辺の頻度分布を調べ、AUCを計算し、AUCが閾値より高いk-merを列挙することで、転写因子の認識配列として抽出することができます（図３）。</p>
+
+<p><img src="/images/moccs/figure3.png" alt="Drawing" style="width: 400px;" align="middle">
+　</p>
+
+<h3 id="moccs2スコアによるaucのばらつきの補正">
+<a class="anchor" href="#moccs2%E3%82%B9%E3%82%B3%E3%82%A2%E3%81%AB%E3%82%88%E3%82%8Bauc%E3%81%AE%E3%81%B0%E3%82%89%E3%81%A4%E3%81%8D%E3%81%AE%E8%A3%9C%E6%AD%A3" aria-hidden="true"><span class="octicon octicon-link"></span></a>MOCCS2スコアによるAUCのばらつきの補正</h3>
+<p>AUCはk-merの出現回数が小さいときに値が不安定になり、偽陽性が生じうるという課題がありました。</p>
+
+<p>実際、転写因子結合サイト周辺に各k-merが一様分布から一定回数出現すると仮定してシミュレーションを行った場合、出現回数が大きいときは累積相対頻度分布が直線に乗るのに対し、出現回数が小さいときは直線からのばらつきが大きくなります（図４）。AUCの値のばらつきの度合いを標準偏差（SD）で定量すると、出現回数が小さいときは標準偏差が大きくなる、すなわち、AUCの値が大きなばらつきを示すことがわかります（図５）。</p>
+
+<p><img src="/images/moccs2/fig1.png" alt="Drawing" style="width: 600px;" align="middle"></p>
+
+<p>　　　</p>
+
+<p><img src="/images/moccs2/fig2.png" alt="Drawing" style="width: 200px;" align="middle"></p>
+
+<p>そこでMOCCS2では、そのようなk-merの出現回数に応じたAUCの標準偏差でAUCを補正した ‘MOCCS2スコア’ を計算することで、転写因子の認識配列を正しく抽出することを目指しました。</p>
+
+<p><strong>MOCCS2スコア</strong> は、あるk-merの出現回数におけるAUCの標準偏差に対する実際のAUCの相対値です。あるk-merの出現回数を <img src="https://latex.codecogs.com/gif.latex?C"> とし、TFBS周辺のk-mer探索領域の長さを <img src="https://latex.codecogs.com/gif.latex?W"> とすると、MOCCS2スコアは以下のように定義されます:</p>
+
+<p align="center"><img src="https://latex.codecogs.com/gif.latex?%5Ctextrm%7B%5BMOCCS2&amp;space;score%5D%7D&amp;space;=&amp;space;%5Ctextrm%7B%5BAUC%5D%7D&amp;space;/&amp;space;%5Ctextrm%7B%5BSD&amp;space;of&amp;space;AUC%5D%7D&amp;space;=&amp;space;%5Ctextrm%7B%5BAUC%5D%7D&amp;space;%5Ctimes&amp;space;%5Cfrac%7B%5Csqrt%7B12C%7D%7D%7BW%7D"></p>
+
+<p>AUCの標準偏差 [SD of AUC] の導出については、上記論文をご参照ください。</p>
+
+<h2 id="moccs2の使用例１-dbpおよびe4bp4-chip-seqデータの解析">
+<a class="anchor" href="#moccs2%E3%81%AE%E4%BD%BF%E7%94%A8%E4%BE%8B%EF%BC%91-dbp%E3%81%8A%E3%82%88%E3%81%B3e4bp4-chip-seq%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%A7%A3%E6%9E%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>MOCCS2の使用例１: DBPおよびE4BP4 ChIP-seqデータの解析</h2>
+
+<h3 id="chip-seq解析">
+<a class="anchor" href="#chip-seq%E8%A7%A3%E6%9E%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>ChIP-seq解析</h3>
+<p>まず、マウス肝臓由来の時計タンパク質であり転写活性化因子であるDBPと転写抑制因子であるE4BP4のChIP-seqデータから、両方の転写因子が結合する 1,490 の結合サイトを決定しました。</p>
+
+<p>モチーフ探索ツールのHOMERを適用したところ、少なくとも長さ8 bpのモチーフがDBPとE4BP4に認識されることがわかりました（図６）。</p>
+
+<p><img src="/images/moccs2/fig0.png" alt="Drawing" style="width: 300px;" align="middle"></p>
+
+<h3 id="moccs2解析">
+<a class="anchor" href="#moccs2%E8%A7%A3%E6%9E%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>MOCCS2解析</h3>
+
+<p>この結合サイト周辺の±250 bpの塩基配列を取り出し、MOCCS2解析に供しました。探索する認識配列の長さは5 bpから10 bpについて調べました。HOMERによるモチーフ解析の結果から、特に8 bpでのMOCCS2の結果に着目しました。</p>
+
+<p>ここで、MOCCS2スコアが高い順に8 bpの配列を並べ替えた上で、MOCCS2スコアで上位にある配列と一塩基ずれで重なりのある配列（例えば、 TTATGCAA に対する TATGCAAN や NTTATGCA）は除外し、DBP/E4BP4認識配列を抽出しました（表１）。</p>
+
+<p><img src="/images/moccs2/fig4.png" alt="Drawing" style="width: 400px;" align="middle"></p>
+
+<p>MOCCS2スコアが最も高かった配列は TTATGCAA でした。実際、DBP/E4BP4結合サイト周辺における TTATGCAA の分布をみるとピーク様の分布を示すことがわかります（図７）。この配列は <em>Per1</em> 遺伝子の転写開始点周辺において機能することが知られる認識配列であり、かつ、先行研究で知られているD-boxモチーフTTAYGTAAには含まれていなかったものでした。また、２番目の TTATGTAA は <em>Per2</em> 遺伝子のプロモーター領域におけるD-boxモチーフでした。さらに、18番目の TTACGTAA は D-boxモチーフ TTAYGTAA に含まれるものであり、出現回数は低いものの実際に結合サイト周辺に集中して分布していることがわかります（図７）。</p>
+
+<p><img src="/images/moccs2/fig3.png" alt="Drawing" style="width: 600px;" align="middle"></p>
+
+<h3 id="実験による検証">
+<a class="anchor" href="#%E5%AE%9F%E9%A8%93%E3%81%AB%E3%82%88%E3%82%8B%E6%A4%9C%E8%A8%BC" aria-hidden="true"><span class="octicon octicon-link"></span></a>実験による検証</h3>
+
+<p>MOCCS2で抽出された認識配列が実際に機能を示すかを確かめるため、DBP依存的な転写活性化およびE4BP4依存的な転写抑制の誘導の有無をルシフェラーゼアッセイにより調べました。同時にネガティブコントロールとして、MOCCS2スコアでトップの TTATGCAA と一塩基ミスマッチであるもののMOCCS2スコアが低い配列（TAATGCAA、TTCTGCAA）でも同様の実験を行いました。</p>
+
+<p>その結果、表１の多くの配列において機能が確認されました（図８）、一方、MOCC2スコアの低い配列では、転写活性化および転写抑制能が観察されませんでした（図８）。以上の結果より、MOCCS2によって実際に機能する認識配列を正確に予測できたことを表しており、MOCCS2の有用性を示すものです。</p>
+
+<p><img src="/images/moccs2/fig5.png" alt="Drawing" style="width: 600px;" align="middle"></p>
+
+<h2 id="moccs2の使用例２-clock-chip-seqデータの再解析">
+<a class="anchor" href="#moccs2%E3%81%AE%E4%BD%BF%E7%94%A8%E4%BE%8B%EF%BC%92-clock-chip-seq%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%86%8D%E8%A7%A3%E6%9E%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>MOCCS2の使用例２: CLOCK ChIP-Seqデータの再解析</h2>
+<h3 id="moccs解析">
+<a class="anchor" href="#moccs%E8%A7%A3%E6%9E%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>MOCCS解析</h3>
+
+<p>私たちは Yoshitane <em>et al</em>. (2014) において、CLOCK ChIP-Seqデータに対し、MOCCSを適用しました。まず、ピーク検出により、約8,000のCLOCK結合サイトを決定しました。この結合サイト周辺±250 bpの配列を解析に使用しました。</p>
+
+<p>　この研究では、CLOCKの典型的な認識モチーフであるCACGTGに類似した配列がどの程度ゲノム全体で使用されているかに興味があったため、探索する塩基配列の長さは6 bpとしました。また、CLOCKは遺伝子の転写開始部位の近傍に結合する傾向を示したため、マウスの全遺伝子のプロモータ配列（TSS上流501 bp）を用いて全ての6-merについてAUCを計算し、その分散の値を用いてAUCを正規化しました。</p>
+
+<p>　AUCの計算結果から、このようにすでにAUCで上位にある配列と重なりのある配列はを除外し、さらに正規化したAUCが5以上という基準を用いて、CLOCK認識配列を抽出しました（図９、表２）。</p>
+
+<p><img src="/images/moccs2/figure_5.png" alt="Drawing" style="width: 400px;" align="middle"></p>
+
+<p>　</p>
+
+<p><img src="/images/moccs2/table_1.png" alt="Drawing" style="width: 600px;" align="middle"></p>
+
+<p>　MOCCSの結果、AUCが最も高かったのはCACGTGでした（表２）。これは。CACGTGが最もよく使用される認識配列であることを示していて、MOCCSが先行研究の知見を再現できたと考えられます。また、CACG[ACGT]Gが全て抽出されたことから、ゲノム全体のレベルでは5番目（２番目）の位置は塩基についてあまり選択的でないことが分かりました。さらに、これまで知られていなかった、CACGTGと２塩基異なる配列が有意な認識配列として見つかりました。</p>
+
+<h3 id="実験による検証-1">
+<a class="anchor" href="#%E5%AE%9F%E9%A8%93%E3%81%AB%E3%82%88%E3%82%8B%E6%A4%9C%E8%A8%BC-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>実験による検証</h3>
+
+<p>　MOCCSで抽出された認識配列が実際に機能を示すかを確かめるため、CLOCK依存的な転写活性化の誘導の有無をルシフェラーゼアッセイにより調べました。その結果、表２のほぼ全ての配列において機能が確認されました（図10）。これは、MOCCSが実際に機能する認識配列を正確に予測できたことを表しており、MOCCSの有用性を示すものです。唯一機能を示さなかった TACGTA については、出現回数が少ないことによってAUCの値がノイズの影響を受けた可能性が考えられました。</p>
+
+<p><img src="/images/moccs2/figure_6.png" alt="Drawing" style="width: 300px;" align="center"></p>
+
+<h3 id="moccs2による再解析">
+<a class="anchor" href="#moccs2%E3%81%AB%E3%82%88%E3%82%8B%E5%86%8D%E8%A7%A3%E6%9E%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>MOCCS2による再解析</h3>
+
+<p>上記CLOCK ChIP-seqデータをMOCCS2によって再解析したところ、TACGTAについてのみAUCが高いにもかかわらずMOCC2スコアは低い値をとる結果となりました（図11）。これは TACGTA が出現回数が低いことによってAUCの値が不安定なことによる偽陽性であることを示すものであり、レポーターアッセイ実験の結果とも整合的です。</p>
+
+<p><img src="/images/moccs2/fig6.png" alt="Drawing" style="width: 600px;" align="center"></p>
+
+<p>この結果から、MOCC2スコアは実際にAUCのばらつきによる偽陽性を除き、より正確に転写因子の認識配列を列挙できることが示されました。</p>
+
+<h2 id="連絡先">
+<a class="anchor" href="#%E9%80%A3%E7%B5%A1%E5%85%88" aria-hidden="true"><span class="octicon octicon-link"></span></a>連絡先</h2>
+<p>MOCCS2は様々なChIP-Seqデータから有意なDNA結合タンパク質の認識配列を列挙することができる手法です。興味のある方は 尾崎 harukao.cb[at]gmail.com までメールにてご連絡ください。</p>
+<!-- <h2 id="moccs2とは">MOCCS2とは？</h2>
+<p>MOCCS2 (MOCCS version 2.0) は、様々なChIP-Seqのデータから転写因子が認識する配列を正確に抽出できるバイオインフォマティクス手法 MOCCS を偽陽性が少なくなるように改良したソフトウェアです。</p>
+
+<p>MOCCS2のソフトウェアはGitHubにて公開しています。 <a href="https://github.com/yuifu/moccs">https://github.com/yuifu/moccs</a></p>
+
+<p>私たちはMOCCS2を開発するとともに、時計タンパク質DBPおよびMOCCS2に適用し、以下の論文に報告しました。</p>
+
+<ul>
+  <li>Hikari Yoshitane*, Yoshimasa Asano, Aya Sagami, Seinosuke Sakai, Yutaka Suzuki, Hitoshi Okamura, Wataru Iwasaki, Haruka Ozaki, and Yoshitaka Fukada*. Functional D-box sequences reset the circadian clock and drive mRNA rhythms. Communications Biology (2019) DOI: 10.1038/s42003-019-0522-3
+    <ul>
+      <li>TODO: <a href="">プレスリリース</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="moccsとは">MOCCSとは？</h3>
+<p>MOCCS（Motif Centrality Analysis of ChIP-Seq）は、<strong>様々なChIP-Seqのデータから転写因子が認識する配列を正確に抽出できる</strong> 新しいバイオインフォマティクス手法です。既存のモチーフ探索ツールが位置特異的重み行列（Position weight matrix）など要約された情報を抽出するのに対し、MOCCSは個々の配列がゲノム全体でどの程度認識されているかを評価します。</p>
+
+<p>MOCCSについて、以下の論文にて報告しています。</p>
+
+<ul>
+  <li>Yoshitane H*, Ozaki H*, Terajima H*, Du NH, Suzuki Y, Fujimori T, Kosaka N, Shimba S, Sugano S, Takagi T, Iwasaki W#, Fukada Y#. <a href="http://mcb.asm.org/content/34/10/1776">CLOCK-controlled polyphonic regulation of circadian rhythms through canonical and noncanonical E-boxes.</a> <em>Molecular and cellular biology</em>. 2014 May 15;34(10):1776-87. (* Equal contributions, # Corresponding authors) <a href="http://www.biochem.s.u-tokyo.ac.jp/fukada-lab/research-highlights/rh2008/yoshitane2014-j.html">日本語プレスリリース</a></li>
+  <li>Ozaki H, Iwasaki W. <a href="https://www.ncbi.nlm.nih.gov/pubmed/26971251">MOCCS: Clarifying DNA-binding motif ambiguity using ChIP-seq data.</a> <em>Computational biology and chemistry</em>. 2016 Aug 1;63:62-72. <a href="http://yuifu.github.io/pdf/2016_moccs.pdf">Preprint</a></li>
+</ul>
+
+<h3 id="moccs2における改良点">MOCCS2における改良点</h3>
+
+<p>MOCCSでは候補認識配列の転写因子結合への集中度合いを <strong>AUC</strong> という指標で評価しますが、候補認識配列の出現回数が小さい場合にAUCの値のばらつきが大きく偽陽性が生じうるという課題がありました。</p>
+
+<p>MOCCS2では、そのようなk-merの出現回数に応じたAUCのばらつきの大きさを補正した <strong>‘MOCCS2スコア’</strong> を採用し、より偽陽性の少ない転写因子の認識配列を抽出することが可能になりました。MOCCS2では、全てのk-merについてAUCとMOCCS2スコアを計算していますが、MOCC2スコアを用いることを推奨しています。</p>
+
+<h2 id="アルゴリズムの概要">アルゴリズムの概要</h2>
+<h3 id="aucによる認識配列の抽出">AUCによる認識配列の抽出</h3>
+<p>　一般に、ChIP-Seqによって決定された転写因子結合サイト周辺での既知の認識配列の出現頻度を調べると、結合サイトを中心としたピーク様の分布を示します（図１）。MOCCSはこの性質を転写因子の認識配列の抽出に利用します。すなわち、転写因子結合サイト周辺での長さkの塩基配列（k-mer）の出現頻度がピーク様の分布となる配列を認識配列とし、全てのk-merの中から認識配列を列挙するというのがMOCCSのアイデアです。</p>
+
+<p><img src="/images/moccs/figure1.png" alt="Drawing" style="width: 300px;" align="middle" /></p>
+
+<p>　このピーク様の分布の鋭さを定量するために、まず、結合部位の中心からの距離を横軸に取り、累積の出現回数を縦軸に相対値としてプロットします（図２）。元の分布がピーク様の分布を示す場合、この曲線は上に凸の形になります（図２、赤線）。一方、ある配列が転写因子結合サイトの周辺にランダムに出現する場合は図２の青線のようになります。つまり、頻度分布のピークが鋭いほど、図２の赤線は青線から離れる形になります。この赤線と青線で囲まれた領域の面積をAUC（Area under curve）として定量すると、明確なピーク様分布を示す場合、AUCは大きくなることが分かります（図２）。</p>
+
+<p><img src="/images/moccs/figure2.png" alt="Drawing" style="width: 600px;" align="middle" /></p>
+
+<p>　MOCCSは、全てのk-merについて、転写因子結合サイト周辺の頻度分布を調べ、AUCを計算し、AUCが閾値より高いk-merを列挙することで、転写因子の認識配列として抽出することができます（図３）。</p>
+
+<p><img src="/images/moccs/figure3.png" alt="Drawing" style="width: 400px;" align="middle" />
+　</p>
+
+<h3 id="moccs2スコアによるaucのばらつきの補正">MOCCS2スコアによるAUCのばらつきの補正</h3>
+<p>AUCはk-merの出現回数が小さいときに値が不安定になり、偽陽性が生じうるという課題がありました。</p>
+
+<p>実際、転写因子結合サイト周辺に各k-merが一様分布から一定回数出現すると仮定してシミュレーションを行った場合、出現回数が大きいときは累積相対頻度分布が直線に乗るのに対し、出現回数が小さいときは直線からのばらつきが大きくなります（図４）。AUCの値のばらつきの度合いを標準偏差（SD）で定量すると、出現回数が小さいときは標準偏差が大きくなる、すなわち、AUCの値が大きなばらつきを示すことがわかります（図５）。</p>
+
+<p><img src="/images/moccs2/fig1.png" alt="Drawing" style="width: 600px;" align="middle" /></p>
+
+<p>　　　</p>
+
+<p><img src="/images/moccs2/fig2.png" alt="Drawing" style="width: 200px;" align="middle" /></p>
+
+<p>そこでMOCCS2では、そのようなk-merの出現回数に応じたAUCの標準偏差でAUCを補正した ‘MOCCS2スコア’ を計算することで、転写因子の認識配列を正しく抽出することを目指しました。</p>
+
+<p><strong>MOCCS2スコア</strong> は、あるk-merの出現回数におけるAUCの標準偏差に対する実際のAUCの相対値です。あるk-merの出現回数を <img src="https://latex.codecogs.com/gif.latex?C" /> とし、TFBS周辺のk-mer探索領域の長さを <img src="https://latex.codecogs.com/gif.latex?W" /> とすると、MOCCS2スコアは以下のように定義されます:</p>
+
+<p align="center"><img src="https://latex.codecogs.com/gif.latex?\textrm{[MOCCS2&space;score]}&space;=&space;\textrm{[AUC]}&space;/&space;\textrm{[SD&space;of&space;AUC]}&space;=&space;\textrm{[AUC]}&space;\times&space;\frac{\sqrt{12C}}{W}" /></p>
+
+<p>AUCの標準偏差 [SD of AUC] の導出については、上記論文をご参照ください。</p>
+
+<h2 id="moccs2の使用例１-dbpおよびe4bp4-chip-seqデータの解析">MOCCS2の使用例１: DBPおよびE4BP4 ChIP-seqデータの解析</h2>
+
+<h3 id="chip-seq解析">ChIP-seq解析</h3>
+<p>まず、マウス肝臓由来の時計タンパク質であり転写活性化因子であるDBPと転写抑制因子であるE4BP4のChIP-seqデータから、両方の転写因子が結合する 1,490 の結合サイトを決定しました。</p>
+
+<p>モチーフ探索ツールのHOMERを適用したところ、少なくとも長さ8 bpのモチーフがDBPとE4BP4に認識されることがわかりました（図６）。</p>
+
+<p><img src="/images/moccs2/fig0.png" alt="Drawing" style="width: 300px;" align="middle" /></p>
+
+<h3 id="moccs2解析">MOCCS2解析</h3>
+
+<p>この結合サイト周辺の±250 bpの塩基配列を取り出し、MOCCS2解析に供しました。探索する認識配列の長さは5 bpから10 bpについて調べました。HOMERによるモチーフ解析の結果から、特に8 bpでのMOCCS2の結果に着目しました。</p>
+
+<p>ここで、MOCCS2スコアが高い順に8 bpの配列を並べ替えた上で、MOCCS2スコアで上位にある配列と一塩基ずれで重なりのある配列（例えば、 TTATGCAA に対する TATGCAAN や NTTATGCA）は除外し、DBP/E4BP4認識配列を抽出しました（表１）。</p>
+
+<p><img src="/images/moccs2/fig4.png" alt="Drawing" style="width: 400px;" align="middle" /></p>
+
+<p>MOCCS2スコアが最も高かった配列は TTATGCAA でした。実際、DBP/E4BP4結合サイト周辺における TTATGCAA の分布をみるとピーク様の分布を示すことがわかります（図７）。この配列は <em>Per1</em> 遺伝子の転写開始点周辺において機能することが知られる認識配列であり、かつ、先行研究で知られているD-boxモチーフTTAYGTAAには含まれていなかったものでした。また、２番目の TTATGTAA は <em>Per2</em> 遺伝子のプロモーター領域におけるD-boxモチーフでした。さらに、18番目の TTACGTAA は D-boxモチーフ TTAYGTAA に含まれるものであり、出現回数は低いものの実際に結合サイト周辺に集中して分布していることがわかります（図７）。</p>
+
+<p><img src="/images/moccs2/fig3.png" alt="Drawing" style="width: 600px;" align="middle" /></p>
+
+<h3 id="実験による検証">実験による検証</h3>
+
+<p>MOCCS2で抽出された認識配列が実際に機能を示すかを確かめるため、DBP依存的な転写活性化およびE4BP4依存的な転写抑制の誘導の有無をルシフェラーゼアッセイにより調べました。同時にネガティブコントロールとして、MOCCS2スコアでトップの TTATGCAA と一塩基ミスマッチであるもののMOCCS2スコアが低い配列（TAATGCAA、TTCTGCAA）でも同様の実験を行いました。</p>
+
+<p>その結果、表１の多くの配列において機能が確認されました（図８）、一方、MOCC2スコアの低い配列では、転写活性化および転写抑制能が観察されませんでした（図８）。以上の結果より、MOCCS2によって実際に機能する認識配列を正確に予測できたことを表しており、MOCCS2の有用性を示すものです。</p>
+
+<p><img src="/images/moccs2/fig5.png" alt="Drawing" style="width: 600px;" align="middle" /></p>
+
+<h2 id="moccs2の使用例２-clock-chip-seqデータの再解析">MOCCS2の使用例２: CLOCK ChIP-Seqデータの再解析</h2>
+<h3 id="moccs解析">MOCCS解析</h3>
+
+<p>私たちは Yoshitane <em>et al</em>. (2014) において、CLOCK ChIP-Seqデータに対し、MOCCSを適用しました。まず、ピーク検出により、約8,000のCLOCK結合サイトを決定しました。この結合サイト周辺±250 bpの配列を解析に使用しました。</p>
+
+<p>　この研究では、CLOCKの典型的な認識モチーフであるCACGTGに類似した配列がどの程度ゲノム全体で使用されているかに興味があったため、探索する塩基配列の長さは6 bpとしました。また、CLOCKは遺伝子の転写開始部位の近傍に結合する傾向を示したため、マウスの全遺伝子のプロモータ配列（TSS上流501 bp）を用いて全ての6-merについてAUCを計算し、その分散の値を用いてAUCを正規化しました。</p>
+
+<p>　AUCの計算結果から、このようにすでにAUCで上位にある配列と重なりのある配列はを除外し、さらに正規化したAUCが5以上という基準を用いて、CLOCK認識配列を抽出しました（図９、表２）。</p>
+
+<p><img src="/images/moccs2/figure_5.png" alt="Drawing" style="width: 400px;" align="middle" /></p>
+
+<p>　</p>
+
+<p><img src="/images/moccs2/table_1.png" alt="Drawing" style="width: 600px;" align="middle" /></p>
+
+<p>　MOCCSの結果、AUCが最も高かったのはCACGTGでした（表２）。これは。CACGTGが最もよく使用される認識配列であることを示していて、MOCCSが先行研究の知見を再現できたと考えられます。また、CACG[ACGT]Gが全て抽出されたことから、ゲノム全体のレベルでは5番目（２番目）の位置は塩基についてあまり選択的でないことが分かりました。さらに、これまで知られていなかった、CACGTGと２塩基異なる配列が有意な認識配列として見つかりました。</p>
+
+<h3 id="実験による検証-1">実験による検証</h3>
+
+<p>　MOCCSで抽出された認識配列が実際に機能を示すかを確かめるため、CLOCK依存的な転写活性化の誘導の有無をルシフェラーゼアッセイにより調べました。その結果、表２のほぼ全ての配列において機能が確認されました（図10）。これは、MOCCSが実際に機能する認識配列を正確に予測できたことを表しており、MOCCSの有用性を示すものです。唯一機能を示さなかった TACGTA については、出現回数が少ないことによってAUCの値がノイズの影響を受けた可能性が考えられました。</p>
+
+<p><img src="/images/moccs2/figure_6.png" alt="Drawing" style="width: 300px;" align="center" /></p>
+
+<h3 id="moccs2による再解析">MOCCS2による再解析</h3>
+
+<p>上記CLOCK ChIP-seqデータをMOCCS2によって再解析したところ、TACGTAについてのみAUCが高いにもかかわらずMOCC2スコアは低い値をとる結果となりました（図11）。これは TACGTA が出現回数が低いことによってAUCの値が不安定なことによる偽陽性であることを示すものであり、レポーターアッセイ実験の結果とも整合的です。</p>
+
+<p><img src="/images/moccs2/fig6.png" alt="Drawing" style="width: 600px;" align="center" /></p>
+
+<p>この結果から、MOCC2スコアは実際にAUCのばらつきによる偽陽性を除き、より正確に転写因子の認識配列を列挙できることが示されました。</p>
+
+<h2 id="連絡先">連絡先</h2>
+<p>MOCCS2は様々なChIP-Seqデータから有意なDNA結合タンパク質の認識配列を列挙することができる手法です。興味のある方は 尾崎 harukao.cb[at]gmail.com までメールにてご連絡ください。</p>
+ -->
+  </div>
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+
+<a href="https://www.facebook.com/yuifu.cb"><i class="svg-icon facebook"></i></a>
+
+<a href="https://github.com/yuifu"><i class="svg-icon github"></i></a>
+
+
+
+
+<a href="https://www.twitter.com/yuifu"><i class="svg-icon twitter"></i></a>
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
